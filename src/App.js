@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import Expo from 'expo';
 import { View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
+import {
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers';
 import reducers from './reducers';
 // import Router from './Nav/Router';
 import MainNavigation from './containers/NavContainer';
@@ -23,17 +28,29 @@ export default class App extends Component {
     firebase.initializeApp(config);
   }
 
+
+
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+      const middleware = createReactNavigationReduxMiddleware(
+        "root",
+        state => state.nav,
+      );
+      const addListener = createReduxBoundAddListener('root');
+
+    const store = createStore(reducers, {}, applyMiddleware(middleware));
     return (
       <Provider store={store}>
          <View style={{ flex: 1 }}>
-            <MainNavigation />
+            <MainNavigation
+                addListener={addListener}
+            />
          </View>
       </Provider>
     );
   }
 }
+
+Expo.registerRootComponent(App)
 
 // const styles = {
 //   containerStyle: {
