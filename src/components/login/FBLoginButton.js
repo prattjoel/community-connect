@@ -2,15 +2,17 @@
 
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import Expo from 'expo';
 import {
     View,
     StyleSheet,
-    Text
+    Text,
+    TouchableHighlight
 } from 'react-native';
-import {
-    LoginButton,
-    AccessToken
-} from 'react-native-fbsdk';
+// import {
+//     LoginButton,
+//     AccessToken
+// } from 'react-native-fbsdk';
 import { NavigationActions } from 'react-navigation';
 import User from '../../User';
 import Spinner from '../common/Spinner';
@@ -110,22 +112,35 @@ export default class FBLoginButton extends Component {
             };
 
             //Finish login to Facebook and obtain acces token for firebase login
-            _fbLoginComplete = (error, result) => {
-                // console.log('login finished called');
-                if (error) {
-                    console.log(`Login failed with error: ${result.error}`);
-                } else if (result.isCancelled) {
-                    console.log('Login was cancelled');
+            // _fbLoginComplete = (error, result) => {
+            //     // console.log('login finished called');
+            //     if (error) {
+            //         console.log(`Login failed with error: ${result.error}`);
+            //     } else if (result.isCancelled) {
+            //         console.log('Login was cancelled');
+            //     } else {
+            //         // console.log(`Login was successful with permissions: ${result.grantedPermissions}`);
+            //         AccessToken.getCurrentAccessToken().then(
+            //             (data) => {
+            //                 const token = data.accessToken.toString();
+            //                 const user = this._firebaseLogin(token);
+            //             }
+            //         );
+            //     }
+            // };
+
+            _loginToFB = async () => {
+                const fbID = '421198768323165';
+                const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(fbID, {
+                    permissions: ['public_profile', 'email'],
+                    });
+
+                if (type === 'success') {
+
                 } else {
-                    // console.log(`Login was successful with permissions: ${result.grantedPermissions}`);
-                    AccessToken.getCurrentAccessToken().then(
-                        (data) => {
-                            const token = data.accessToken.toString();
-                            const user = this._firebaseLogin(token);
-                        }
-                    );
+                    alert(type);
                 }
-            };
+            }
 
             // Create user instance from FB graph API request and Firebase auth
             _createUser = (name, userID, token) => {
@@ -227,11 +242,22 @@ export default class FBLoginButton extends Component {
                         <View style={styles.containerStyle}>
                             {
                                 !this.props.isLoading &&
-                                <LoginButton
-                                readPermissions={['public_profile']}
-                                onLoginFinished={this._fbLoginComplete.bind(this)}
-                                onLogoutFinished={this._firebaseLogout.bind(this)}
-                                />
+                                // <LoginButton
+                                // readPermissions={['public_profile']}
+                                // onLoginFinished={this._fbLoginComplete.bind(this)}
+                                // onLogoutFinished={this._firebaseLogout.bind(this)}
+                                // />
+
+                                    <TouchableHighlight
+                                        onPress={this._loginToFB.bind(this)}
+                                    >
+                                        <View>
+                                            <Text>
+                                                FB Login
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+
                             }
                             {
                                 this.props.isLoading &&
