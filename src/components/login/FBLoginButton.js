@@ -136,7 +136,15 @@ export default class FBLoginButton extends Component {
                     });
 
                 if (type === 'success') {
+                    const response = await fetch(
+                        `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`
+                    );
 
+                    console.log('response', response);
+
+                    const jsonResp = await response.json();
+                    console.log('USER INFO', jsonResp);
+                    
                 } else {
                     alert(type);
                 }
@@ -251,9 +259,9 @@ export default class FBLoginButton extends Component {
                                     <TouchableHighlight
                                         onPress={this._loginToFB.bind(this)}
                                     >
-                                        <View>
-                                            <Text>
-                                                FB Login
+                                        <View style={{ width: '50%', borderRadius: 4, padding: 24, backgroundColor: '#3b5998' }}>
+                                            <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                                                Login to Facebook
                                             </Text>
                                         </View>
                                     </TouchableHighlight>
