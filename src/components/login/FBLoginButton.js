@@ -64,7 +64,7 @@ export default class FBLoginButton extends Component {
 
 
     // Login user to firebase using acces token from Facebook login
-    _firebaseLogin = (token) => {
+    _firebaseLogin = (token, email) => {
         this.props.updateLoading(true);
         console.log('loading status firbaseLogin:');
         console.log(this.props.isLoading);
@@ -77,7 +77,7 @@ export default class FBLoginButton extends Component {
             // console.log('name and id are: ');
             // console.log(displayName);
             // console.log(uid);
-            this._createUser(displayName, uid, token);
+            this._createUser(displayName, uid, email);
             // console.log(user);
             // console.log(`User token is: ${token}`);
             this.props.updateLoading(false);
@@ -85,7 +85,7 @@ export default class FBLoginButton extends Component {
             console.log(this.props.isLoading);
         })
         .catch((error) => {
-            console.log('error is: ');
+            console.log('error signing in to Firebase: ');
             console.log(error);
         });
     };
@@ -144,40 +144,56 @@ export default class FBLoginButton extends Component {
 
                     const jsonResp = await response.json();
                     console.log('USER INFO', jsonResp);
-                    
+
+                    const email = jsonResp.email;
+
+                    // firebase.auth().signInWithCredential(token)
+                    // .then((resp) => {
+                    //     console.log('firebase respnonse', resp);
+                    // }).catch((error) => {
+                    //     console.log('error from firebase sing in', error);
+                    // })
+
+                    this._firebaseLogin(token, email);
                 } else {
                     alert(type);
                 }
             }
 
+            _createUser = (name, userID, email) => {
+                const currentUser = new User(name, email, userID);
+                console.log('currentUser is:', currentUser);
+                this._addUserToDatabase(currentUser);
+            }
+
             // Create user instance from FB graph API request and Firebase auth
-            _createUser = (name, userID, token) => {
-                const graphUrl = `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`;
-                // console.log(graphUrl);
-                fetch(graphUrl)
-                .then(
-                    (response) => {
-                        // console.log('response from graph request is:');
-                        // console.log(response);
-                        response.json()
-                        .then(
-                            (json) => {
-                                // console.log('json is:');
-                                // console.log(json);
-                                const currentUser = new User(name, json.email, userID);
-                                // console.log('currentUser is:');
-                                // console.log(currentUser);
-                                this._addUserToDatabase(currentUser);
-                            }
-                        );
-                    })
-                    .catch(
-                        (error) => {
-                            console.log('error with graph request: ');
-                            console.log(error);
-                        }
-                    );
-                };
+            // _createUser = (name, userID, token) => {
+            //     const graphUrl = `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`;
+            //     // console.log(graphUrl);
+            //     fetch(graphUrl)
+            //     .then(
+            //         (response) => {
+            //             // console.log('response from graph request is:');
+            //             // console.log(response);
+            //             response.json()
+            //             .then(
+            //                 (json) => {
+            //                     // console.log('json is:');
+            //                     // console.log(json);
+            //                     const currentUser = new User(name, json.email, userID);
+            //                     // console.log('currentUser is:');
+            //                     // console.log(currentUser);
+            //                     this._addUserToDatabase(currentUser);
+            //                 }
+            //             );
+            //         })
+            //         .catch(
+            //             (error) => {
+            //                 console.log('error with graph request: ');
+            //                 console.log(error);
+            //             }
+            //         );
+            //     };
 
                 //Add the user to firebase database
                 _addUserToDatabase = (currentUser) => {
@@ -259,7 +275,7 @@ export default class FBLoginButton extends Component {
                                     <TouchableHighlight
                                         onPress={this._loginToFB.bind(this)}
                                     >
-                                        <View style={{ width: '50%', borderRadius: 4, padding: 24, backgroundColor: '#3b5998' }}>
+                                        <View style={{ borderRadius: 100, padding: 24, backgroundColor: '#3b5998' }}>
                                             <Text style={{ color: 'white', fontWeight: 'bold' }}>
                                                 Login to Facebook
                                             </Text>
@@ -281,6 +297,6 @@ export default class FBLoginButton extends Component {
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: '#192D59',
+                    backgroundColor: '#FFCB76',
                 },
             });
