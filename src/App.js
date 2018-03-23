@@ -28,16 +28,14 @@ export default class App extends Component {
     firebase.initializeApp(config);
   }
 
-
-
   render() {
       const middleware = createReactNavigationReduxMiddleware(
-        "root",
+        'root',
         state => state.nav,
       );
       const addListener = createReduxBoundAddListener('root');
 
-    const store = createStore(reducers, {}, applyMiddleware(middleware));
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
          <View style={{ flex: 1 }}>
@@ -50,7 +48,7 @@ export default class App extends Component {
   }
 }
 
-Expo.registerRootComponent(App)
+Expo.registerRootComponent(App);
 
 // const styles = {
 //   containerStyle: {

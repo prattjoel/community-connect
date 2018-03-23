@@ -139,21 +139,12 @@ export default class FBLoginButton extends Component {
                     const response = await fetch(
                         `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`
                     );
-
                     console.log('response', response);
 
                     const jsonResp = await response.json();
                     console.log('USER INFO', jsonResp);
 
                     const email = jsonResp.email;
-
-                    // firebase.auth().signInWithCredential(token)
-                    // .then((resp) => {
-                    //     console.log('firebase respnonse', resp);
-                    // }).catch((error) => {
-                    //     console.log('error from firebase sing in', error);
-                    // })
-
                     this._firebaseLogin(token, email);
                 } else {
                     alert(type);

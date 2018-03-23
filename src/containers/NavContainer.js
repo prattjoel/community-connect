@@ -3,10 +3,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addNavigationHelpers } from 'react-navigation';
-import {
-  createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware,
-} from 'react-navigation-redux-helpers';
+// import {
+//   createReduxBoundAddListener,
+//   createReactNavigationReduxMiddleware,
+// } from 'react-navigation-redux-helpers';
 import Router from '../Nav/Router';
 
 
