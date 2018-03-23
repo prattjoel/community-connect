@@ -129,7 +129,15 @@ export default class FBLoginButton extends Component {
             //     }
             // };
 
-            _loginToFB = async () => {
+            _manageLogin = () => {
+                    if (this.props.isSignedIn) {
+                        this._firebaseLogout();
+                    } else {
+                        this._loginToFacebook();
+                    }
+            }
+
+            _loginToFacebook = async () => {
                 const fbID = '421198768323165';
                 const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(fbID, {
                     permissions: ['public_profile', 'email'],
@@ -252,6 +260,13 @@ export default class FBLoginButton extends Component {
                     }
                 };
 
+                _showLoginText = () => {
+                    const loginText = 'Login to Facebook';
+                    const logoutText = 'Logout';
+
+                    return (this.props.isSignedIn ? logoutText : loginText);
+                }
+
                 render() {
                     return (
                         <View style={styles.containerStyle}>
@@ -264,11 +279,11 @@ export default class FBLoginButton extends Component {
                                 // />
 
                                     <TouchableHighlight
-                                        onPress={this._loginToFB.bind(this)}
+                                        onPress={this._manageLogin.bind(this)}
                                     >
                                         <View style={{ borderRadius: 100, padding: 24, backgroundColor: '#3b5998' }}>
                                             <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                                                Login to Facebook
+                                                {this._showLoginText()}
                                             </Text>
                                         </View>
                                     </TouchableHighlight>
