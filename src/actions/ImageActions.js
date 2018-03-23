@@ -1,7 +1,7 @@
 'use strict';
 
 import { RNS3 } from 'react-native-aws3';
-import Config from 'react-native-config';
+// import Config from 'react-native-config';
 import {
     SET_CURRENT_IMAGES,
     SHOW_IMAGE_SELECTOR,
@@ -13,6 +13,10 @@ import {
     prepareMessageToSend,
     sendMessageToDatabase
 } from './MessageActions';
+import {
+    KEY,
+    SECRET
+} from '../constants/KeysToTheKingdom';
 
 export const setCurrentImages = imagesFromCameraRoll => {
     const currentImages = imagesFromCameraRoll
@@ -67,8 +71,8 @@ const imageOptions = {
     keyPrefix: 'message_images/',
     bucket: 'community-connect-image-store',
     region: 'us-east-2',
-    accessKey: Config.ACCESS_KEY,
-    secretKey: Config.ACCESS_SECRET,
+    accessKey: KEY,
+    secretKey: SECRET,
     successActionStatus: 201
 };
 
