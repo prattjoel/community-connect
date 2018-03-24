@@ -9,6 +9,8 @@ import {
     Text,
     TouchableHighlight
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
 
 import { NavigationActions } from 'react-navigation';
 import User from '../../User';
@@ -22,14 +24,16 @@ export default class FBLoginButton extends Component {
         const updatedTitile = navigation.state.params ? navigation.state.params.title : titleText;
         const button =
         (
-            <Text
+            <Ionicons
+                name='ios-home'
+                size={30}
+                style={{ marginRight: 10 }}
+                color='#FFCB76'
                 onPress={() => {
                     navigation.navigate('Home');
                 }
             }
-            >
-                Home
-            </Text>
+            />
         );
 
         // Show Home button to take user back to home screen.

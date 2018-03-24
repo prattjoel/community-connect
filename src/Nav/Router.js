@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Text, Keyboard } from 'react-native';
+import { Keyboard } from 'react-native';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import Login from '../containers/Login';
@@ -55,7 +55,7 @@ const MessagesNav = StackNavigator(
                     name='ios-arrow-back'
                     size={45}
                     style={{ marginLeft: 10 }}
-                    color='#FFAA00'
+                    color='#FFCB76'
                     onPress={() => {
                             Keyboard.dismiss();
                             navigation.goBack();
@@ -75,6 +75,7 @@ const MessagesNav = StackNavigator(
             name='ios-menu'
             size={30}
             style={{ marginRight: 10 }}
+            color='#FFCB76'
             onPress={() => {
                 Keyboard.dismiss();
                 navigation.navigate('DrawerToggle');
