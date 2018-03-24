@@ -6,6 +6,7 @@ import {
   Text,
   Image
 } from 'react-native';
+import { Image as CacheImage } from 'react-native-expo-image-cache';
 
 // TODO:
 //Add image to messages if url is present
@@ -28,8 +29,12 @@ const MessageText = (props) => {
                 </Text>
               </View>
               <View style={{ paddingTop: 5, paddingBottom: 5 }}>
-                  <Image
+                  {/* <Image
                     source={{ uri: props.photoUrl }}
+                    style={{ width: 200, height: 200 }}
+                  /> */}
+                  <CacheImage
+                    {...{ uri: props.photoUrl }}
                     style={{ width: 200, height: 200 }}
                   />
               </View>
