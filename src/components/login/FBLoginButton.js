@@ -9,37 +9,33 @@ import {
     Text,
     TouchableHighlight
 } from 'react-native';
-// import {
-//     LoginButton,
-//     AccessToken
-// } from 'react-native-fbsdk';
+
 import { NavigationActions } from 'react-navigation';
 import User from '../../User';
 import Spinner from '../common/Spinner';
 
 export default class FBLoginButton extends Component {
 
+    // Control header title and home button for navigation.
     static navigationOptions = ({ navigation }) => {
-        // debugger;
         const titleText = 'Logout';
         const updatedTitile = navigation.state.params ? navigation.state.params.title : titleText;
+        const button =
+        (
+            <Text
+                onPress={() => {
+                    navigation.navigate('Home');
+                }
+            }
+            >
+                Home
+            </Text>
+        );
 
+        // Show Home button to take user back to home screen.
         const displayHomeButton = () => {
-            // console.log('test showHomeButton');
-            // return 'test';
             if (navigation.state.params) {
                 if (navigation.state.params.showHomeButton) {
-                    const button =
-                    (
-                        <Text
-                            onPress={() => {
-                                navigation.navigate('Home');
-                            }
-                        }
-                        >
-                            Home
-                        </Text>
-                    );
                     return button;
                 }
             }
@@ -62,7 +58,6 @@ export default class FBLoginButton extends Component {
         }
     }
 
-
     // Login user to firebase using acces token from Facebook login
     _firebaseLogin = (token, email) => {
         this.props.updateLoading(true);
@@ -71,15 +66,8 @@ export default class FBLoginButton extends Component {
         const credential = firebase.auth.FacebookAuthProvider.credential(token);
         firebase.auth().signInWithCredential(credential)
         .then((result) => {
-            // console.log('result is: ');
-            // console.log(result);
             const { displayName, uid } = result;
-            // console.log('name and id are: ');
-            // console.log(displayName);
-            // console.log(uid);
             this._createUser(displayName, uid, email);
-            // console.log(user);
-            // console.log(`User token is: ${token}`);
             this.props.updateLoading(false);
             console.log('loading status after firbaseLogin:');
             console.log(this.props.isLoading);
@@ -111,160 +99,119 @@ export default class FBLoginButton extends Component {
                 });
             };
 
-            //Finish login to Facebook and obtain acces token for firebase login
-            // _fbLoginComplete = (error, result) => {
-            //     // console.log('login finished called');
-            //     if (error) {
-            //         console.log(`Login failed with error: ${result.error}`);
-            //     } else if (result.isCancelled) {
-            //         console.log('Login was cancelled');
-            //     } else {
-            //         // console.log(`Login was successful with permissions: ${result.grantedPermissions}`);
-            //         AccessToken.getCurrentAccessToken().then(
-            //             (data) => {
-            //                 const token = data.accessToken.toString();
-            //                 const user = this._firebaseLogin(token);
-            //             }
-            //         );
-            //     }
-            // };
-
+            // Sign user in or out depending on if the user is already signed in or not.
             _manageLogin = () => {
-                    if (this.props.isSignedIn) {
-                        this._firebaseLogout();
-                    } else {
-                        this._loginToFacebook();
-                    }
+                if (this.props.isSignedIn) {
+                    this._firebaseLogout();
+                } else {
+                    this._loginToFacebook();
+                }
             }
 
+            // Log user in to Facebook using Expo's Facebook login.
             _loginToFacebook = async () => {
                 const fbID = '421198768323165';
                 const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(fbID, {
                     permissions: ['public_profile', 'email'],
-                    });
+                });
 
                 if (type === 'success') {
                     const response = await fetch(
                         `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`
                     );
-                    console.log('response', response);
-
+                    // console.log('response', response);
                     const jsonResp = await response.json();
-                    console.log('USER INFO', jsonResp);
-
+                    // console.log('USER INFO', jsonResp);
                     const email = jsonResp.email;
                     this._firebaseLogin(token, email);
                 } else {
-                    alert(type);
+                    console.log('Type from FB login attempt is: ', type);
                 }
             }
 
+            // Add user to state in Redux
             _createUser = (name, userID, email) => {
                 const currentUser = new User(name, email, userID);
                 console.log('currentUser is:', currentUser);
                 this._addUserToDatabase(currentUser);
             }
 
-            // Create user instance from FB graph API request and Firebase auth
-            // _createUser = (name, userID, token) => {
-            //     const graphUrl = `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`;
-            //     // console.log(graphUrl);
-            //     fetch(graphUrl)
-            //     .then(
-            //         (response) => {
-            //             // console.log('response from graph request is:');
-            //             // console.log(response);
-            //             response.json()
-            //             .then(
-            //                 (json) => {
-            //                     // console.log('json is:');
-            //                     // console.log(json);
-            //                     const currentUser = new User(name, json.email, userID);
-            //                     // console.log('currentUser is:');
-            //                     // console.log(currentUser);
-            //                     this._addUserToDatabase(currentUser);
-            //                 }
-            //             );
-            //         })
-            //         .catch(
-            //             (error) => {
-            //                 console.log('error with graph request: ');
-            //                 console.log(error);
-            //             }
-            //         );
-            //     };
+            //Add the user to firebase database
+            _addUserToDatabase = (currentUser) => {
+                const { userID, email, name } = currentUser;
+                const database = firebase.database();
+                database.ref(`users/${userID}`).update({
+                    name,
+                    email
+                });
+            };
 
-                //Add the user to firebase database
-                _addUserToDatabase = (currentUser) => {
-                    const { userID, email, name } = currentUser;
-                    const database = firebase.database();
-                    database.ref(`users/${userID}`).update({
-                        name,
-                        email
+            // Navigate to Home Screen
+            goToHomeScreen = () => {
+                const goHome = NavigationActions.navigate({
+                    routeName: 'Home'
+                });
+                // debugger;
+                this.props.navigation.dispatch(goHome);
+            };
+
+            // Add listener to see if the user is signed in to Firebase
+            _isLoggedin = () => {
+                this.props.updateLoading(true);
+                if (!this.props.isSignedIn) {
+                    firebase.auth().onAuthStateChanged((user) => {
+                        if (user) {
+                            this.props.navigation.setParams({ title: 'Logout' });
+                            // const userID = user.uid;
+                            const databaseRef = firebase.database().ref(`users/${user.uid}`);
+                            this._checkFirebaseSignInStatus(databaseRef);
+                        } else {
+                            console.log('user not signed in');
+                            // this.props.navigation.setParams({ title: 'Login' });
+                            this.props.updateLoading(false);
+                        }
                     });
-                };
+                } else {
+                    this.props.updateLoading(false);
+                }
+            };
 
-                goToHomeScreen = () => {
-                    const goHome = NavigationActions.navigate({
-                        routeName: 'Home'
-                    });
-                    // debugger;
-                    this.props.navigation.dispatch(goHome);
-                };
+            // Use databse refernece to check if user is signed in to Firbase.
+            _checkFirebaseSignInStatus = (ref) => {
+                ref.once('value')
+                .then(() => {
+                    this.props.updateSignIn(true);
+                    this.props.updateLoading(false);
+                    this.goToHomeScreen();
+                })
+                .catch((error) => {
+                    this.props.updateLoading(false);
+                    console.log('error checking for user signed in status:');
+                    console.log(error);
+                });
+            }
 
-                // Add listener to see if the user is signed in to Firebase
-                _isLoggedin = () => {
-                    // debugger;
-                    this.props.updateLoading(true);
-                    // console.log('isSignedIn in _isLoggedin');
-                    // console.log(this.props.isSignedIn);
-                    if (!this.props.isSignedIn) {
-                        firebase.auth().onAuthStateChanged((user) => {
-                            if (user) {
-                                this.props.navigation.setParams({ title: 'Logout' });
-                                // console.log('signed in user:');
-                                const userID = user.uid;
-                                const databaseRef = firebase.database().ref(`users/${user.uid}`);
-                                // console.log('databaseRef:');
-                                // console.log(databaseRef);
-                                databaseRef.once('value')
-                                .then((snapshot) => {
-                                    // console.log('snapshot:');
-                                    // console.log(snapshot);
-                                    const name = snapshot.child('name').val();
-                                    const email = snapshot.child('email').val();
-                                    const currentUser = new User(name, email, userID);
-                                    // debugger;
-                                    this.props.updateSignIn(true);
-                                    // console.log('isSignedIn after logged in');
-                                    // console.log(this.props.isSignedIn);
-                                    // debugger;
-                                    // this.props.navigation.navigate('Home');
-                                    this.props.updateLoading(false);
-                                    this.goToHomeScreen();
-                                    // console.log(currentUser);
-                                })
-                                .catch((error) => {
-                                    this.props.updateLoading(false);
-                                    console.log('error checking for user signed in status:');
-                                    console.log(error);
-                                });
-                            } else {
-                                console.log('user not signed in');
-                                // this.props.navigation.setParams({ title: 'Login' });
-                                this.props.updateLoading(false);
-                            }
-                        });
-                    } else {
-                        this.props.updateLoading(false);
-                    }
-                };
+            // Render text for Login Button for Facebook login
+            _showLoginText = () => {
+                const loginText = 'Login to Facebook';
+                const logoutText = 'Logout';
 
-                _showLoginText = () => {
-                    const loginText = 'Login to Facebook';
-                    const logoutText = 'Logout';
+                return (this.props.isSignedIn ? logoutText : loginText);
+            }
 
-                    return (this.props.isSignedIn ? logoutText : loginText);
+            // Render Login button for Facebook login
+            _renderLoginButton = () => {
+                return (
+                    <TouchableHighlight
+                        onPress={this._manageLogin.bind(this)}
+                    >
+                            <View style={styles.buttonContainer}>
+                                <Text style={styles.textStyle}>
+                                    {this._showLoginText()}
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
+                    );
                 }
 
                 render() {
@@ -272,22 +219,8 @@ export default class FBLoginButton extends Component {
                         <View style={styles.containerStyle}>
                             {
                                 !this.props.isLoading &&
-                                // <LoginButton
-                                // readPermissions={['public_profile']}
-                                // onLoginFinished={this._fbLoginComplete.bind(this)}
-                                // onLogoutFinished={this._firebaseLogout.bind(this)}
-                                // />
 
-                                    <TouchableHighlight
-                                        onPress={this._manageLogin.bind(this)}
-                                    >
-                                        <View style={{ borderRadius: 100, padding: 24, backgroundColor: '#3b5998' }}>
-                                            <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                                                {this._showLoginText()}
-                                            </Text>
-                                        </View>
-                                    </TouchableHighlight>
-
+                                this._renderLoginButton()
                             }
                             {
                                 this.props.isLoading &&
@@ -304,5 +237,14 @@ export default class FBLoginButton extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#FFCB76',
+                },
+                buttonContainer: {
+                    borderRadius: 100,
+                    padding: 24,
+                    backgroundColor: '#3b5998',
+                },
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'bold'
                 },
             });
