@@ -3,6 +3,7 @@
 import React from 'react';
 import { Text, Keyboard } from 'react-native';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
 import Login from '../containers/Login';
 import Home from '../components/Home';
 import ChatRooms from '../containers/ChatRooms';
@@ -49,38 +50,41 @@ const MessagesNav = StackNavigator(
             navigationOptions: ({ navigation }) => ({
                 headerTitle: 'Current Messages',
                 headerLeft:
-                <Text
+                // renderBackButton(navigation);
+                <Ionicons
+                    name='ios-arrow-back'
+                    size={45}
+                    style={{ marginLeft: 10 }}
+                    color='#FFAA00'
                     onPress={() => {
-                        Keyboard.dismiss();
-                        navigation.goBack();
+                            Keyboard.dismiss();
+                            navigation.goBack();
+                        }
                     }
-                    }
-                >
-                    Back
-                </Text>
-            }),
-        },
+                />
+        }),
     },
-    {
-        // initialRouteName: 'MessageHome',
-        headerMode: 'float',
-        navigationOptions: ({ navigation }) => ({
-            title: 'Home Page',
-            headerRight:
-            <Text
-                onPress={() => {
-                    Keyboard.dismiss();
-                    navigation.navigate('DrawerToggle');
-                }
+},
+{
+    // initialRouteName: 'MessageHome',
+    headerMode: 'float',
+    navigationOptions: ({ navigation }) => ({
+        title: 'Home Page',
+        headerRight:
+        <Text
+            onPress={() => {
+                Keyboard.dismiss();
+                navigation.navigate('DrawerToggle');
             }
-            >
-                Menu
-            </Text>
-        })
-        // {
-        //   headerMode: 'none'
-        // }
-    },
+        }
+        >
+            Menu
+        </Text>
+    })
+    // {
+    //   headerMode: 'none'
+    // }
+},
 );
 
 const LoginStack = StackNavigator(
