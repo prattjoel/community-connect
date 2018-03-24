@@ -71,19 +71,17 @@ const MessagesNav = StackNavigator(
     navigationOptions: ({ navigation }) => ({
         title: 'Home Page',
         headerRight:
-        <Text
+        <Ionicons
+            name='ios-menu'
+            size={30}
+            style={{ marginRight: 10 }}
             onPress={() => {
                 Keyboard.dismiss();
                 navigation.navigate('DrawerToggle');
             }
         }
-        >
-            Menu
-        </Text>
+        />
     })
-    // {
-    //   headerMode: 'none'
-    // }
 },
 );
 
