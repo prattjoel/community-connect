@@ -18,22 +18,40 @@ import SettingsMenu from '../components/Settings';
 
 const HomeNav = TabNavigator(
     {
-        ChatroomChooser: {
+        Chat: {
             screen: ChatRooms,
             // navigationOptions: {
             //   headerTitle: 'Messages'
             // },
         },
-        GivingPage: {
+        Give: {
             screen: GivingPage
         },
-        ContactForm: {
+        Contact: {
             screen: ContactForm
         },
-        Announcements: {
+        News: {
             screen: Announcements
         }
     },
+    {
+        navigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused }) => {
+                const { routeName } = navigation.state;
+                let iconName;
+                if (routeName === 'Chat') {
+                    iconName = `ios-home${focused ? '' : '-outline'}`;
+                } else if (routeName === 'Give') {
+                    iconName = `ios-cash${focused ? '' : '-outline'}`;
+                } else if (routeName === 'Contact') {
+                    iconName = `ios-at${focused ? '' : '-outline'}`;
+                } else if (routeName === 'News') {
+                    iconName = `ios-megaphone${focused ? '' : '-outline'}`;
+                }
+                return <Ionicons name={iconName} size={25} />;
+            }
+        })
+    }
 );
 
 const MessagesNav = StackNavigator(
