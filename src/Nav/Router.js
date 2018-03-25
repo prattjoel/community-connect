@@ -47,17 +47,26 @@ const HomeNav = TabNavigator(
         navigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused }) => {
                 const { routeName } = navigation.state;
-                let iconName;
+                const createIcon = (name) => {
+                    return <Ionicons name={name} size={25} />;
+                };
                 if (routeName === 'Chat') {
-                    iconName = `ios-home${focused ? '' : '-outline'}`;
+                    const chatIconName = `ios-home${focused ? '' : '-outline'}`;
+                    const chatIcon = createIcon(chatIconName);
+                    return chatIcon;
                 } else if (routeName === 'Give') {
-                    iconName = `ios-cash${focused ? '' : '-outline'}`;
+                    const giveIconName = `ios-cash${focused ? '' : '-outline'}`;
+                    const giveIcon = createIcon(giveIconName);
+                    return giveIcon;
                 } else if (routeName === 'Contact') {
-                    iconName = `ios-at${focused ? '' : '-outline'}`;
+                    const contactIconName = `ios-at${focused ? '' : '-outline'}`;
+                    const contactIcon = createIcon(contactIconName);
+                    return contactIcon;
                 } else if (routeName === 'News') {
-                    iconName = `ios-megaphone${focused ? '' : '-outline'}`;
+                    const newsIconName = `ios-megaphone${focused ? '' : '-outline'}`;
+                    const newsIcon = createIcon(newsIconName);
+                    return newsIcon;
                 }
-                return <Ionicons name={iconName} size={25} />;
             }
         })
     }
