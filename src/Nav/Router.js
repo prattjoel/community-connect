@@ -20,18 +20,27 @@ const HomeNav = TabNavigator(
     {
         Chat: {
             screen: ChatRooms,
-            // navigationOptions: {
-            //   headerTitle: 'Messages'
-            // },
+            navigationOptions: {
+              headerTitle: 'Chat'
+            },
         },
         Give: {
-            screen: GivingPage
+            screen: GivingPage,
+            navigationOptions: {
+              headerTitle: 'Give'
+            },
         },
         Contact: {
-            screen: ContactForm
+            screen: ContactForm,
+            navigationOptions: {
+              headerTitle: 'Contact'
+            },
         },
         News: {
-            screen: Announcements
+            screen: Announcements,
+            navigationOptions: {
+              headerTitle: 'News'
+            },
         }
     },
     {
