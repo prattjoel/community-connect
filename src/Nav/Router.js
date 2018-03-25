@@ -73,7 +73,7 @@ const MessagesNav = StackNavigator(
                     name='ios-arrow-back'
                     size={45}
                     style={{ marginLeft: 10 }}
-                    color='#FFCB76'
+                    // color='#FFCB76'
                     onPress={() => {
                             Keyboard.dismiss();
                             navigation.goBack();
@@ -93,7 +93,7 @@ const MessagesNav = StackNavigator(
             name='ios-menu'
             size={30}
             style={{ marginRight: 10 }}
-            color='#FFCB76'
+            // color='#FFCB76'
             onPress={() => {
                 Keyboard.dismiss();
                 navigation.navigate('DrawerToggle');

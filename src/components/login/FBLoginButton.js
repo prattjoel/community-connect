@@ -28,7 +28,7 @@ export default class FBLoginButton extends Component {
                 name='ios-home'
                 size={30}
                 style={{ marginRight: 10 }}
-                color='#FFCB76'
+                // color='#FFCB76'
                 onPress={() => {
                     navigation.navigate('Home');
                 }
@@ -240,7 +240,8 @@ export default class FBLoginButton extends Component {
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: '#FFCB76',
+                    backgroundColor: 'white'
+                    // backgroundColor: '#FFCB76',
                 },
                 buttonContainer: {
                     borderRadius: 100,
