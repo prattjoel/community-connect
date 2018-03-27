@@ -7,15 +7,25 @@ import {
     Linking
 } from 'react-native';
 
+import Button from './common/Button';
+
 const Giving = () => {
     const givingLink = (
+        // <View style={styles.containerStyle}>
+        //     <Text
+        //         onPress={openGivingUrl}
+        //         style={styles.givingLinkStyle}
+        //     >
+        //             Give
+        //     </Text>
+        // </View>
         <View style={styles.containerStyle}>
-            <Text
+            <Button
                 onPress={openGivingUrl}
-                style={styles.givingLinkStyle}
+                style={{ alignSelf: 'center' }}
             >
-                    Give
-            </Text>
+                Give
+            </Button>
         </View>
     );
   return givingLink;
@@ -33,7 +43,9 @@ const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        flexDirection: 'row'
     },
     givingLinkStyle: {
         fontSize: 46
