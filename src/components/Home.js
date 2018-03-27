@@ -1,7 +1,7 @@
 'use-strict';
 
 import React, { Component } from 'react';
-// import { View } from 'react-native';
+import { View } from 'react-native';
 import Messages from '../containers/Messages';
 import MessageInput from './chat/MessageInput';
 import KeyboardManager from './common/KeyboardManager';
@@ -15,8 +15,10 @@ export default class HomePage extends Component {
     render() {
         return (
             <KeyboardManager style={{ flex: 1 }}>
-                <Messages />
-                <MessageInput />
+                <View style={{ flex: 1, backgroundColor: 'white' }}>
+                    <Messages />
+                    <MessageInput />
+                </View>
                 <ImagesFromCR />
             </KeyboardManager>
         );

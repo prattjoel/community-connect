@@ -20,21 +20,44 @@ const Giving = () => {
         //     </Text>
         // </View>
         <View style={styles.containerStyle}>
-            <Button
-                onPress={openGivingUrl}
-                style={{ alignSelf: 'center' }}
-            >
-                Give
-            </Button>
+            <View style={{ ...styles.containerStyle }}>
+            {/* <View style={{ ...styles.containerStyle, borderColor: 'black', borderWidth: 2 }}> */}
+                <Text>
+                    We invite you into the joyful and fulfilling practice of giving at New Day.
+                    You will be supporting a ministry that shares the healing love of God.
+                    It’s your support that makes it possible!
+                </Text>
+            </View>
+            <View style={{ ...styles.containerStyle, flexDirection: 'row' }}>
+            {/* <View style={{ ...styles.containerStyle, flexDirection: 'row', borderColor: 'blue', borderWidth: 2 }}> */}
+
+                <Button
+                    onPress={() => {
+                        openGivingUrl(webGivingUrl);
+                    }}
+                    style={{ alignSelf: 'center' }}
+                >
+                    Give
+                </Button>
+                <Button
+                    onPress={() => {
+                        openGivingUrl(venmoUrl);
+                    }}
+                    style={{ alignSelf: 'center' }}
+                >
+                    Venmo
+                </Button>
+            </View>
         </View>
     );
   return givingLink;
 };
 
-const givingUrl = 'http://www.newdaychurch.nyc/contribute/';
+const webGivingUrl = 'http://www.newdaychurch.nyc/contribute/';
+const venmoUrl = 'https://venmo.com/';
 
-const openGivingUrl = () => {
-    Linking.openURL(givingUrl);
+const openGivingUrl = (url) => {
+    Linking.openURL(url);
 };
 
 export default Giving;
@@ -45,7 +68,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
-        flexDirection: 'row'
+        // flexDirection: 'row'
     },
     givingLinkStyle: {
         fontSize: 46

@@ -78,7 +78,8 @@ const styles = {
       flex: 1,
       flexDirection: 'row',
       paddingBottom: 5,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      // borderTopWidth: 1
       // borderWidth: 5,
       // borderColor: 'red'
   }
