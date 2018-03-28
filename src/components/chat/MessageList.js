@@ -61,7 +61,7 @@ export default class MessageList extends Component {
   render() {
     // debugger;
     return (
-            <View style={{ flex: 10, backgroundColor: 'white', marginBottom: 25, borderBottomWidth: 0.25, borderBottomColor: 'gray' }}>
+            <View style={{ flex: 8, backgroundColor: 'white', marginBottom: 25, borderBottomWidth: 0.25, borderBottomColor: 'gray' }}>
               <FlatList
                 data={this.props.messagesToDisplay.reverse()}
                 renderItem={this.renderItem}

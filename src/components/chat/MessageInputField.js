@@ -42,22 +42,44 @@ export default class MessageInputField extends Component {
   render() {
     return (
       <View style={styles.containerStyle}>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder='Type Message Here'
-          onChangeText={this.onMessageChange.bind(this)}
-          value={this.props.message}
-        />
-        <Button
-            onPress={this.onImageButtonPressed.bind(this)}
-        >
-            Image
-        </Button>
-        <Button
-          onPress={this.onSendButtonPressed.bind(this)}
-        >
-            Send
-        </Button>
+          <View style={{ flex: 1 }}>
+              <TextInput
+                style={styles.textInputStyle}
+                placeholder='Type Message Here'
+                onChangeText={this.onMessageChange.bind(this)}
+                value={this.props.message}
+              />
+          </View>
+          <View style={styles.buttonContainerStyle}>
+              {/* <Button
+                  onPress={this.onImageButtonPressed.bind(this)}
+                  style={{ alignSelf: 'auto' }}
+              >
+                  Image
+              </Button> */}
+              <Button
+                onPress={this.onSendButtonPressed.bind(this)}
+                updatedText={{ fontSize: 12, paddingLeft: 5, paddingRight: 5 }}
+                // style={{ alignSelf: 'auto' }}
+              >
+                  Send
+              </Button>
+          </View>
+
+        {/* <View style={styles.buttonContainerStyle}>
+            <Button
+                onPress={this.onImageButtonPressed.bind(this)}
+                // style={{ alignSelf: 'auto' }}
+            >
+                Image
+            </Button>
+            <Button
+              onPress={this.onSendButtonPressed.bind(this)}
+              // style={{ alignSelf: 'auto' }}
+            >
+                Send
+            </Button>
+        </View> */}
       </View>
     );
   }
@@ -65,22 +87,30 @@ export default class MessageInputField extends Component {
 
 const styles = {
   textInputStyle: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
+    height: 40,
+    // borderColor: 'gray',
+    // borderWidth: 1,
+    // borderRadius: 5,
     marginLeft: 5,
     paddingLeft: 5,
-    flex: 3,
-    alignSelf: 'flex-end'
+    paddingBottom: 15,
+    flex: 1,
+    // alignSelf: 'flex-end'
   },
   containerStyle: {
-      flex: 1,
-      flexDirection: 'row',
+      height: 75,
+      // flexDirection: 'row',
       paddingBottom: 5,
       backgroundColor: 'white',
-      // borderTopWidth: 1
-      // borderWidth: 5,
+      // alignContent: 'space-around',
+      // borderTopWidth: 1,
+      // borderWidth: 1,
+      // borderColor: 'red'
+  },
+  buttonContainerStyle: {
+      flex: 1,
+      // flexDirection: 'row',
+      // borderWidth: 1,
       // borderColor: 'red'
   }
 };

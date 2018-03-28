@@ -56,9 +56,9 @@ export default class KeyboardManager extends Component {
         return (
             <Animated.View
                 style={{ flex: 1, paddingBottom: this.keyboardHeight }}
-                >
+            >
                     {this.props.children}
-                </Animated.View>
+            </Animated.View>
 
             );
         }
