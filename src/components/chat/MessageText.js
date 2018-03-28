@@ -9,11 +9,13 @@ import {
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 
 const MessageText = (props) => {
+    console.log('photo url in message text: ', props.profilePicUrl);
     if (props.photoUrl) {
         return (
           <View style={styles.containerStyle}>
             <Image
-              source={require('../../assets/profilePlaceholder.png')}
+              // source={require('../../assets/profilePlaceholder.png')}
+              source={props.profilePicUrl ? { uri: props.profilePicUrl } : require('../../assets/profilePlaceholder.png')}
               style={{ width: 20, height: 20 }}
             />
             <View>
@@ -42,7 +44,8 @@ const MessageText = (props) => {
         return (
           <View style={styles.containerStyle}>
             <Image
-              source={require('../../assets/profilePlaceholder.png')}
+              // source={require('../../assets/profilePlaceholder.png')}
+              source={props.profilePicUrl ? { uri: props.profilePicUrl } : require('../../assets/profilePlaceholder.png')}
               style={{ width: 20, height: 20 }}
             />
             <View>

@@ -44,13 +44,15 @@ const messageInfo = prepareMessageToSend(type, content);
 
 export const prepareMessageToSend = (type, content) => {
     const { currentUser } = firebase.auth();
+    console.log('currentUser from firebase auth is: ', currentUser);
     const timeOptions = { hour: 'numeric', minute: 'numeric' };
     const date = new Date();
     const timestamp = date.toLocaleTimeString('en-us', timeOptions);
     const messageInfo = {
       user: currentUser.uid,
       timestamp,
-      name: currentUser.displayName
+      name: currentUser.displayName,
+      profilePhotoUrl: currentUser.photoURL
    };
    messageInfo[type] = content;
    return messageInfo;
