@@ -8,10 +8,7 @@ import {
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 
-// TODO:
-//Add image to messages if url is present
 const MessageText = (props) => {
-
     if (props.photoUrl) {
         return (
           <View style={styles.containerStyle}>

@@ -63,7 +63,7 @@ export default class FBLoginButton extends Component {
     }
 
     // Login user to firebase using acces token from Facebook login
-    _firebaseLogin = (token, email) => {
+    _firebaseLogin = (token, email, profilePicUrl) => {
         this.props.updateLoading(true);
         console.log('loading status firbaseLogin:');
         console.log(this.props.isLoading);
@@ -71,7 +71,7 @@ export default class FBLoginButton extends Component {
         firebase.auth().signInWithCredential(credential)
         .then((result) => {
             const { displayName, uid } = result;
-            this._createUser(displayName, uid, email);
+            this._createUser(displayName, uid, email, profilePicUrl);
             this.props.updateLoading(false);
             console.log('loading status after firbaseLogin:');
             console.log(this.props.isLoading);
@@ -121,32 +121,35 @@ export default class FBLoginButton extends Component {
 
                 if (type === 'success') {
                     const response = await fetch(
-                        `https://graph.facebook.com/v2.11/me?fields=id,name,email&access_token=${token}`
+                        `https://graph.facebook.com/v2.11/me?fields=id,name,email,picture&access_token=${token}`
                     );
                     // console.log('response', response);
                     const jsonResp = await response.json();
-                    // console.log('USER INFO', jsonResp);
+                    console.log('USER INFO', jsonResp);
                     const email = jsonResp.email;
-                    this._firebaseLogin(token, email);
+                    const profilePicUrl = jsonResp.picture.data.url;
+                    console.log('profile url: ', profilePicUrl);
+                    this._firebaseLogin(token, email, profilePicUrl);
                 } else {
                     console.log('Type from FB login attempt is: ', type);
                 }
             }
 
             // Add user to state in Redux
-            _createUser = (name, userID, email) => {
-                const currentUser = new User(name, email, userID);
+            _createUser = (name, userID, email, profilePicUrl) => {
+                const currentUser = new User(name, email, userID, profilePicUrl);
                 console.log('currentUser is:', currentUser);
                 this._addUserToDatabase(currentUser);
             }
 
             //Add the user to firebase database
             _addUserToDatabase = (currentUser) => {
-                const { userID, email, name } = currentUser;
+                const { userID, email, name, profilePicUrl } = currentUser;
                 const database = firebase.database();
                 database.ref(`users/${userID}`).update({
                     name,
-                    email
+                    email,
+                    profilePicUrl
                 });
             };
 
