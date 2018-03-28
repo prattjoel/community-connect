@@ -50,6 +50,7 @@ export default class MessageList extends Component {
             timestamp={item.timestamp}
             name={item.name}
             photoUrl={item.photoUrl}
+            profilePicUrl={item.profilePhotoUrl}
           />
         );
     }
