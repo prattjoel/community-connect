@@ -40,7 +40,19 @@ export default class MessageInputField extends Component {
     });
   }
 
+  userIsTyping() {
+      const { message } = this.props;
+      if (message !== '') {
+          return true;
+      }
+      return false;
+  }
+
+
+
   render() {
+      const isTypingTextStyle = { ...styles.buttonText, ...styles.isTypingButtonTextStyle };
+      // const isTypingButtonStyle =
     return (
       <View style={styles.containerStyle}>
           <View style={{ flex: 1 }}>
@@ -52,13 +64,8 @@ export default class MessageInputField extends Component {
               />
           </View>
           <View style={styles.buttonContainerStyle}>
-              {/* <Button
-                  onPress={this.onImageButtonPressed.bind(this)}
-                  style={{ alignSelf: 'auto' }}
-              >
-                  Image
-              </Button> */}
               <IconButton
+                  // name={this.userIsTyping() ? 'ios-images' : 'ios-images-outline'}
                   name='ios-images'
                   size={25}
                   style={styles.iconStyle}
@@ -67,27 +74,12 @@ export default class MessageInputField extends Component {
               />
               <Button
                 onPress={this.onSendButtonPressed.bind(this)}
-                updatedText={styles.buttonText}
-                // style={{ alignSelf: 'auto' }}
+                updatedText={this.userIsTyping() ? isTypingTextStyle : styles.buttonText}
+                style={this.userIsTyping() ? styles.isTypingButton : styles.notTypingButton}
               >
                   Send
               </Button>
           </View>
-
-        {/* <View style={styles.buttonContainerStyle}>
-            <Button
-                onPress={this.onImageButtonPressed.bind(this)}
-                // style={{ alignSelf: 'auto' }}
-            >
-                Image
-            </Button>
-            <Button
-              onPress={this.onSendButtonPressed.bind(this)}
-              // style={{ alignSelf: 'auto' }}
-            >
-                Send
-            </Button>
-        </View> */}
       </View>
     );
   }
@@ -131,7 +123,17 @@ const styles = {
     paddingLeft: 5,
     paddingRight: 5,
     paddingTop: 5,
-    paddingBottom: 5
+    paddingBottom: 5,
+    color: 'gray'
+  },
+  isTypingButtonTextStyle: {
+      color: 'white'
+  },
+  isTypingButton: {
+      backgroundColor: '#007AFF'
+  },
+  notTypingButton: {
+      borderColor: 'gray'
   },
   iconStyle: {
       flex: 5,

@@ -1,17 +1,20 @@
 'use-strict';
 
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const IconButton = ({ name, size, style, onPress }) => {
     return (
-        <TouchableOpacity
+        <View
             style={style}
-            onPress={onPress}
         >
-            <Ionicons name={name} size={size} />
-        </TouchableOpacity>
+            <TouchableOpacity
+                onPress={onPress}
+            >
+                <Ionicons name={name} size={size} />
+            </TouchableOpacity>
+        </View>
     );
 };
 
