@@ -28,14 +28,14 @@ const MessageText = (props) => {
                   {props.timestamp}
                 </Text>
               </View>
-              <View style={{ paddingTop: 5, paddingBottom: 5 }}>
+              <View style={{ paddingTop: 10, paddingBottom: 5 }}>
                   {/* <Image
                     source={{ uri: props.photoUrl }}
                     style={{ width: 200, height: 200 }}
                   /> */}
                   <CacheImage
                     {...{ uri: props.photoUrl }}
-                    style={{ width: 200, height: 200 }}
+                    style={{ width: 300, height: 200, borderRadius: 5 }}
                   />
               </View>
             </View>
@@ -74,9 +74,10 @@ const styles = {
     paddingLeft: 10,
     paddingTop: 10,
     paddingRight: 25,
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: '#d3d3d3'
+    paddingBottom: 10
+    // borderTopWidth: 0.5,
+    // borderBottomWidth: 0.5,
+    // borderColor: '#d3d3d3'
   },
   textStyle: {
     paddingLeft: 10,
@@ -84,7 +85,8 @@ const styles = {
   },
   timestampStyle: {
     paddingLeft: 10,
-    fontSize: 10
+    fontSize: 10,
+    color: 'gray'
   },
   nameStyle: {
     paddingLeft: 10,
