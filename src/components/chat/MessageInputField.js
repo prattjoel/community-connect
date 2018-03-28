@@ -7,6 +7,7 @@ import {
     CameraRoll
 } from 'react-native';
 import Button from '../common/Button';
+import IconButton from '../common/IconButton';
 
 export default class MessageInputField extends Component {
   componentWillMount() {
@@ -57,9 +58,16 @@ export default class MessageInputField extends Component {
               >
                   Image
               </Button> */}
+              <IconButton
+                  name='ios-images'
+                  size={25}
+                  style={styles.iconStyle}
+                  onPress={this.onImageButtonPressed.bind(this)}
+                  // imageStyle={{ }}
+              />
               <Button
                 onPress={this.onSendButtonPressed.bind(this)}
-                updatedText={{ fontSize: 12, paddingLeft: 5, paddingRight: 5 }}
+                updatedText={styles.buttonText}
                 // style={{ alignSelf: 'auto' }}
               >
                   Send
@@ -98,7 +106,8 @@ const styles = {
     // alignSelf: 'flex-end'
   },
   containerStyle: {
-      height: 75,
+      height: 70,
+      marginTop: 10,
       // flexDirection: 'row',
       paddingBottom: 5,
       backgroundColor: 'white',
@@ -109,8 +118,26 @@ const styles = {
   },
   buttonContainerStyle: {
       flex: 1,
-      // flexDirection: 'row',
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      marginRight: 15
       // borderWidth: 1,
       // borderColor: 'red'
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '900',
+    // padding: 100
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingTop: 5,
+    paddingBottom: 5
+  },
+  iconStyle: {
+      flex: 5,
+      paddingRight: 10,
+      // borderWidth: 1,
+      // borderColor: 'green',
+      alignItems: 'flex-end'
   }
 };
