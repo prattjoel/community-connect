@@ -14,6 +14,8 @@ const MessageText = (props) => {
     // console.log('photo url in message text: ', props.profilePicUrl);
     const { width } = Dimensions.get('window');
     const imageWidth = 0.85 * width;
+    const preview = require('../../assets/messageImagePlaceholder.png');
+
     if (props.photoUrl) {
         return (
           <View style={styles.containerStyle}>
@@ -37,7 +39,7 @@ const MessageText = (props) => {
                     style={{ width: 200, height: 200 }}
                   /> */}
                   <CacheImage
-                    {...{ uri: props.photoUrl }}
+                    {...{ uri: props.photoUrl, preview }}
                     style={{ width: imageWidth, height: 200, borderRadius: 5 }}
                   />
               </View>
