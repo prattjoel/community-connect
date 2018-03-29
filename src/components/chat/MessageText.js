@@ -4,13 +4,16 @@ import React from 'react';
 import {
   View,
   Text,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 
 const MessageText = (props) => {
     // // debugger;
     // console.log('photo url in message text: ', props.profilePicUrl);
+    const { width } = Dimensions.get('window');
+    const imageWidth = 0.85 * width;
     if (props.photoUrl) {
         return (
           <View style={styles.containerStyle}>
@@ -35,7 +38,7 @@ const MessageText = (props) => {
                   /> */}
                   <CacheImage
                     {...{ uri: props.photoUrl }}
-                    style={{ width: 300, height: 200, borderRadius: 5 }}
+                    style={{ width: imageWidth, height: 200, borderRadius: 5 }}
                   />
               </View>
             </View>
