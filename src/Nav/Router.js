@@ -48,7 +48,7 @@ const HomeNav = TabNavigator(
             tabBarIcon: ({ focused }) => {
                 const { routeName } = navigation.state;
                 const createIcon = (name) => {
-                    return <Ionicons name={name} size={25} />;
+                    return <Ionicons name={name} size={40} style={{ paddingTop: 10 }} />;
                 };
                 if (routeName === 'Chat') {
                     const chatIconName = `ios-home${focused ? '' : '-outline'}`;
