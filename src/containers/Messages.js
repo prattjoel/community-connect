@@ -7,11 +7,14 @@ import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
 const mapStateToProps = state => {
+    // debugger;
   const { messagesToShow } = state.messages;
+  const reversedMessages = _.values(messagesToShow).reverse();
+  const reversedKeys = Object.keys(messagesToShow).reverse();
   return (
     {
-      messagesToDisplay: _.values(messagesToShow),
-      messageKeys: Object.keys(messagesToShow),
+      messagesToDisplay: reversedMessages,
+      messageKeys: reversedKeys,
       currentChatRoom: state.chatRooms.currentChatRoom
     }
   );

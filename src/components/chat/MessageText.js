@@ -9,7 +9,8 @@ import {
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 
 const MessageText = (props) => {
-    console.log('photo url in message text: ', props.profilePicUrl);
+    // // debugger;
+    // console.log('photo url in message text: ', props.profilePicUrl);
     if (props.photoUrl) {
         return (
           <View style={styles.containerStyle}>

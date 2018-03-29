@@ -16,14 +16,6 @@ export default class MessageList extends Component {
     console.log('chat room in message list');
     console.log(currentChatRoom);
   }
-  //
-  // componentWillUpdate(nextProps) {
-  //   const { getMessages, currentChatRoom } = nextProps;
-  //
-  //   getMessages(currentChatRoom);
-  //   console.log('chat room in componentWillReceiveProps');
-  //   console.log(currentChatRoom);
-  // }
 
   // Assign unique key from firebase to each message
   keyExtractor = (item, index) => {
@@ -31,8 +23,6 @@ export default class MessageList extends Component {
   }
 
   renderItem = ({ item }) => {
-     // TODO: display image messages if message in database has url
-    // TODO: create custom list item and render user's info along with message content
     // debugger;
     if (item.message) {
         return (
@@ -65,9 +55,10 @@ export default class MessageList extends Component {
     return (
             <View style={{ flex: 8, backgroundColor: 'white', borderBottomWidth: 0.25, borderBottomColor: 'gray' }}>
               <FlatList
-                data={this.props.messagesToDisplay.reverse()}
+                data={this.props.messagesToDisplay}
                 renderItem={this.renderItem}
                 keyExtractor={this.keyExtractor}
+                // extraData={this.state}
                 inverted
               />
             </View>
