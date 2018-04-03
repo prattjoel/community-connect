@@ -81,7 +81,9 @@ export const getMessages = (currentChatRoom) => {
     return (dispatch) => {
         // debugger;
         firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
+        .limitToLast(10)
         .on('value', snapshot => {
+            // debugger;
             const snap = snapshot.val();
             if (snap) {
                 // debugger;
