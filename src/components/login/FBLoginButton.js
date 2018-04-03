@@ -70,6 +70,7 @@ export default class FBLoginButton extends Component {
         const credential = firebase.auth.FacebookAuthProvider.credential(token);
         firebase.auth().signInWithCredential(credential)
         .then((result) => {
+            debugger;
             const { displayName, uid } = result;
             this._createUser(displayName, uid, email, profilePicUrl);
             this.props.updateLoading(false);

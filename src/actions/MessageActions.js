@@ -14,33 +14,46 @@ export const messageChanged = text => {
     });
 };
 
-// Send massages to database
+// Create and send message to database
 export const sendMessage = (type, content, currentChatRoom) => {
-    // debugger;
-    const messageInfo = prepareMessageToSend(type, content);
-
-    const action = { type: MESSAGE_SENT };
     return (dispatch) => {
-        sendMessageToDatabase(dispatch, messageInfo, currentChatRoom, action);
+        const { currentUser } = firebase.auth();
+        const userID = currentUser.uid;
+        firebase.database().ref(`/users/${userID}`).once('value', snapshot => {
+            const userInfo = snapshot.val();
+            const messageInfo = prepareMessageToSend(type, content, userInfo, userID);
+            const action = { type: MESSAGE_SENT };
+
+            sendMessageToDatabase(dispatch, messageInfo, currentChatRoom, action);
+        })
+        .catch((error) => {
+            console.log('error sending message from sendMessage', error);
+        });
     };
 };
 
-export const prepareMessageToSend = (type, content) => {
-    const { currentUser } = firebase.auth();
-    console.log('currentUser from firebase auth is: ', currentUser);
+// Creat message object to send to database
+export const prepareMessageToSend = (type, content, userInfo, id) => {
     const timeOptions = { hour: 'numeric', minute: 'numeric' };
     const date = new Date();
     const timestamp = date.toLocaleTimeString('en-us', timeOptions);
-    const messageInfo = {
-        user: currentUser.uid,
-        timestamp,
-        name: currentUser.displayName,
-        profilePhotoUrl: currentUser.photoURL
-    };
-    messageInfo[type] = content;
-    return messageInfo;
+
+    if (userInfo) {
+        const { name, profilePicUrl } = userInfo;
+        const messageInfo = {
+            user: id,
+            timestamp,
+            name,
+            profilePhotoUrl: profilePicUrl
+        };
+        messageInfo[type] = content;
+        return messageInfo;
+    } else {
+        console.log('no user in sendMessage');
+    }
 };
 
+// Send created message to database
 export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, action) => {
     // return () => {
     firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
@@ -55,9 +68,6 @@ export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, ac
 
 // Retrieve messages from database based on the current chat room.
 export const getMessages = (currentChatRoom) => {
-    // const { currentUser } = firebase.auth();
-    // debugger;
-
     // Supply default in case chat room is empty
     const defaultMessage = {
         key: {

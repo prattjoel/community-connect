@@ -15,6 +15,8 @@ const MessageText = (props) => {
     const { width } = Dimensions.get('window');
     const imageWidth = 0.85 * width;
     const preview = require('../../assets/messageImagePlaceholder.png');
+    // debugger;
+    console.log('profile url in mesagetext: ', props.profilePicUrl);
 
     if (props.photoUrl) {
         return (
@@ -102,3 +104,6 @@ const styles = {
 };
 
 export default MessageText;
+
+// https://lookaside.facebook.com/platform/profilepic/?asid=10100579529544983&height=50&width=50&ext=1523045265&hash=AeTRuTiWm57Y0lcu
+// https://lookaside.facebook.com/platform/profilepic/?asid=10100579529544983&height=100&width=100&ext=1522679390&hash=AeSBYY8ujnOFLVoO
