@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import {
   messageChanged,
   sendMessage
-} from '../../actions/MessageActions';
+} from '../actions/MessageActions';
 import {
     setCurrentImages,
     toggleImageSelector
-} from '../../actions/ImageActions';
-import MessageInputField from './MessageInputField';
+} from '../actions/ImageActions';
+import MessageInputField from '../components/chat/MessageInputField';
 
 const mapStateToProps = state => {
   return (

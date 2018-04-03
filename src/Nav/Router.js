@@ -5,7 +5,7 @@ import { Keyboard } from 'react-native';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import Login from '../containers/Login';
-import Home from '../components/Home';
+import Home from '../components/MessagesHome';
 import ChatRooms from '../containers/ChatRooms';
 import GivingPage from '../components/Giving';
 import ContactForm from '../components/ContactForm';

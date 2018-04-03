@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Messages from '../containers/Messages';
-import MessageInput from './chat/MessageInput';
+import MessageInput from '../containers/MessageInput';
 import KeyboardManager from './common/KeyboardManager';
 import ImagesFromCR from '../containers/ImagesFromCR';
 
