@@ -1,6 +1,7 @@
 'use strict';
 
 import { RNS3 } from 'react-native-aws3';
+import firebase from 'firebase';
 // import Config from 'react-native-config';
 import {
     SET_CURRENT_IMAGES,
@@ -22,16 +23,16 @@ export const setCurrentImages = imagesFromCameraRoll => {
     const currentImages = imagesFromCameraRoll
     .map(imageInfo => {
         return {
-        uri: imageInfo.node.image.uri,
-        filename: imageInfo.node.image.filename,
-        isSelected: false
-    };
-});
-// debugger;
-  return ({
-    type: SET_CURRENT_IMAGES,
-    payload: currentImages
-  });
+            uri: imageInfo.node.image.uri,
+            filename: imageInfo.node.image.filename,
+            isSelected: false
+        };
+    });
+    // debugger;
+    return ({
+        type: SET_CURRENT_IMAGES,
+        payload: currentImages
+    });
 };
 
 export const toggleImageSelector = showImageSelector => {
@@ -54,11 +55,11 @@ export const selectImageToSend = imageToSend => {
 };
 
 export const cancelImages = () => {
-        return (
-            {
-                type: CANCEL_IMAGE_SELECTION
-            }
-        );
+    return (
+        {
+            type: CANCEL_IMAGE_SELECTION
+        }
+    );
 };
 
 // debugger;
@@ -77,49 +78,48 @@ const imageOptions = {
 };
 
 export const sendSelectedImages = (selectedImages, currentChatRoom) => {
-        const imageToSend = prepareImageToSend(selectedImages);
-        return (dispatch) => {
-            sendImage(dispatch, imageToSend, currentChatRoom);
-        };
+    const imageToSend = prepareImageToSend(selectedImages);
+    return (dispatch) => {
+        sendImage(dispatch, imageToSend, currentChatRoom);
+    };
 };
 
 const sendImage = (dispatch, imageFile, currentChatRoom) => {
-        RNS3.put(imageFile, imageOptions).then(response => {
-            if (response.status !== 201) {
-                console.log(response);
-                throw new Error('Image upload failed');
-            } else {
-                console.log('response from sending image');
-                console.log(response);
-                console.log('image url:');
-                console.log(response.body.postResponse.location);
-                const photoUrl = response.body.postResponse.location;
-                // debugger;
-                return photoUrl;
-                // TODO:
-                //Add image to firebase database with url
-                // debugger;
-                // // sendMessage('PhotoUrl', photoUrl, currentChatRoom);
-                // dispatch({
-                //     type: IMAGE_UPLOADED,
-                //     payload: photoUrl
-                // });
-            }
-        }).then(photoUrl => {
-            // debugger;
-            const messageInfo = prepareMessageToSend('photoUrl', photoUrl);
+    RNS3.put(imageFile, imageOptions).then(response => {
+        if (response.status !== 201) {
+            console.log(response);
+            throw new Error('Image upload failed');
+        } else {
+            // console.log('response from sending image');
+            // console.log(response);
+            // console.log('image url:');
+            // console.log(response.body.postResponse.location);
+            const photoUrl = response.body.postResponse.location;
+            return photoUrl;
+        }
+    }).then(photoUrl => {
+        const { currentUser } = firebase.auth();
+        const userID = currentUser.uid;
+        firebase.database().ref(`/users/${userID}`).once('value', snapshot => {
+            const userInfo = snapshot.val();
+
+            const messageInfo = prepareMessageToSend('photoUrl', photoUrl, userInfo, userID);
             const action = {
                 type: IMAGE_UPLOADED,
                 payload: photoUrl };
-            sendMessageToDatabase(dispatch, messageInfo, currentChatRoom, action);
+                sendMessageToDatabase(dispatch, messageInfo, currentChatRoom, action);
+            })
+            .catch((error) => {
+                console.log('error sending image from sendImage', error);
+            });
         });
-};
+    };
 
-const prepareImageToSend = imageToPrepare => {
+    const prepareImageToSend = imageToPrepare => {
         const preparedImage = {
             uri: imageToPrepare.uri,
             name: imageToPrepare.filename,
             type: 'image/png'
         };
         return preparedImage;
-};
+    };
