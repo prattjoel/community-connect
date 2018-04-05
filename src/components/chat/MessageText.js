@@ -16,7 +16,7 @@ const MessageText = (props) => {
     const imageWidth = 0.85 * width;
     const preview = require('../../assets/messageImagePlaceholder.png');
     // debugger;
-    console.log('profile url in mesagetext: ', props.profilePicUrl);
+    // console.log('profile url in mesagetext: ', props.profilePicUrl);
 
     if (props.photoUrl) {
         return (

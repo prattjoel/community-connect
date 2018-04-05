@@ -3,7 +3,9 @@ import firebase from 'firebase';
 import {
     MESSAGE_TEXT_CHANGED,
     MESSAGE_SENT,
-    GET_MESSAGE_SUCCESS
+    GET_MESSAGE_SUCCESS,
+    CHILD_ADDED,
+    SET_REFRESH_STATUS
 } from './types';
 
 // Set text for message input
@@ -12,6 +14,13 @@ export const messageChanged = text => {
         type: MESSAGE_TEXT_CHANGED,
         payload: text
     });
+};
+
+export const setRefresh = isRefreshing => {
+    return {
+        type: SET_REFRESH_STATUS,
+        payload: !isRefreshing
+    };
 };
 
 // Create and send message to database
@@ -67,7 +76,7 @@ export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, ac
 };
 
 // Retrieve messages from database based on the current chat room.
-export const getMessages = (currentChatRoom) => {
+export const getMessages = (currentChatRoom, lastKey) => {
     // Supply default in case chat room is empty
     const defaultMessage = {
         key: {
@@ -77,23 +86,57 @@ export const getMessages = (currentChatRoom) => {
             user: 'default user'
         }
     };
-
     return (dispatch) => {
-        // debugger;
-        firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
-        .limitToLast(10)
-        .on('value', snapshot => {
-            // debugger;
-            const snap = snapshot.val();
-            if (snap) {
-                // debugger;
-                callDispatch(dispatch, snap);
-            } else {
-                // debugger;
-                callDispatch(dispatch, defaultMessage);
-            }
-        });
+        debugger;
+        const rootRef = firebase.database().ref();
+        if (lastKey) {
+            console.log('lastKey in getMessages is: ', lastKey);
+            const refByKey = rootRef.child(`/chat_rooms/${currentChatRoom}`).limitToLast(20);
+            // .orderByKey()
+            // .startAt(lastKey);
+            // .equalTo(lastKey);
+            queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByKey);
+        } else {
+            console.log('no lastKey in getMessages');
+            const refByLast = rootRef.child(`/chat_rooms/${currentChatRoom}`).limitToLast(10);
+
+            queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByLast);
+        }
+        // firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
+        // .limitToLast(10)
+        // .on(CHILD_ADDED, data => {
+        //     // debugger;
+        //     const messageData = data.val();
+        //     const message = {};
+        //      message[data.key] = messageData;
+        //     if (data) {
+        //         // debugger;
+        //         callDispatch(dispatch, message);
+        //     } else {
+        //         // debugger;
+        //         callDispatch(dispatch, defaultMessage);
+        //     }
+        // });
     };
+};
+
+const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref) => {
+    // const last10 =
+    // firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
+    ref
+    .on(CHILD_ADDED, data => {
+        // debugger;
+        const messageData = data.val();
+        const message = {};
+         message[data.key] = messageData;
+        if (data) {
+            // debugger;
+            callDispatch(dispatch, message);
+        } else {
+            // debugger;
+            callDispatch(dispatch, defaultMessage);
+        }
+    });
 };
 
 const callDispatch = (dispatch, messageValue) => {

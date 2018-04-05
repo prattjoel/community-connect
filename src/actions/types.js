@@ -11,3 +11,6 @@ export const GENERAL_CHAT_ROOM = 'general_chat_room';
 export const SMALL_GROUP_CHAT_ROOM = 'small_group_chat_room';
 export const SET_CHAT_ROOM = 'set_chat_room';
 export const GET_CHAT_ROOM = 'get_chat_room';
+
+export const CHILD_ADDED = 'child_added';
+export const SET_REFRESH_STATUS = 'set_refresh_status';
