@@ -87,13 +87,14 @@ export const getMessages = (currentChatRoom, lastKey) => {
         }
     };
     return (dispatch) => {
-        debugger;
+        // debugger;
         const rootRef = firebase.database().ref();
         if (lastKey) {
             console.log('lastKey in getMessages is: ', lastKey);
-            const refByKey = rootRef.child(`/chat_rooms/${currentChatRoom}`).limitToLast(20);
-            // .orderByKey()
-            // .startAt(lastKey);
+            const refByKey = rootRef.child(`/chat_rooms/${currentChatRoom}`)
+            .orderByKey()
+            .endAt(lastKey)
+            .limitToLast(10);
             // .equalTo(lastKey);
             queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByKey);
         } else {
