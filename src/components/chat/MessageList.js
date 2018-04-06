@@ -13,7 +13,7 @@ export default class MessageList extends Component {
     const { getMessages, currentChatRoom } = this.props;
 
     // debugger;
-    // getMessages(currentChatRoom);
+    getMessages(currentChatRoom);
 
 
     console.log('chat room in message list');
