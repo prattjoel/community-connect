@@ -1,16 +1,20 @@
 'use strict';
+
+import _ from 'lodash';
 import {
     MESSAGE_TEXT_CHANGED,
     MESSAGE_SENT,
     GET_MESSAGE_SUCCESS,
-    SET_REFRESH_STATUS
+    SET_REFRESH_STATUS,
+    SET_CHAT_ROOM
 } from '../actions/types';
 
 const initialState = {
     messageText: '',
-    messagesToShow: [],
+    messagesToShow: {},
     refreshedMessages: [],
-    isRefreshing: false
+    isRefreshing: false,
+    currentChatRoom: ''
 };
 
 export default (state = initialState, action) => {
@@ -22,11 +26,15 @@ export default (state = initialState, action) => {
         return { ...state, messageText: '' };
         case SET_REFRESH_STATUS:
             return { ...state, isRefreshing: action.payload };
+        case SET_CHAT_ROOM:
+            // debugger;
+            return { ...state, currentChatRoom: action.payload };
         case GET_MESSAGE_SUCCESS:
-        // debugger;
+        debugger;
         {
+            const chatRoom = state.currentChatRoom;
             const currentMessages = state.messagesToShow;
-            if (currentMessages) {
+            if (!_.isEmpty(currentMessages)) {
                 const message = [action.payload];
                 if (state.isRefreshing) {
                     // debugger;
@@ -34,12 +42,15 @@ export default (state = initialState, action) => {
                     const refreshedMessages = [...message, ...updatedMessages];
                     return { ...state, refreshedMessages };
                 }
-                const newMessages = [...message, ...currentMessages];
+                const currentMessageArray = currentMessages[chatRoom];
+                const newMessages = {};
+                newMessages[chatRoom] = [...message, ...currentMessageArray];
                 return { ...state, messagesToShow: newMessages };
                 // debugger;
                 // newMessages.unshift(action.payload);
             }
-            const firstMessage = [action.payload];
+            const firstMessage = {};
+            firstMessage[chatRoom] = [action.payload];
             return { ...state, messagesToShow: firstMessage };
         // const currentMessagesArray = Object.keys(currentMessages);
         // const updatedMessagesArray = Object.keys(action.payload);

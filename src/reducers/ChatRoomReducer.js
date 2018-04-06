@@ -6,7 +6,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  currentChatRoom: GENERAL_CHAT_ROOM
+  currentChatRoom: ''
 };
 
 export default (state = initialState, action) => {
