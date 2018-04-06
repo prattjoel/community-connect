@@ -8,7 +8,8 @@ import {
 
 const initialState = {
     messageText: '',
-    messagesToShow: {},
+    messagesToShow: [],
+    refreshedMessages: [],
     isRefreshing: false
 };
 
@@ -24,13 +25,22 @@ export default (state = initialState, action) => {
         case GET_MESSAGE_SUCCESS:
         // debugger;
         {
-            const newMessages = {};
             const currentMessages = state.messagesToShow;
             if (currentMessages) {
-                newMessages.payload = { ...currentMessages, ...action.payload };
-            } else {
-                newMessages.payload = action.payload;
+                const message = [action.payload];
+                if (state.isRefreshing) {
+                    // debugger;
+                    const updatedMessages = state.refreshedMessages;
+                    const refreshedMessages = [...message, ...updatedMessages];
+                    return { ...state, refreshedMessages };
+                }
+                const newMessages = [...message, ...currentMessages];
+                return { ...state, messagesToShow: newMessages };
+                // debugger;
+                // newMessages.unshift(action.payload);
             }
+            const firstMessage = [action.payload];
+            return { ...state, messagesToShow: firstMessage };
         // const currentMessagesArray = Object.keys(currentMessages);
         // const updatedMessagesArray = Object.keys(action.payload);
         // const currentMessageCount = currentMessagesArray.length;
@@ -39,7 +49,7 @@ export default (state = initialState, action) => {
         //     // debugger;
         //     return state;
         // }
-            return { ...state, messagesToShow: newMessages.payload };
+            // return { ...state, messagesToShow: newMessages.payload };
         }
         default:
             return (state);

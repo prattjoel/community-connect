@@ -78,6 +78,7 @@ export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, ac
 // Retrieve messages from database based on the current chat room.
 export const getMessages = (currentChatRoom, lastKey) => {
     // Supply default in case chat room is empty
+    // debugger;
     const defaultMessage = {
         key: {
             message: 'default message',

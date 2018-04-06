@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { FlatList, View, RefreshControl } from 'react-native';
+import _ from 'lodash';
 import MessageText from './MessageText';
 // import KeyboardManager from './KeyboardManager';
 
@@ -11,8 +12,9 @@ export default class MessageList extends Component {
     // Get messages from chat room in firebase
     const { getMessages, currentChatRoom } = this.props;
 
-    getMessages(currentChatRoom);
     // debugger;
+    // getMessages(currentChatRoom);
+
 
     console.log('chat room in message list');
     console.log(currentChatRoom);
@@ -31,28 +33,32 @@ export default class MessageList extends Component {
 
   // Assign unique key from firebase to each message
   keyExtractor = (item, index) => {
-    return this.props.messageKeys[index];
+      // debugger;
+      const key = Object.keys(item)[0];
+      return key;
+    // return this.props.messageKeys[index];
   }
 
   renderItem = ({ item }) => {
     // debugger;
-    if (item.message) {
+    const messageInfo = _.values(item)[0];
+    if (messageInfo.message) {
         return (
           <MessageText
-            timestamp={item.timestamp}
-            name={item.name}
-            profilePicUrl={item.profilePhotoUrl}
+            timestamp={messageInfo.timestamp}
+            name={messageInfo.name}
+            profilePicUrl={messageInfo.profilePhotoUrl}
           >
-            {item.message}
+            {messageInfo.message}
           </MessageText>
         );
     } else {
         return (
           <MessageText
-            timestamp={item.timestamp}
-            name={item.name}
-            photoUrl={item.photoUrl}
-            profilePicUrl={item.profilePhotoUrl}
+            timestamp={messageInfo.timestamp}
+            name={messageInfo.name}
+            photoUrl={messageInfo.photoUrl}
+            profilePicUrl={messageInfo.profilePhotoUrl}
           />
         );
     }
