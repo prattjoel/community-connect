@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
             // debugger;
             return { ...state, currentChatRoom: action.payload };
         case GET_MESSAGE_SUCCESS:
-        debugger;
+        // debugger;
         {
             const chatRoom = state.currentChatRoom;
             const currentMessages = state.messagesToShow;
