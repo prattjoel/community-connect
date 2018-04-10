@@ -133,17 +133,17 @@ const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref
          message[data.key] = messageData;
         if (data) {
             // debugger;
-            callDispatch(dispatch, message);
+            callDispatch(dispatch, message, currentChatRoom);
         } else {
             // debugger;
-            callDispatch(dispatch, defaultMessage);
+            callDispatch(dispatch, defaultMessage, currentChatRoom);
         }
     });
 };
 
-const callDispatch = (dispatch, messageValue) => {
+const callDispatch = (dispatch, messageValue, currentChatRoom) => {
     dispatch({
-        type: GET_MESSAGE_SUCCESS,
+        type: currentChatRoom,
         payload: messageValue
     });
 };

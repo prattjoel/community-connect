@@ -10,9 +10,9 @@ const mapStateToProps = state => {
     // debugger;
   const { messagesToShow, isRefreshing, refreshedMessages, currentChatRoom } = state.messages;
   // const messages = messagesToShow.map(item => _.values(item));
-  const currentMessages = messagesToShow[currentChatRoom] || {};
-  const messages = [...currentMessages, ...refreshedMessages];
-  const keys = getKeys(messages);
+  // const currentMessages = messagesToShow[currentChatRoom] || {};
+  // const messages = [...currentMessages, ...refreshedMessages];
+  const keys = getKeys(messagesToShow);
   // const reversedMessages = _.values(messagesToShow).reverse();
   // const reversedKeys = Object.keys(messagesToShow).reverse();
 
@@ -20,7 +20,7 @@ const mapStateToProps = state => {
   // const isRefreshing = state.messagesisRefreshing;
   return (
     {
-      messagesToDisplay: messages,
+      messagesToDisplay: messagesToShow,
       messageKeys: keys,
       currentChatRoom: state.chatRooms.currentChatRoom,
       isRefreshing,

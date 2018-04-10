@@ -8,10 +8,18 @@ import {
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM
 } from '../actions/types';
+import {
+    PRAYER_CHAT_ROOM,
+    GENERAL_CHAT_ROOM,
+    SMALL_GROUP_CHAT_ROOM,
+} from '../constants/chatRoomTypes';
 
 const initialState = {
     messageText: '',
-    messagesToShow: {},
+    prayerMessages: [],
+    generalMessages: [],
+    smallGroupMessages: [],
+    messagesToShow: [],
     refreshedMessages: [],
     isRefreshing: false,
     currentChatRoom: ''
@@ -29,11 +37,17 @@ export default (state = initialState, action) => {
         case SET_CHAT_ROOM:
             // debugger;
             return { ...state, currentChatRoom: action.payload };
+        case PRAYER_CHAT_ROOM:
+            // debugger;
+            {
+            const currentMessages = prepareMessagesForState(action.payload, state.prayerMessages);
+            return { ...state, messagesToShow: currentMessages, prayerMessages: currentMessages };
+            }
         case GET_MESSAGE_SUCCESS:
-        // debugger;
+        debugger;
         {
             const chatRoom = state.currentChatRoom;
-            const currentMessages = state.messagesToShow;
+            const currentMessages = state.messagesToShow[chatRoom];
             if (!_.isEmpty(currentMessages)) {
                 const message = [action.payload];
                 if (state.isRefreshing) {
@@ -65,4 +79,14 @@ export default (state = initialState, action) => {
         default:
             return (state);
     }
+};
+
+const prepareMessagesForState = (newMessage, currentMessages) => {
+    if (!_.isEmpty(currentMessages)) {
+        const messageToAdd = [newMessage];
+        const updatedMessages = [...messageToAdd, ...currentMessages];
+        return updatedMessages;
+    }
+    const firstMessage = [newMessage];
+    return firstMessage;
 };
