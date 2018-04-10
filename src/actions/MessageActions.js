@@ -44,14 +44,18 @@ export const sendMessage = (type, content, currentChatRoom) => {
 // Creat message object to send to database
 export const prepareMessageToSend = (type, content, userInfo, id) => {
     const timeOptions = { hour: 'numeric', minute: 'numeric' };
+    // debugger;
+    const timestamp = Date.now();
     const date = new Date();
-    const timestamp = date.toLocaleTimeString('en-us', timeOptions);
+    const timeToShow = date.toLocaleTimeString('en-us', timeOptions);
+    // const timestamp = date.toLocaleTimeString('en-us', timeOptions);
 
     if (userInfo) {
         const { name, profilePicUrl } = userInfo;
         const messageInfo = {
             user: id,
             timestamp,
+            timeToShow,
             name,
             profilePhotoUrl: profilePicUrl
         };
@@ -76,7 +80,7 @@ export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, ac
 };
 
 // Retrieve messages from database based on the current chat room.
-export const getMessages = (currentChatRoom, lastKey) => {
+export const getMessages = (currentChatRoom, lastTimeStamp) => {
     // Supply default in case chat room is empty
     // debugger;
     const defaultMessage = {
@@ -90,11 +94,12 @@ export const getMessages = (currentChatRoom, lastKey) => {
     return (dispatch) => {
         // debugger;
         const rootRef = firebase.database().ref();
-        if (lastKey) {
-            console.log('lastKey in getMessages is: ', lastKey);
+        if (lastTimeStamp) {
+            const time = time - 1;
+            console.log('lastTime in getMessages is: ', time);
             const refByKey = rootRef.child(`/chat_rooms/${currentChatRoom}`)
             .orderByKey()
-            .endAt(lastKey)
+            .endAt(time)
             .limitToLast(10);
             // .equalTo(lastKey);
             queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByKey);
@@ -127,13 +132,26 @@ const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref
     // firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
     ref
     .on(CHILD_ADDED, data => {
-        // debugger;
-        const messageData = data.val();
-        const message = {};
-         message[data.key] = messageData;
         if (data) {
             // debugger;
-            callDispatch(dispatch, message, currentChatRoom);
+            const messageData = data.val();
+            const message = {};
+            // const key = data.key;
+             message[data.key] = messageData;
+             // const messageInfo = message[key];
+             // const time = messageInfo.timestamp;
+             // // debugger;
+             // if (Number.isInteger(time)) {
+             //     const date = new Date(time);
+             //     const timeOptions = { hour: 'numeric', minute: 'numeric' };
+             //     const updatedTime = date.toLocaleTimeString('en-us', timeOptions);
+             //     // const updatedMessage = { ...message, timestamp: updatedTime };
+             //     message[key].timestamp = updatedTime;
+             //     callDispatch(dispatch, message, currentChatRoom);
+             // } else {
+             //     callDispatch(dispatch, message, currentChatRoom);
+             // }
+             callDispatch(dispatch, message, currentChatRoom);
         } else {
             // debugger;
             callDispatch(dispatch, defaultMessage, currentChatRoom);

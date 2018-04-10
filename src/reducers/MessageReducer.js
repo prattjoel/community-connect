@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {
     MESSAGE_TEXT_CHANGED,
     MESSAGE_SENT,
-    GET_MESSAGE_SUCCESS,
+    // GET_MESSAGE_SUCCESS,
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM
 } from '../actions/types';

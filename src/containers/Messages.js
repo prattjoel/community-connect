@@ -15,8 +15,13 @@ const mapStateToProps = state => {
   const keys = getKeys(messagesToShow);
   // const reversedMessages = _.values(messagesToShow).reverse();
   // const reversedKeys = Object.keys(messagesToShow).reverse();
-
-  const lastKey = keys[keys.length - 1];
+  // const lastTimeStamp = [];
+  // if (!_.isEmpty(messagesToShow)){
+  //     const lastKey = keys[keys.length - 1];
+  //     debugger;
+  //     const lastMessage = messagesToShow[messagesToShow.length - 1];
+  //     lastTimeStamp = lastMessage[lastKey].timestamp;
+  // }
   // const isRefreshing = state.messagesisRefreshing;
   return (
     {
@@ -24,7 +29,7 @@ const mapStateToProps = state => {
       messageKeys: keys,
       currentChatRoom,
       isRefreshing,
-      lastKey
+      // lastTimeStamp
     }
   );
 };

@@ -25,8 +25,8 @@ export default class MessageList extends Component {
   getOlderMessages = () => {
       // debugger;
     this.props.setRefresh(this.props.isRefreshing);
-    const { getMessages, currentChatRoom, lastKey } = this.props;
-    getMessages(currentChatRoom, lastKey);
+    const { getMessages, currentChatRoom, lastTimeStamp } = this.props;
+    getMessages(currentChatRoom, lastTimeStamp);
     console.log('refreshed');
     setTimeout(() => {
         this.props.setRefresh(this.props.isRefreshing);
@@ -51,7 +51,7 @@ export default class MessageList extends Component {
     if (messageInfo.message) {
         return (
           <MessageText
-            timestamp={messageInfo.timestamp}
+            timestamp={messageInfo.timeToShow}
             name={messageInfo.name}
             profilePicUrl={messageInfo.profilePhotoUrl}
           >
@@ -61,7 +61,7 @@ export default class MessageList extends Component {
     } else {
         return (
           <MessageText
-            timestamp={messageInfo.timestamp}
+            timestamp={messageInfo.timeToShow}
             name={messageInfo.name}
             photoUrl={messageInfo.photoUrl}
             profilePicUrl={messageInfo.profilePhotoUrl}
