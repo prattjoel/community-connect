@@ -12,11 +12,12 @@ export default class MessageList extends Component {
     // Get messages from chat room in firebase
     const { getMessages, currentChatRoom } = this.props;
 
-    if (this.props.messagesToDisplay.length < 1) {
-        // debugger;
-        getMessages(currentChatRoom);
-    }
+    // if (this.props.messagesToDisplay.length < 1) {
+    //     debugger;
+    //     getMessages(currentChatRoom);
+    // }
 
+    getMessages(currentChatRoom);
     console.log('chat room in message list');
     console.log(currentChatRoom);
   }
@@ -32,6 +33,10 @@ export default class MessageList extends Component {
     }, 3000);
   };
 
+  componWillUnMount() {
+      debugger;
+  }
+  
   // Assign unique key from firebase to each message
   keyExtractor = (item, index) => {
       // debugger;

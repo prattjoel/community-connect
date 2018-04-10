@@ -142,6 +142,7 @@ const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref
 };
 
 const callDispatch = (dispatch, messageValue, currentChatRoom) => {
+    // debugger;
     dispatch({
         type: currentChatRoom,
         payload: messageValue

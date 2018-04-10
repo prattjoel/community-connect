@@ -40,9 +40,23 @@ export default (state = initialState, action) => {
         case PRAYER_CHAT_ROOM:
             // debugger;
             {
-            const currentMessages = prepareMessagesForState(action.payload, state.prayerMessages);
-            return { ...state, messagesToShow: currentMessages, prayerMessages: currentMessages };
+            const prayerMessages = prepareMessagesForState(action.payload, state.prayerMessages);
+            return { ...state, messagesToShow: prayerMessages, prayerMessages };
             }
+        case GENERAL_CHAT_ROOM:
+            debugger;
+            {
+            const generalMessages = prepareMessagesForState(action.payload, state.generalMessages);
+            return { ...state, messagesToShow: generalMessages, generalMessages };
+            }
+        case SMALL_GROUP_CHAT_ROOM:
+            {
+            const smallGroupMessages = prepareMessagesForState(
+                action.payload, state.smallGroupMessages
+            );
+            return { ...state, messagesToShow: smallGroupMessages, smallGroupMessages };
+            }
+
         case GET_MESSAGE_SUCCESS:
         debugger;
         {
