@@ -22,7 +22,7 @@ const mapStateToProps = state => {
     {
       messagesToDisplay: messagesToShow,
       messageKeys: keys,
-      currentChatRoom: state.chatRooms.currentChatRoom,
+      currentChatRoom,
       isRefreshing,
       lastKey
     }

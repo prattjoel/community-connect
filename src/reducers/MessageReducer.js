@@ -31,12 +31,19 @@ export default (state = initialState, action) => {
             return { ...state, messageText: action.payload };
         case MESSAGE_SENT:
         // debugger;
-        return { ...state, messageText: '' };
+            return { ...state, messageText: '' };
         case SET_REFRESH_STATUS:
             return { ...state, isRefreshing: action.payload };
         case SET_CHAT_ROOM:
             // debugger;
-            return { ...state, currentChatRoom: action.payload };
+            {
+            const messagesForRoom = getMessagesFromCurrentRoom(action.payload, state);
+            return { ...state,
+                currentChatRoom: action.payload,
+                messagesToShow: messagesForRoom
+            };
+            }
+
         case PRAYER_CHAT_ROOM:
             // debugger;
             {
@@ -44,7 +51,7 @@ export default (state = initialState, action) => {
             return { ...state, messagesToShow: prayerMessages, prayerMessages };
             }
         case GENERAL_CHAT_ROOM:
-            debugger;
+            // debugger;
             {
             const generalMessages = prepareMessagesForState(action.payload, state.generalMessages);
             return { ...state, messagesToShow: generalMessages, generalMessages };
@@ -57,41 +64,42 @@ export default (state = initialState, action) => {
             return { ...state, messagesToShow: smallGroupMessages, smallGroupMessages };
             }
 
-        case GET_MESSAGE_SUCCESS:
-        debugger;
-        {
-            const chatRoom = state.currentChatRoom;
-            const currentMessages = state.messagesToShow[chatRoom];
-            if (!_.isEmpty(currentMessages)) {
-                const message = [action.payload];
-                if (state.isRefreshing) {
-                    // debugger;
-                    const updatedMessages = state.refreshedMessages;
-                    const refreshedMessages = [...message, ...updatedMessages];
-                    return { ...state, refreshedMessages };
-                }
-                const currentMessageArray = currentMessages[chatRoom];
-                const newMessages = {};
-                newMessages[chatRoom] = [...message, ...currentMessageArray];
-                return { ...state, messagesToShow: newMessages };
-                // debugger;
-                // newMessages.unshift(action.payload);
-            }
-            const firstMessage = {};
-            firstMessage[chatRoom] = [action.payload];
-            return { ...state, messagesToShow: firstMessage };
-        // const currentMessagesArray = Object.keys(currentMessages);
-        // const updatedMessagesArray = Object.keys(action.payload);
-        // const currentMessageCount = currentMessagesArray.length;
-        // const updatedMessageCount = updatedMessagesArray.length;
-        // if (currentMessageCount === updatedMessageCount) {
-        //     // debugger;
-        //     return state;
-        // }
-            // return { ...state, messagesToShow: newMessages.payload };
-        }
         default:
             return (state);
+
+        // case GET_MESSAGE_SUCCESS:
+        // debugger;
+        // {
+        //     const chatRoom = state.currentChatRoom;
+        //     const currentMessages = state.messagesToShow[chatRoom];
+        //     if (!_.isEmpty(currentMessages)) {
+        //         const message = [action.payload];
+        //         if (state.isRefreshing) {
+        //             // debugger;
+        //             const updatedMessages = state.refreshedMessages;
+        //             const refreshedMessages = [...message, ...updatedMessages];
+        //             return { ...state, refreshedMessages };
+        //         }
+        //         const currentMessageArray = currentMessages[chatRoom];
+        //         const newMessages = {};
+        //         newMessages[chatRoom] = [...message, ...currentMessageArray];
+        //         return { ...state, messagesToShow: newMessages };
+        //         // debugger;
+        //         // newMessages.unshift(action.payload);
+        //     }
+        //     const firstMessage = {};
+        //     firstMessage[chatRoom] = [action.payload];
+        //     return { ...state, messagesToShow: firstMessage };
+        // // const currentMessagesArray = Object.keys(currentMessages);
+        // // const updatedMessagesArray = Object.keys(action.payload);
+        // // const currentMessageCount = currentMessagesArray.length;
+        // // const updatedMessageCount = updatedMessagesArray.length;
+        // // if (currentMessageCount === updatedMessageCount) {
+        // //     // debugger;
+        // //     return state;
+        // // }
+        //     // return { ...state, messagesToShow: newMessages.payload };
+        // }
     }
 };
 
@@ -103,4 +111,17 @@ const prepareMessagesForState = (newMessage, currentMessages) => {
     }
     const firstMessage = [newMessage];
     return firstMessage;
+};
+
+const getMessagesFromCurrentRoom = (currentRoom, state) => {
+    switch (currentRoom) {
+        case PRAYER_CHAT_ROOM:
+            return state.prayerMessages;
+        case GENERAL_CHAT_ROOM:
+            return state.generalMessages;
+        case SMALL_GROUP_CHAT_ROOM:
+            return state.smallGroupMessages;
+        default:
+            return [];
+    }
 };
