@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { getMessages, setRefresh } from '../actions/MessageActions';
+import { getMessages, setRefresh, refreshMessages } from '../actions/MessageActions';
 import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
@@ -52,6 +52,9 @@ const mapDispatchToProps = dispatch => {
     },
     setRefresh: (isRefreshing) => {
         dispatch(setRefresh(isRefreshing));
+    },
+    refreshMessages: (currentChatRoom, currentMessages) => {
+        dispatch(refreshMessages(currentChatRoom, currentMessages));
     }
   });
 };

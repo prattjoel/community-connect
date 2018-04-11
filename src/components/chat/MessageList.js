@@ -24,9 +24,18 @@ export default class MessageList extends Component {
 
   getOlderMessages = () => {
       // debugger;
-    this.props.setRefresh(this.props.isRefreshing);
-    const { getMessages, currentChatRoom, lastTimeStamp } = this.props;
-    getMessages(currentChatRoom, lastTimeStamp);
+    // this.props.setRefresh(this.props.isRefreshing);
+    const {
+        refreshMessages,
+        isRefreshing,
+        setRefresh,
+        currentChatRoom,
+        messagesToDisplay
+    } = this.props;
+    setRefresh(isRefreshing);
+    refreshMessages(currentChatRoom, messagesToDisplay);
+    // getMessages(currentChatRoom, lastTimeStamp);
+
     console.log('refreshed');
     setTimeout(() => {
         this.props.setRefresh(this.props.isRefreshing);

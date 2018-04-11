@@ -79,6 +79,37 @@ export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, ac
     // };
 };
 
+export const refreshMessages = (currentChatRoom, messages) => {
+    return (dispatch) => {
+        const defaultMessage = {
+            key: {
+                message: 'default message',
+                name: 'name',
+                timestamp: '00:00',
+                user: 'default user'
+            }
+        };
+        // debugger;
+        const hourInMiliseconds = 3600000;
+        const lastMessage = messages[messages.length - 1];
+        const messageInfo = Object.values(lastMessage)[0];
+        const key = Object.keys(lastMessage)[0];
+        const lastTimestamp = messageInfo.timestamp;
+        const timeForQueryEnd = (lastTimestamp - 1000);
+        const timeForQueryStart = (lastTimestamp - hourInMiliseconds);
+
+        const rootRef = firebase.database().ref();
+        const refByTime = rootRef.child(`/chat_rooms/${currentChatRoom}`)
+        .orderByChild('timestamp')
+        // .startAt(timeForQueryStart)
+        .endAt(timeForQueryEnd)
+         // .limitToFirst(10);
+        .limitToLast(10);
+        // .equalTo(lastKey);
+        queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByTime, true);
+    };
+};
+
 // Retrieve messages from database based on the current chat room.
 export const getMessages = (currentChatRoom, lastTimeStamp) => {
     // Supply default in case chat room is empty
@@ -107,7 +138,7 @@ export const getMessages = (currentChatRoom, lastTimeStamp) => {
             console.log('no lastKey in getMessages');
             const refByLast = rootRef.child(`/chat_rooms/${currentChatRoom}`).limitToLast(10);
 
-            queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByLast);
+            queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByLast, false);
         }
         // firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
         // .limitToLast(10)
@@ -127,7 +158,7 @@ export const getMessages = (currentChatRoom, lastTimeStamp) => {
     };
 };
 
-const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref) => {
+const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref, isRefreshing) => {
     // const last10 =
     // firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
     ref
@@ -151,18 +182,19 @@ const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref
              // } else {
              //     callDispatch(dispatch, message, currentChatRoom);
              // }
-             callDispatch(dispatch, message, currentChatRoom);
+             callDispatch(dispatch, message, currentChatRoom, isRefreshing);
         } else {
             // debugger;
-            callDispatch(dispatch, defaultMessage, currentChatRoom);
+            callDispatch(dispatch, defaultMessage, currentChatRoom, isRefreshing);
         }
     });
 };
 
-const callDispatch = (dispatch, messageValue, currentChatRoom) => {
+const callDispatch = (dispatch, messageValue, currentChatRoom, isRefreshing) => {
     // debugger;
     dispatch({
         type: currentChatRoom,
+        isRefreshing,
         payload: messageValue
     });
 };

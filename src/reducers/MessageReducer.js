@@ -47,19 +47,20 @@ export default (state = initialState, action) => {
         case PRAYER_CHAT_ROOM:
             // debugger;
             {
-            const prayerMessages = prepareMessagesForState(action.payload, state.prayerMessages);
+            const prayerMessages = prepareMessagesForState(action.payload, state.prayerMessages, action.isRefreshing);
             return { ...state, messagesToShow: prayerMessages, prayerMessages };
             }
         case GENERAL_CHAT_ROOM:
             // debugger;
             {
-            const generalMessages = prepareMessagesForState(action.payload, state.generalMessages);
+            const generalMessages = prepareMessagesForState(action.payload, state.generalMessages, action.isRefreshing);
             return { ...state, messagesToShow: generalMessages, generalMessages };
             }
         case SMALL_GROUP_CHAT_ROOM:
+            // debugger;
             {
             const smallGroupMessages = prepareMessagesForState(
-                action.payload, state.smallGroupMessages
+                action.payload, state.smallGroupMessages, action.isRefreshing
             );
             return { ...state, messagesToShow: smallGroupMessages, smallGroupMessages };
             }
@@ -103,15 +104,22 @@ export default (state = initialState, action) => {
     }
 };
 
-const prepareMessagesForState = (newMessage, currentMessages) => {
-    if (!_.isEmpty(currentMessages)) {
-        const messageToAdd = [newMessage];
+const prepareMessagesForState = (newMessage, currentMessages, isRefreshing) => {
+    const messageToAdd = [newMessage];
+    if (isRefreshing) {
+        const refreshedMessages = [...currentMessages, ...messageToAdd];
+        return refreshedMessages;
+    } else if (!_.isEmpty(currentMessages)) {
         const updatedMessages = [...messageToAdd, ...currentMessages];
         return updatedMessages;
     }
     const firstMessage = [newMessage];
     return firstMessage;
 };
+
+// const prepareRefreshedMessages = (newMessage, currentMessages) => {
+//         const messageToAdd = [newMessage];
+// };
 
 const getMessagesFromCurrentRoom = (currentRoom, state) => {
     switch (currentRoom) {
