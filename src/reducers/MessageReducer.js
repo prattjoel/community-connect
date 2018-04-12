@@ -30,12 +30,10 @@ export default (state = initialState, action) => {
         case MESSAGE_TEXT_CHANGED:
             return { ...state, messageText: action.payload };
         case MESSAGE_SENT:
-        // debugger;
             return { ...state, messageText: '' };
         case SET_REFRESH_STATUS:
             return { ...state, isRefreshing: action.payload };
         case SET_CHAT_ROOM:
-            // debugger;
             {
             const messagesForRoom = getMessagesFromCurrentRoom(action.payload, state);
             return { ...state,
@@ -43,26 +41,34 @@ export default (state = initialState, action) => {
                 messagesToShow: messagesForRoom
             };
             }
-
         case PRAYER_CHAT_ROOM:
-            // debugger;
             {
             const prayerMessages = prepareMessagesForState(action.payload, state.prayerMessages, action.isRefreshing);
             return { ...state, messagesToShow: prayerMessages, prayerMessages };
             }
         case GENERAL_CHAT_ROOM:
-            // debugger;
             {
             const generalMessages = prepareMessagesForState(action.payload, state.generalMessages, action.isRefreshing);
             return { ...state, messagesToShow: generalMessages, generalMessages };
             }
         case SMALL_GROUP_CHAT_ROOM:
-            // debugger;
             {
                 if (action.isRefreshing) {
                     const newRefreshedMessages = prepareMessagesForState(
                         action.payload, state.refreshedMessages, action.isRefreshing
                     );
+                    if (newRefreshedMessages.length === 10) {
+                        const updatedMessages = [
+                            ...state.smallGroupMessages,
+                            ...newRefreshedMessages
+                        ];
+                        return {
+                            ...state,
+                            messagesToShow: updatedMessages,
+                            smallGroupMessages: updatedMessages,
+                            refreshedMessages: []
+                        };
+                    }
                     return {
                         ...state,
                         refreshedMessages: newRefreshedMessages
