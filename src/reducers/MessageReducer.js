@@ -59,6 +59,15 @@ export default (state = initialState, action) => {
         case SMALL_GROUP_CHAT_ROOM:
             // debugger;
             {
+                if (action.isRefreshing) {
+                    const newRefreshedMessages = prepareMessagesForState(
+                        action.payload, state.refreshedMessages, action.isRefreshing
+                    );
+                    return {
+                        ...state,
+                        refreshedMessages: newRefreshedMessages
+                    };
+                }
             const smallGroupMessages = prepareMessagesForState(
                 action.payload, state.smallGroupMessages, action.isRefreshing
             );
@@ -104,12 +113,13 @@ export default (state = initialState, action) => {
     }
 };
 
-const prepareMessagesForState = (newMessage, currentMessages, isRefreshing) => {
+const prepareMessagesForState = (newMessage, currentMessages) => {
     const messageToAdd = [newMessage];
-    if (isRefreshing) {
-        const refreshedMessages = [...currentMessages, ...messageToAdd];
-        return refreshedMessages;
-    } else if (!_.isEmpty(currentMessages)) {
+    // if (isRefreshing) {
+    //     const refreshedMessages = [...currentMessages, ...messageToAdd];
+    //     return refreshedMessages;
+    // } else
+    if (!_.isEmpty(currentMessages)) {
         const updatedMessages = [...messageToAdd, ...currentMessages];
         return updatedMessages;
     }
