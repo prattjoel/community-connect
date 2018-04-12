@@ -5,7 +5,8 @@ import {
     MESSAGE_SENT,
     GET_MESSAGE_SUCCESS,
     CHILD_ADDED,
-    SET_REFRESH_STATUS
+    SET_REFRESH_STATUS,
+    GET_REFRESHED_MESSAGES
 } from './types';
 
 // Set text for message input
@@ -192,8 +193,9 @@ const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref
 
 const callDispatch = (dispatch, messageValue, currentChatRoom, isRefreshing) => {
     // debugger;
+    const type = (isRefreshing ? GET_REFRESHED_MESSAGES : GET_MESSAGE_SUCCESS);
     dispatch({
-        type: GET_MESSAGE_SUCCESS,
+        type,
         currentChatRoom,
         isRefreshing,
         payload: messageValue

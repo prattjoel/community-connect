@@ -6,7 +6,8 @@ import {
     MESSAGE_SENT,
     GET_MESSAGE_SUCCESS,
     SET_REFRESH_STATUS,
-    SET_CHAT_ROOM
+    SET_CHAT_ROOM,
+    GET_REFRESHED_MESSAGES
 } from '../actions/types';
 import {
     PRAYER_CHAT_ROOM,
@@ -45,33 +46,34 @@ export default (state = initialState, action) => {
         case GET_MESSAGE_SUCCESS:
         // debugger;
             {
-                if (action.isRefreshing) {
-                    const newRefreshedMessages = prepareMessagesForState(
-                        action.payload, state.refreshedMessages, action.isRefreshing
-                    );
-                    const maxMessagesFromRefresh = 10;
-                    if (newRefreshedMessages.length === maxMessagesFromRefresh) {
-                        const refreshedState = mergeRefreshedMessages(
-                            state,
-                            action.currentChatRoom,
-                            newRefreshedMessages
-                        );
-                        return refreshedState;
-                    }
-                    return {
-                        ...state,
-                        refreshedMessages: newRefreshedMessages
-                    };
-                }
-            const messagesInRoom = state[action.currentChatRoom];
-            const messages = prepareMessagesForState(
-                action.payload, messagesInRoom, action.isRefreshing
-            );
-            const newState = { ...state, messagesToShow: messages };
-            newState[action.currentChatRoom] = messages;
-            return newState;
+                const messagesInRoom = state[action.currentChatRoom];
+                const messages = prepareMessagesForState(
+                    action.payload, messagesInRoom, action.isRefreshing
+                );
+                const newState = { ...state, messagesToShow: messages };
+                newState[action.currentChatRoom] = messages;
+                return newState;
             }
-
+        case GET_REFRESHED_MESSAGES:
+        // debugger;
+            {
+                const newRefreshedMessages = prepareMessagesForState(
+                    action.payload, state.refreshedMessages
+                );
+                const maxMessagesFromRefresh = 10;
+                if (newRefreshedMessages.length === maxMessagesFromRefresh) {
+                    const refreshedState = mergeRefreshedMessages(
+                        state,
+                        action.currentChatRoom,
+                        newRefreshedMessages
+                    );
+                    return refreshedState;
+                }
+                return {
+                    ...state,
+                    refreshedMessages: newRefreshedMessages
+                };
+            }
         default:
             return (state);
     }

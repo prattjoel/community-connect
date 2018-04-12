@@ -5,6 +5,7 @@ export const MESSAGE_TEXT_CHANGED = 'message_text_changed';
 export const SEND_MESSAGE = 'send_message_text';
 export const MESSAGE_SENT = 'message_sent';
 export const GET_MESSAGE_SUCCESS = 'get_messsage_success';
+export const GET_REFRESHED_MESSAGES = 'get_refreshed_messages';
 
 export const PRAYER_CHAT_ROOM = 'prayer_chat_room';
 export const GENERAL_CHAT_ROOM = 'general_chat_room';
