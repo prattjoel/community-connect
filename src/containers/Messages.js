@@ -2,13 +2,20 @@
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { getMessages, setRefresh, refreshMessages } from '../actions/MessageActions';
+import { getMessages, setRefresh, refreshMessages, setCanLoadOlderMessages } from '../actions/MessageActions';
 import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
 const mapStateToProps = state => {
     // debugger;
-  const { messagesToShow, isRefreshing, refreshedMessages, currentChatRoom } = state.messages;
+  const {
+      messagesToShow,
+      isRefreshing,
+      refreshedMessages,
+      currentChatRoom,
+      isLoadingMessages,
+      canLoadOlderMessages
+  } = state.messages;
   // const messages = messagesToShow.map(item => _.values(item));
   // const currentMessages = messagesToShow[currentChatRoom] || {};
   // const messages = [...currentMessages, ...refreshedMessages];
@@ -30,6 +37,8 @@ const mapStateToProps = state => {
       messageKeys: keys,
       currentChatRoom,
       isRefreshing,
+      isLoadingMessages,
+      canLoadOlderMessages
       // lastTimeStamp
     }
   );
@@ -56,6 +65,9 @@ const mapDispatchToProps = dispatch => {
     },
     refreshMessages: (currentChatRoom, currentMessages) => {
         dispatch(refreshMessages(currentChatRoom, currentMessages));
+    },
+    setCanLoadOlderMessages: (canLoad) => {
+        dispatch(setCanLoadOlderMessages(canLoad));
     }
   });
 };

@@ -1,7 +1,7 @@
 'use-strict';
 
 import React, { Component } from 'react';
-import { FlatList, View, RefreshControl } from 'react-native';
+import { FlatList, View, RefreshControl, Dimensions } from 'react-native';
 import _ from 'lodash';
 import MessageText from './MessageText';
 // import KeyboardManager from './KeyboardManager';
@@ -24,22 +24,31 @@ export default class MessageList extends Component {
 
   getOlderMessages = () => {
       // debugger;
+      console.log('end reached');
     // this.props.setRefresh(this.props.isRefreshing);
     const {
         refreshMessages,
         isRefreshing,
         setRefresh,
         currentChatRoom,
-        messagesToDisplay
+        messagesToDisplay,
+        isLoadingMessages,
+        setCanLoadOlderMessages,
+        canLoadOlderMessages
     } = this.props;
-    setRefresh(isRefreshing);
-    refreshMessages(currentChatRoom, messagesToDisplay);
-    // getMessages(currentChatRoom, lastTimeStamp);
+    if (messagesToDisplay.length >= 20 && !isLoadingMessages) {
+        setCanLoadOlderMessages(canLoadOlderMessages);
+    }
+    if (canLoadOlderMessages) {
+        // debugger;
+        setRefresh(isRefreshing);
+        refreshMessages(currentChatRoom, messagesToDisplay);
 
-    console.log('refreshed');
-    setTimeout(() => {
-        this.props.setRefresh(this.props.isRefreshing);
-    }, 3000);
+        console.log('refreshed');
+        setTimeout(() => {
+            this.props.setRefresh(this.props.isRefreshing);
+        }, 3000);
+    }
   };
 
   componWillUnMount() {
@@ -54,9 +63,13 @@ export default class MessageList extends Component {
     // return this.props.messageKeys[index];
   }
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item, index }) => {
     // debugger;
+    // console.log('index: ', index);
     const messageInfo = _.values(item)[0];
+    // if (index === 0) {
+    //     console.log('message at 0 index', messageInfo.message);
+    // }
     if (messageInfo.message) {
         return (
           <MessageText
@@ -79,6 +92,30 @@ export default class MessageList extends Component {
     }
   };
 
+  // manageScroll = (event) => {
+  //     const topScrollPosition = (Dimensions.get('window').height / 2);
+  //     const currentScroolPosition = event.nativeEvent.contentOffset.y;
+  //     console.log('topScrollPosition is:', topScrollPosition);
+  //     console.log(event.nativeEvent.contentOffset.y);
+  //     // if (currentScroolPosition > topScrollPosition) {
+  //     //     const {
+  //     //         refreshMessages,
+  //     //         isRefreshing,
+  //     //         setRefresh,
+  //     //         currentChatRoom,
+  //     //         messagesToDisplay
+  //     //     } = this.props;
+  //     //     setRefresh(isRefreshing);
+  //     //     refreshMessages(currentChatRoom, messagesToDisplay);
+  //     //     // getMessages(currentChatRoom, lastTimeStamp);
+  //     //
+  //     //     console.log('refreshed');
+  //     //     setTimeout(() => {
+  //     //         this.props.setRefresh(this.props.isRefreshing);
+  //     //     }, 3000);
+  //     // }
+  // }
+
   renderHeader = () => {
     // TODO: create custom headers for message sections - Date time etc.
   };
@@ -91,18 +128,21 @@ export default class MessageList extends Component {
                 data={this.props.messagesToDisplay}
                 renderItem={this.renderItem}
                 keyExtractor={this.keyExtractor}
-                // onEndReached={() => console.log('onEndReached')}
+                onEndReached={this.getOlderMessages.bind(this)}
+                onEndReachedThreshold={0.1}
+                // bounces={false}
                 // refreshControl={
                 //   <RefreshControl
                 //     refreshing={this.props.isRefreshing}
                 //     onRefresh={this.getOlderMessages.bind(this)}
                 //   />
                 // }
-                refreshing={this.props.isRefreshing}
-                onRefresh={this.getOlderMessages.bind(this)}
+                // refreshing={this.props.isRefreshing}
+                // onRefresh={this.getOlderMessages.bind(this)}
                 // onRefresh={() => log)
                 inverted
-                // extraData={this.state}
+                // onScroll={this.manageScroll}
+                extraData={this.state}
               />
             </View>
     );

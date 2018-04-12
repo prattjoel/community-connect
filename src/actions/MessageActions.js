@@ -6,7 +6,8 @@ import {
     GET_MESSAGE_SUCCESS,
     CHILD_ADDED,
     SET_REFRESH_STATUS,
-    GET_REFRESHED_MESSAGES
+    GET_REFRESHED_MESSAGES,
+    SET_CAN_LOAD
 } from './types';
 
 // Set text for message input
@@ -21,6 +22,13 @@ export const setRefresh = isRefreshing => {
     return {
         type: SET_REFRESH_STATUS,
         payload: !isRefreshing
+    };
+};
+
+export const setCanLoadOlderMessages = canLoad => {
+    return {
+        type: SET_CAN_LOAD,
+        payload: !canLoad
     };
 };
 
@@ -137,7 +145,7 @@ export const getMessages = (currentChatRoom, lastTimeStamp) => {
             queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByKey);
         } else {
             console.log('no lastKey in getMessages');
-            const refByLast = rootRef.child(`/chat_rooms/${currentChatRoom}`).limitToLast(10);
+            const refByLast = rootRef.child(`/chat_rooms/${currentChatRoom}`).limitToLast(20);
 
             queryDatabaseForMessages(dispatch, currentChatRoom, defaultMessage, refByLast, false);
         }

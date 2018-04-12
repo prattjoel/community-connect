@@ -7,7 +7,8 @@ import {
     GET_MESSAGE_SUCCESS,
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM,
-    GET_REFRESHED_MESSAGES
+    GET_REFRESHED_MESSAGES,
+    SET_CAN_LOAD
 } from '../actions/types';
 import {
     PRAYER_CHAT_ROOM,
@@ -23,7 +24,9 @@ const initialState = {
     messagesToShow: [],
     refreshedMessages: [],
     isRefreshing: false,
-    currentChatRoom: ''
+    currentChatRoom: '',
+    canLoadOlderMessages: false
+    // isLoadingMessages: false,
 };
 
 export default (state = initialState, action) => {
@@ -34,6 +37,8 @@ export default (state = initialState, action) => {
             return { ...state, messageText: '' };
         case SET_REFRESH_STATUS:
             return { ...state, isRefreshing: action.payload };
+        case SET_CAN_LOAD:
+            return { ...state, canLoadOlderMessages: action.payload };
         case SET_CHAT_ROOM:
         // debugger;
             {
@@ -50,7 +55,14 @@ export default (state = initialState, action) => {
                 const messages = prepareMessagesForState(
                     action.payload, messagesInRoom, action.isRefreshing
                 );
-                const newState = { ...state, messagesToShow: messages };
+                const maxMessages = 20;
+                if (messages.length === maxMessages) {
+                    // debugger;
+                    const newState = { ...state, messagesToShow: messages };
+                    newState[action.currentChatRoom] = messages;
+                    return newState;
+                }
+                const newState = { ...state };
                 newState[action.currentChatRoom] = messages;
                 return newState;
             }
