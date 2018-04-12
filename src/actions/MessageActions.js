@@ -193,7 +193,8 @@ const queryDatabaseForMessages = (dispatch, currentChatRoom, defaultMessage, ref
 const callDispatch = (dispatch, messageValue, currentChatRoom, isRefreshing) => {
     // debugger;
     dispatch({
-        type: currentChatRoom,
+        type: GET_MESSAGE_SUCCESS,
+        currentChatRoom,
         isRefreshing,
         payload: messageValue
     });

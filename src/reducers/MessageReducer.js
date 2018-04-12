@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {
     MESSAGE_TEXT_CHANGED,
     MESSAGE_SENT,
-    // GET_MESSAGE_SUCCESS,
+    GET_MESSAGE_SUCCESS,
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM
 } from '../actions/types';
@@ -16,9 +16,9 @@ import {
 
 const initialState = {
     messageText: '',
-    prayerMessages: [],
-    generalMessages: [],
-    smallGroupMessages: [],
+    prayer_chat_room: [],
+    general_chat_room: [],
+    small_group_chat_room: [],
     messagesToShow: [],
     refreshedMessages: [],
     isRefreshing: false,
@@ -34,6 +34,7 @@ export default (state = initialState, action) => {
         case SET_REFRESH_STATUS:
             return { ...state, isRefreshing: action.payload };
         case SET_CHAT_ROOM:
+        // debugger;
             {
             const messagesForRoom = getMessagesFromCurrentRoom(action.payload, state);
             return { ...state,
@@ -41,81 +42,38 @@ export default (state = initialState, action) => {
                 messagesToShow: messagesForRoom
             };
             }
-        case PRAYER_CHAT_ROOM:
-            {
-            const prayerMessages = prepareMessagesForState(action.payload, state.prayerMessages, action.isRefreshing);
-            return { ...state, messagesToShow: prayerMessages, prayerMessages };
-            }
-        case GENERAL_CHAT_ROOM:
-            {
-            const generalMessages = prepareMessagesForState(action.payload, state.generalMessages, action.isRefreshing);
-            return { ...state, messagesToShow: generalMessages, generalMessages };
-            }
-        case SMALL_GROUP_CHAT_ROOM:
+        case GET_MESSAGE_SUCCESS:
+        // debugger;
             {
                 if (action.isRefreshing) {
                     const newRefreshedMessages = prepareMessagesForState(
                         action.payload, state.refreshedMessages, action.isRefreshing
                     );
-                    if (newRefreshedMessages.length === 10) {
-                        const updatedMessages = [
-                            ...state.smallGroupMessages,
-                            ...newRefreshedMessages
-                        ];
-                        return {
-                            ...state,
-                            messagesToShow: updatedMessages,
-                            smallGroupMessages: updatedMessages,
-                            refreshedMessages: []
-                        };
+                    const maxMessagesFromRefresh = 10;
+                    if (newRefreshedMessages.length === maxMessagesFromRefresh) {
+                        const refreshedState = mergeRefreshedMessages(
+                            state,
+                            action.currentChatRoom,
+                            newRefreshedMessages
+                        );
+                        return refreshedState;
                     }
                     return {
                         ...state,
                         refreshedMessages: newRefreshedMessages
                     };
                 }
-            const smallGroupMessages = prepareMessagesForState(
-                action.payload, state.smallGroupMessages, action.isRefreshing
+            const messagesInRoom = state[action.currentChatRoom];
+            const messages = prepareMessagesForState(
+                action.payload, messagesInRoom, action.isRefreshing
             );
-            return { ...state, messagesToShow: smallGroupMessages, smallGroupMessages };
+            const newState = { ...state, messagesToShow: messages };
+            newState[action.currentChatRoom] = messages;
+            return newState;
             }
 
         default:
             return (state);
-
-        // case GET_MESSAGE_SUCCESS:
-        // debugger;
-        // {
-        //     const chatRoom = state.currentChatRoom;
-        //     const currentMessages = state.messagesToShow[chatRoom];
-        //     if (!_.isEmpty(currentMessages)) {
-        //         const message = [action.payload];
-        //         if (state.isRefreshing) {
-        //             // debugger;
-        //             const updatedMessages = state.refreshedMessages;
-        //             const refreshedMessages = [...message, ...updatedMessages];
-        //             return { ...state, refreshedMessages };
-        //         }
-        //         const currentMessageArray = currentMessages[chatRoom];
-        //         const newMessages = {};
-        //         newMessages[chatRoom] = [...message, ...currentMessageArray];
-        //         return { ...state, messagesToShow: newMessages };
-        //         // debugger;
-        //         // newMessages.unshift(action.payload);
-        //     }
-        //     const firstMessage = {};
-        //     firstMessage[chatRoom] = [action.payload];
-        //     return { ...state, messagesToShow: firstMessage };
-        // // const currentMessagesArray = Object.keys(currentMessages);
-        // // const updatedMessagesArray = Object.keys(action.payload);
-        // // const currentMessageCount = currentMessagesArray.length;
-        // // const updatedMessageCount = updatedMessagesArray.length;
-        // // if (currentMessageCount === updatedMessageCount) {
-        // //     // debugger;
-        // //     return state;
-        // // }
-        //     // return { ...state, messagesToShow: newMessages.payload };
-        // }
     }
 };
 
@@ -140,12 +98,27 @@ const prepareMessagesForState = (newMessage, currentMessages) => {
 const getMessagesFromCurrentRoom = (currentRoom, state) => {
     switch (currentRoom) {
         case PRAYER_CHAT_ROOM:
-            return state.prayerMessages;
+            return state.prayer_chat_room;
         case GENERAL_CHAT_ROOM:
-            return state.generalMessages;
+            return state.general_chat_room;
         case SMALL_GROUP_CHAT_ROOM:
-            return state.smallGroupMessages;
+            return state.small_group_chat_room;
         default:
             return [];
     }
+};
+
+const mergeRefreshedMessages = (state, currentChatRoom, newMessages) => {
+    const currentMessages = state[currentChatRoom];
+    const updatedMessages = [
+        ...currentMessages,
+        ...newMessages
+    ];
+    const refreshedState = {
+        ...state,
+        messagesToShow: updatedMessages,
+        refreshedMessages: []
+    };
+    refreshedState[currentChatRoom] = updatedMessages;
+    return refreshedState;
 };
