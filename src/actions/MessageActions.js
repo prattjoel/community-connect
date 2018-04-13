@@ -7,7 +7,8 @@ import {
     CHILD_ADDED,
     SET_REFRESH_STATUS,
     GET_REFRESHED_MESSAGES,
-    SET_CAN_LOAD
+    SET_CAN_LOAD,
+    SET_SCROLLING
 } from './types';
 
 // Set text for message input
@@ -29,6 +30,13 @@ export const setCanLoadOlderMessages = canLoad => {
     return {
         type: SET_CAN_LOAD,
         payload: !canLoad
+    };
+};
+
+export const setIsScrolling = isScrolling => {
+    return {
+        type: SET_SCROLLING,
+        payload: isScrolling
     };
 };
 

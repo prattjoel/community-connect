@@ -7,10 +7,21 @@ import MessageText from './MessageText';
 // import KeyboardManager from './KeyboardManager';
 
 export default class MessageList extends Component {
+  //   constructor(props) {
+  //   super(props);
+  //   this.getOlderMessages = _.debounce(this.getOlderMessages, 500);
+  // }
 
   componentWillMount() {
     // Get messages from chat room in firebase
     const { getMessages, currentChatRoom } = this.props;
+    // if (this.props.canLoadOlderMessages) {
+    //     this.props.setCanLoadOlderMessages(this.props.canLoadOlderMessages);
+    // }
+
+    if (!this.props.isScrolling) {
+        this.props.setIsScrolling(true);
+    }
 
     if (this.props.messagesToDisplay.length < 1) {
         // debugger;
@@ -28,27 +39,52 @@ export default class MessageList extends Component {
     // this.props.setRefresh(this.props.isRefreshing);
     const {
         refreshMessages,
-        isRefreshing,
-        setRefresh,
+        // isRefreshing,
+        // setRefresh,
         currentChatRoom,
         messagesToDisplay,
-        isLoadingMessages,
-        setCanLoadOlderMessages,
-        canLoadOlderMessages
+        // setCanLoadOlderMessages,
+        // canLoadOlderMessages,
+        // isScrolling,
+        // setIsScrolling,
+        isLoadingMessages
     } = this.props;
-    if (messagesToDisplay.length >= 20 && !isLoadingMessages) {
-        setCanLoadOlderMessages(canLoadOlderMessages);
-    }
-    if (canLoadOlderMessages) {
-        // debugger;
-        setRefresh(isRefreshing);
-        refreshMessages(currentChatRoom, messagesToDisplay);
 
+    // if (isScrolling) {
+    //     setCanLoadOlderMessages(canLoadOlderMessages);
+    // }
+    console.log('message count: ', messagesToDisplay.length);
+    console.log('is loading: ', isLoadingMessages);
+
+    if (!isLoadingMessages) {
+        // debugger;
+        // setRefresh(isRefreshing);
+        refreshMessages(currentChatRoom, messagesToDisplay);
+        // setCanLoadOlderMessages(canLoadOlderMessages);
         console.log('refreshed');
-        setTimeout(() => {
-            this.props.setRefresh(this.props.isRefreshing);
-        }, 3000);
+        // setIsScrolling(false);
+        // setRefresh(isRefreshing);
+
+        // setTimeout(() => {
+        //
+        // }, 1000);
+        // setRefresh(isRefreshing);
     }
+    // if (messagesToDisplay.length >= 20 && !canLoadOlderMessages) {
+    //     setCanLoadOlderMessages(canLoadOlderMessages);
+    // }
+    // if (canLoadOlderMessages) {
+    //     // debugger;
+    //     setRefresh(isRefreshing);
+    //     refreshMessages(currentChatRoom, messagesToDisplay);
+    //     setCanLoadOlderMessages(canLoadOlderMessages);
+    //     console.log('refreshed');
+    //     setRefresh(isRefreshing);
+    // }
+        // setTimeout(() => {
+        //     this.props.setRefresh(this.props.isRefreshing);
+        // }, 3000);
+    // }
   };
 
   componWillUnMount() {
@@ -122,6 +158,7 @@ export default class MessageList extends Component {
 
   render() {
     // debugger;
+
     return (
             <View style={{ flex: 8, backgroundColor: 'white', borderBottomWidth: 0.25, borderBottomColor: 'gray' }}>
               <FlatList
@@ -130,6 +167,14 @@ export default class MessageList extends Component {
                 keyExtractor={this.keyExtractor}
                 onEndReached={this.getOlderMessages.bind(this)}
                 onEndReachedThreshold={0.1}
+                // onMomentumScrollBegin={() => {
+                //     console.log('scrolling');
+                //     this.props.setIsScrolling(false);
+                // }}
+                inverted
+                // onEndReached={() => {
+                //     console.log('end reached');
+                // }}
                 // bounces={false}
                 // refreshControl={
                 //   <RefreshControl
@@ -140,9 +185,8 @@ export default class MessageList extends Component {
                 // refreshing={this.props.isRefreshing}
                 // onRefresh={this.getOlderMessages.bind(this)}
                 // onRefresh={() => log)
-                inverted
                 // onScroll={this.manageScroll}
-                extraData={this.state}
+                // extraData={this.state}
               />
             </View>
     );

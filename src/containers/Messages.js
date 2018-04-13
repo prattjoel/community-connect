@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { getMessages, setRefresh, refreshMessages, setCanLoadOlderMessages } from '../actions/MessageActions';
+import { getMessages, setRefresh, refreshMessages, setCanLoadOlderMessages, setIsScrolling } from '../actions/MessageActions';
 import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
@@ -14,7 +14,8 @@ const mapStateToProps = state => {
       refreshedMessages,
       currentChatRoom,
       isLoadingMessages,
-      canLoadOlderMessages
+      canLoadOlderMessages,
+      isScrolling
   } = state.messages;
   // const messages = messagesToShow.map(item => _.values(item));
   // const currentMessages = messagesToShow[currentChatRoom] || {};
@@ -38,7 +39,9 @@ const mapStateToProps = state => {
       currentChatRoom,
       isRefreshing,
       isLoadingMessages,
-      canLoadOlderMessages
+      canLoadOlderMessages,
+      isScrolling
+
       // lastTimeStamp
     }
   );
@@ -68,6 +71,9 @@ const mapDispatchToProps = dispatch => {
     },
     setCanLoadOlderMessages: (canLoad) => {
         dispatch(setCanLoadOlderMessages(canLoad));
+    },
+    setIsScrolling: (isScrolling) => {
+        dispatch(setIsScrolling(isScrolling));
     }
   });
 };

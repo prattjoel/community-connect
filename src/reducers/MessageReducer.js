@@ -8,7 +8,8 @@ import {
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM,
     GET_REFRESHED_MESSAGES,
-    SET_CAN_LOAD
+    SET_CAN_LOAD,
+    SET_SCROLLING
 } from '../actions/types';
 import {
     PRAYER_CHAT_ROOM,
@@ -25,8 +26,9 @@ const initialState = {
     refreshedMessages: [],
     isRefreshing: false,
     currentChatRoom: '',
-    canLoadOlderMessages: false
-    // isLoadingMessages: false,
+    canLoadOlderMessages: false,
+    isScrolling: true,
+    isLoadingMessages: true,
 };
 
 export default (state = initialState, action) => {
@@ -39,6 +41,8 @@ export default (state = initialState, action) => {
             return { ...state, isRefreshing: action.payload };
         case SET_CAN_LOAD:
             return { ...state, canLoadOlderMessages: action.payload };
+        case SET_SCROLLING:
+            return { ...state, isScrolling: action.payload };
         case SET_CHAT_ROOM:
         // debugger;
             {
@@ -58,11 +62,11 @@ export default (state = initialState, action) => {
                 const maxMessages = 20;
                 if (messages.length === maxMessages) {
                     // debugger;
-                    const newState = { ...state, messagesToShow: messages };
+                    const newState = { ...state, messagesToShow: messages, isLoadingMessages: false };
                     newState[action.currentChatRoom] = messages;
                     return newState;
                 }
-                const newState = { ...state };
+                const newState = { ...state, messagesToShow: messages };
                 newState[action.currentChatRoom] = messages;
                 return newState;
             }
@@ -83,7 +87,7 @@ export default (state = initialState, action) => {
                 }
                 return {
                     ...state,
-                    refreshedMessages: newRefreshedMessages
+                    refreshedMessages: newRefreshedMessages, isLoadingMessages: true, isRefreshing: true
                 };
             }
         default:
@@ -131,7 +135,10 @@ const mergeRefreshedMessages = (state, currentChatRoom, newMessages) => {
     const refreshedState = {
         ...state,
         messagesToShow: updatedMessages,
-        refreshedMessages: []
+        refreshedMessages: [],
+        isScrolling: false,
+        isRefreshing: false,
+        isLoadingMessages: false,
     };
     refreshedState[currentChatRoom] = updatedMessages;
     return refreshedState;
