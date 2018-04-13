@@ -8,8 +8,7 @@ import {
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM,
     GET_REFRESHED_MESSAGES,
-    SET_CAN_LOAD,
-    SET_SCROLLING
+    SET_LOADING
 } from '../actions/types';
 import {
     PRAYER_CHAT_ROOM,
@@ -39,10 +38,10 @@ export default (state = initialState, action) => {
             return { ...state, messageText: '' };
         case SET_REFRESH_STATUS:
             return { ...state, isRefreshing: action.payload };
-        case SET_CAN_LOAD:
-            return { ...state, canLoadOlderMessages: action.payload };
-        case SET_SCROLLING:
-            return { ...state, isScrolling: action.payload };
+        case SET_LOADING:
+            return { ...state, isLoadingMessages: action.payload };
+        // case SET_SCROLLING:
+        //     return { ...state, isScrolling: action.payload };
         case SET_CHAT_ROOM:
         // debugger;
             {

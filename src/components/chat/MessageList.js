@@ -7,105 +7,52 @@ import MessageText from './MessageText';
 // import KeyboardManager from './KeyboardManager';
 
 export default class MessageList extends Component {
-  //   constructor(props) {
-  //   super(props);
-  //   this.getOlderMessages = _.debounce(this.getOlderMessages, 500);
-  // }
 
   componentWillMount() {
     // Get messages from chat room in firebase
     const { getMessages, currentChatRoom } = this.props;
-    // if (this.props.canLoadOlderMessages) {
-    //     this.props.setCanLoadOlderMessages(this.props.canLoadOlderMessages);
-    // }
-
-    if (!this.props.isScrolling) {
-        this.props.setIsScrolling(true);
+    if (!this.props.isLoadingMessages) {
+        this.props.setIsLoading(true);
     }
 
     if (this.props.messagesToDisplay.length < 1) {
-        // debugger;
         getMessages(currentChatRoom);
     }
 
-    // getMessages(currentChatRoom);
-    console.log('chat room in message list');
-    console.log(currentChatRoom);
+    // console.log('chat room in message list');
+    // console.log(currentChatRoom);
   }
 
+  //Retrieve previous messages from database
   getOlderMessages = () => {
       // debugger;
-      console.log('end reached');
-    // this.props.setRefresh(this.props.isRefreshing);
+      // console.log('end reached');
     const {
         refreshMessages,
-        // isRefreshing,
-        // setRefresh,
         currentChatRoom,
         messagesToDisplay,
-        // setCanLoadOlderMessages,
-        // canLoadOlderMessages,
-        // isScrolling,
-        // setIsScrolling,
         isLoadingMessages
     } = this.props;
 
-    // if (isScrolling) {
-    //     setCanLoadOlderMessages(canLoadOlderMessages);
-    // }
-    console.log('message count: ', messagesToDisplay.length);
-    console.log('is loading: ', isLoadingMessages);
+    // console.log('message count: ', messagesToDisplay.length);
+    // console.log('is loading: ', isLoadingMessages);
 
     if (!isLoadingMessages) {
-        // debugger;
-        // setRefresh(isRefreshing);
         refreshMessages(currentChatRoom, messagesToDisplay);
-        // setCanLoadOlderMessages(canLoadOlderMessages);
         console.log('refreshed');
-        // setIsScrolling(false);
-        // setRefresh(isRefreshing);
-
-        // setTimeout(() => {
-        //
-        // }, 1000);
-        // setRefresh(isRefreshing);
     }
-    // if (messagesToDisplay.length >= 20 && !canLoadOlderMessages) {
-    //     setCanLoadOlderMessages(canLoadOlderMessages);
-    // }
-    // if (canLoadOlderMessages) {
-    //     // debugger;
-    //     setRefresh(isRefreshing);
-    //     refreshMessages(currentChatRoom, messagesToDisplay);
-    //     setCanLoadOlderMessages(canLoadOlderMessages);
-    //     console.log('refreshed');
-    //     setRefresh(isRefreshing);
-    // }
-        // setTimeout(() => {
-        //     this.props.setRefresh(this.props.isRefreshing);
-        // }, 3000);
-    // }
   };
 
-  componWillUnMount() {
-      debugger;
-  }
-
   // Assign unique key from firebase to each message
-  keyExtractor = (item, index) => {
+  keyExtractor = (item) => {
       // debugger;
       const key = Object.keys(item)[0];
       return key;
-    // return this.props.messageKeys[index];
   }
 
-  renderItem = ({ item, index }) => {
+  renderItem = ({ item }) => {
     // debugger;
-    // console.log('index: ', index);
     const messageInfo = _.values(item)[0];
-    // if (index === 0) {
-    //     console.log('message at 0 index', messageInfo.message);
-    // }
     if (messageInfo.message) {
         return (
           <MessageText
@@ -128,30 +75,6 @@ export default class MessageList extends Component {
     }
   };
 
-  // manageScroll = (event) => {
-  //     const topScrollPosition = (Dimensions.get('window').height / 2);
-  //     const currentScroolPosition = event.nativeEvent.contentOffset.y;
-  //     console.log('topScrollPosition is:', topScrollPosition);
-  //     console.log(event.nativeEvent.contentOffset.y);
-  //     // if (currentScroolPosition > topScrollPosition) {
-  //     //     const {
-  //     //         refreshMessages,
-  //     //         isRefreshing,
-  //     //         setRefresh,
-  //     //         currentChatRoom,
-  //     //         messagesToDisplay
-  //     //     } = this.props;
-  //     //     setRefresh(isRefreshing);
-  //     //     refreshMessages(currentChatRoom, messagesToDisplay);
-  //     //     // getMessages(currentChatRoom, lastTimeStamp);
-  //     //
-  //     //     console.log('refreshed');
-  //     //     setTimeout(() => {
-  //     //         this.props.setRefresh(this.props.isRefreshing);
-  //     //     }, 3000);
-  //     // }
-  // }
-
   renderHeader = () => {
     // TODO: create custom headers for message sections - Date time etc.
   };
@@ -167,26 +90,7 @@ export default class MessageList extends Component {
                 keyExtractor={this.keyExtractor}
                 onEndReached={this.getOlderMessages.bind(this)}
                 onEndReachedThreshold={0.1}
-                // onMomentumScrollBegin={() => {
-                //     console.log('scrolling');
-                //     this.props.setIsScrolling(false);
-                // }}
                 inverted
-                // onEndReached={() => {
-                //     console.log('end reached');
-                // }}
-                // bounces={false}
-                // refreshControl={
-                //   <RefreshControl
-                //     refreshing={this.props.isRefreshing}
-                //     onRefresh={this.getOlderMessages.bind(this)}
-                //   />
-                // }
-                // refreshing={this.props.isRefreshing}
-                // onRefresh={this.getOlderMessages.bind(this)}
-                // onRefresh={() => log)
-                // onScroll={this.manageScroll}
-                // extraData={this.state}
               />
             </View>
     );

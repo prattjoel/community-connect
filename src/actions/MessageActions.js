@@ -7,8 +7,9 @@ import {
     CHILD_ADDED,
     SET_REFRESH_STATUS,
     GET_REFRESHED_MESSAGES,
-    SET_CAN_LOAD,
-    SET_SCROLLING
+    SET_LOADING
+    // SET_CAN_LOAD,
+    // SET_SCROLLING
 } from './types';
 
 // Set text for message input
@@ -26,17 +27,17 @@ export const setRefresh = isRefreshing => {
     };
 };
 
-export const setCanLoadOlderMessages = canLoad => {
-    return {
-        type: SET_CAN_LOAD,
-        payload: !canLoad
-    };
-};
+// export const setCanLoadOlderMessages = canLoad => {
+//     return {
+//         type: SET_CAN_LOAD,
+//         payload: !canLoad
+//     };
+// };
 
-export const setIsScrolling = isScrolling => {
+export const setIsLoading = isLoading => {
     return {
-        type: SET_SCROLLING,
-        payload: isScrolling
+        type: SET_LOADING,
+        payload: isLoading
     };
 };
 
@@ -97,6 +98,7 @@ export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, ac
 };
 
 export const refreshMessages = (currentChatRoom, messages) => {
+    // debugger;
     return (dispatch) => {
         const defaultMessage = {
             key: {

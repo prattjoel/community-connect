@@ -24,7 +24,7 @@ const MessageText = (props) => {
             <Image
               // source={require('../../assets/profilePlaceholder.png')}
               source={props.profilePicUrl ? { uri: props.profilePicUrl } : require('../../assets/profilePlaceholder.png')}
-              style={{ width: 20, height: 20 }}
+              style={{ width: 20, height: 20, borderRadius: 10 }}
             />
             <View>
               <View style={{ flexDirection: 'row' }}>
@@ -54,7 +54,7 @@ const MessageText = (props) => {
             <Image
               // source={require('../../assets/profilePlaceholder.png')}
               source={props.profilePicUrl ? { uri: props.profilePicUrl } : require('../../assets/profilePlaceholder.png')}
-              style={{ width: 20, height: 20 }}
+              style={{ width: 20, height: 20, borderRadius: 10 }}
             />
             <View>
               <View style={{ flexDirection: 'row' }}>
