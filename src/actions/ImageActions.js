@@ -78,6 +78,7 @@ const imageOptions = {
 };
 
 export const sendSelectedImages = (selectedImages, currentChatRoom) => {
+    // debugger;
     const imageToSend = prepareImageToSend(selectedImages);
     return (dispatch) => {
         sendImage(dispatch, imageToSend, currentChatRoom);
@@ -85,6 +86,7 @@ export const sendSelectedImages = (selectedImages, currentChatRoom) => {
 };
 
 const sendImage = (dispatch, imageFile, currentChatRoom) => {
+    // debugger;
     RNS3.put(imageFile, imageOptions).then(response => {
         if (response.status !== 201) {
             console.log(response);

@@ -87,6 +87,7 @@ export const prepareMessageToSend = (type, content, userInfo, id) => {
 // Send created message to database
 export const sendMessageToDatabase = (dispatch, messageInfo, currentChatRoom, action) => {
     // return () => {
+    // debugger;
     firebase.database().ref(`/chat_rooms/${currentChatRoom}`)
     .push(messageInfo)
     .then(() => {
