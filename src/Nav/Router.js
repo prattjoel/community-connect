@@ -67,8 +67,11 @@ const HomeNav = TabNavigator(
                     const newsIcon = createIcon(newsIconName);
                     return newsIcon;
                 }
-            }
-        })
+            },
+        }),
+        tabBarOptions: {
+            activeTintColor: 'black'
+        }
     }
 );
 
