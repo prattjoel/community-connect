@@ -87,7 +87,7 @@ const MessagesNav = StackNavigator(
         Messages: {
             screen: Home,
             navigationOptions: ({ navigation }) => ({
-                headerTitle: 'Current Messages',
+                headerTitle: navigation.getParam('currentChatroom'),
                 headerLeft:
                 // renderBackButton(navigation);
                 <Ionicons

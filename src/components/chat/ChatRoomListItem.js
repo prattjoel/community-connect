@@ -14,7 +14,9 @@ export default class ChatRoomListItem extends Component {
         // this.props.getMessages(this.props.roomKey);
 
         // Navigate to Messages screen
-        this.props.navigation.navigate('Messages');
+        this.props.navigation.navigate('Messages', {
+            currentChatroom: this.props.room
+        });
     }
     render() {
         return (

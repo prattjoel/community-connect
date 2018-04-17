@@ -33,6 +33,7 @@ export default class ChatRoomList extends Component {
       <ChatRoomListItem
         onPress={this.updateChatRoom}
         roomKey={item.key}
+        room={item.room}
         // getMessages={this.props.getMessages}
         navigation={this.props.navigation}
       >
