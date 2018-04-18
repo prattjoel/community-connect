@@ -10,6 +10,13 @@ import Button from '../common/Button';
 import IconButton from '../common/IconButton';
 
 export default class MessageInputField extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            height: null
+        };
+    }
+
   componentWillMount() {
     console.log('chat room in message input field');
     console.log(this.props.currentChatRoom);
@@ -48,7 +55,17 @@ export default class MessageInputField extends Component {
       return false;
   }
 
-
+updateInputSize = ({ nativeEvent }) => {
+    console.log('inputHeight: ', nativeEvent.contentSize.height);
+    console.log('height in state:', this.state.height);
+    const height = nativeEvent.contentSize.height;
+    if (height > 40) {
+        // debugger;
+        this.setState(() => {
+            return { height };
+        });
+    }
+}
 
   render() {
       const isTypingTextStyle = { ...styles.buttonText, ...styles.isTypingButtonTextStyle };
@@ -61,6 +78,8 @@ export default class MessageInputField extends Component {
                 placeholder='Type Message Here'
                 onChangeText={this.onMessageChange.bind(this)}
                 value={this.props.message}
+                multiline
+                onContentSizeChange={this.updateInputSize}
               />
           </View>
           <View style={styles.buttonContainerStyle}>
