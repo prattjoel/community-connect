@@ -10,12 +10,12 @@ import Button from '../common/Button';
 import IconButton from '../common/IconButton';
 
 export default class MessageInputField extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            height: null
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         height: null
+    //     };
+    // }
 
   componentWillMount() {
     console.log('chat room in message input field');
@@ -55,17 +55,17 @@ export default class MessageInputField extends Component {
       return false;
   }
 
-updateInputSize = ({ nativeEvent }) => {
-    console.log('inputHeight: ', nativeEvent.contentSize.height);
-    console.log('height in state:', this.state.height);
-    const height = nativeEvent.contentSize.height;
-    if (height > 40) {
-        // debugger;
-        this.setState(() => {
-            return { height };
-        });
-    }
-}
+// updateInputSize = ({ nativeEvent }) => {
+//     console.log('inputHeight: ', nativeEvent.contentSize.height);
+//     console.log('height in state:', this.state.height);
+//     const height = nativeEvent.contentSize.height;
+//     if (height > 40) {
+//         // debugger;
+//         this.setState(() => {
+//             return { height };
+//         });
+//     }
+// }
 
   render() {
       const isTypingTextStyle = { ...styles.buttonText, ...styles.isTypingButtonTextStyle };
@@ -79,7 +79,7 @@ updateInputSize = ({ nativeEvent }) => {
                 onChangeText={this.onMessageChange.bind(this)}
                 value={this.props.message}
                 multiline
-                onContentSizeChange={this.updateInputSize}
+                // onContentSizeChange={this.updateInputSize}
               />
           </View>
           <View style={styles.buttonContainerStyle}>
@@ -106,7 +106,7 @@ updateInputSize = ({ nativeEvent }) => {
 
 const styles = {
   textInputStyle: {
-    height: 40,
+    height: 45,
     // borderColor: 'gray',
     // borderWidth: 1,
     // borderRadius: 5,
@@ -117,7 +117,7 @@ const styles = {
     // alignSelf: 'flex-end'
   },
   containerStyle: {
-      height: 70,
+      height: 75,
       marginTop: 10,
       // flexDirection: 'row',
       paddingBottom: 5,
