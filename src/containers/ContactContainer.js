@@ -3,13 +3,18 @@
 import { connect } from 'react-redux';
 import {
   setNameText,
+  setEmailText,
+  setMessageText
 } from '../actions/ContactFormActions';
 import ContactForm from '../components/ContactForm';
 
 const mapStateToProps = state => {
+    const { nameText, emailText, messageText } = state.contactForm;
   return (
     {
-      nameText: state.contactForm.nameText,
+      nameText,
+      emailText,
+      messageText
     }
   );
 };
@@ -17,8 +22,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return (
     {
-      setNameText: text => {
-      dispatch(setNameText(text));
+    setNameText: text => {
+        dispatch(setNameText(text));
+    },
+    setEmailText: text => {
+        dispatch(setEmailText(text));
+    },
+    setMessageText: text => {
+        dispatch(setMessageText(text));
     },
   });
 };

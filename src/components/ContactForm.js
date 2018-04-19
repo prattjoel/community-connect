@@ -13,8 +13,18 @@ export default class ContactForm extends Component {
     onNameChange = (text) => {
         // debugger;
         this.props.setNameText(text);
-        console.log(this.props.nameText);
+        // console.log(this.props.nameText);
     };
+
+    onEmailChange = (text) => {
+        this.props.setEmailText(text);
+        // console.log(this.props.emailText);
+    }
+
+    onMessageChange = (text) => {
+        this.props.setMessageText(text);
+        // console.log(this.props.messageText);
+    }
   render() {
     return (
         <View style={styles.containerStyle}>
@@ -28,11 +38,13 @@ export default class ContactForm extends Component {
             <TextInput
                 style={styles.inputStyle}
                 placeholder=' Enter Email Here'
+                onChangeText={this.onEmailChange}
             />
             <Text style={styles.textStyle}>Message</Text>
             <TextInput
                 style={StyleSheet.flatten([styles.inputStyle, styles.messageInput])}
                 placeholder=' Enter Message Here'
+                onChangeText={this.onMessageChange}
                 multiline
             />
         </View>

@@ -18,3 +18,5 @@ export const SET_REFRESH_STATUS = 'set_refresh_status';
 export const SET_LOADING = 'set_loading';
 
 export const SET_NAME_TEXT = 'set_name_text';
+export const SET_EMAIL_TEXT = 'set_email_text';
+export const SET_MESSAGE_TEXT = 'set_message_text';
