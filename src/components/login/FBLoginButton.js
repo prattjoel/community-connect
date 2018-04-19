@@ -71,6 +71,7 @@ export default class FBLoginButton extends Component {
         firebase.auth().signInWithCredential(credential)
         .then((result) => {
             // debugger;
+            console.log('result of _firebaseLogin', result);
             const { displayName, uid } = result;
             this._createUser(displayName, uid, email, profilePicUrl);
             this.props.updateLoading(false);
@@ -128,8 +129,8 @@ export default class FBLoginButton extends Component {
             const jsonResp = await response.json();
             console.log('USER INFO', jsonResp);
             const email = jsonResp.email;
-            // const profilePicUrl = jsonResp.picture.data.url;
-            const profilePicUrl = `https://graph.facebook.com/v2.11/${jsonResp.id}/picture`;
+            const profilePicUrl = jsonResp.picture.data.url;
+            // const profilePicUrl = `https://graph.facebook.com/v2.11/${jsonResp.id}/picture`;
             console.log('profile url: ', profilePicUrl);
             this._firebaseLogin(token, email, profilePicUrl);
         } else {
@@ -170,6 +171,7 @@ export default class FBLoginButton extends Component {
         if (!this.props.isSignedIn) {
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
+                    // console.log('user from _isLoggedin', user);
                     this.props.navigation.setParams({ title: 'Logout' });
                     // const userID = user.uid;
                     const databaseRef = firebase.database().ref(`users/${user.uid}`);
