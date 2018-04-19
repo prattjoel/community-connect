@@ -1,6 +1,6 @@
 'use-strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
     Text,
     View,
@@ -8,28 +8,42 @@ import {
     TextInput
  } from 'react-native';
 
-const ContactForm = () => {
-  return (
-      <View style={styles.containerStyle}>
-          <Text style={styles.textStyle}>Name</Text>
-          <TextInput
-              style={styles.inputStyle}
-              placeholder=' Enter Name Here'
-          />
-          <Text style={styles.textStyle}>Email</Text>
-          <TextInput
-              style={styles.inputStyle}
-              placeholder=' Enter Email Here'
-          />
-          <Text style={styles.textStyle}>Message</Text>
-          <TextInput
-              style={StyleSheet.flatten([styles.inputStyle, styles.messageInput])}
-              placeholder=' Enter Message Here'
-              multiline
-          />
-      </View>
-  );
-};
+export default class ContactForm extends Component {
+
+    onNameChange = (text) => {
+        // debugger;
+        this.props.setNameText(text);
+        console.log(this.props.nameText);
+    };
+  render() {
+    return (
+        <View style={styles.containerStyle}>
+            <Text style={styles.textStyle}>Name</Text>
+            <TextInput
+                style={styles.inputStyle}
+                placeholder=' Enter Name Here'
+                onChangeText={this.onNameChange}
+            />
+            <Text style={styles.textStyle}>Email</Text>
+            <TextInput
+                style={styles.inputStyle}
+                placeholder=' Enter Email Here'
+            />
+            <Text style={styles.textStyle}>Message</Text>
+            <TextInput
+                style={StyleSheet.flatten([styles.inputStyle, styles.messageInput])}
+                placeholder=' Enter Message Here'
+                multiline
+            />
+        </View>
+    );
+  }
+}
+// const = () => {
+//   return (
+//
+//   );
+// };
 
 const styles = StyleSheet.create({
     containerStyle: {
@@ -55,5 +69,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
-
-export default ContactForm;

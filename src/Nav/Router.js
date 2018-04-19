@@ -8,7 +8,7 @@ import Login from '../containers/Login';
 import Home from '../components/MessagesHome';
 import ChatRooms from '../containers/ChatRooms';
 import GivingPage from '../components/Giving';
-import ContactForm from '../components/ContactForm';
+import ContactForm from '../containers/ContactContainer';
 import Announcements from '../components/Announcements';
 import SettingsMenu from '../components/Settings';
 

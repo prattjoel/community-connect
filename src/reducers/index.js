@@ -4,6 +4,7 @@ import MessageReducer from './MessageReducer';
 import ChatRoomReducer from './ChatRoomReducer';
 import NavReducer from './NavReducer';
 import ImageReducer from './ImageReducer';
+import ContactFormReducer from './ContactFormReducer';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
     messages: MessageReducer,
     chatRooms: ChatRoomReducer,
     nav: NavReducer,
-    imagesFromCR: ImageReducer
+    imagesFromCR: ImageReducer,
+    contactForm: ContactFormReducer
 });
