@@ -57,18 +57,21 @@ export default class ContactForm extends Component {
                 style={styles.inputStyle}
                 placeholder=' Enter Name Here'
                 onChangeText={this.onNameChange}
+                value={this.props.nameText}
             />
             <Text style={styles.textStyle}>Email</Text>
             <TextInput
                 style={styles.inputStyle}
                 placeholder=' Enter Email Here'
                 onChangeText={this.onEmailChange}
+                value={this.props.emailText}
             />
             <Text style={styles.textStyle}>Message</Text>
             <TextInput
                 style={StyleSheet.flatten([styles.inputStyle, styles.messageInput])}
                 placeholder=' Enter Message Here'
                 onChangeText={this.onMessageChange}
+                value={this.props.messageText}
                 multiline
             />
             <View style={styles.buttonContainer}>

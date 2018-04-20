@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
     case SET_MESSAGE_TEXT:
         return { ...state, messageText: action.payload };
     case SEND_CONTACT_INFO:
-        return { ...state, contactInfo: action.payload };
+        return { ...state, ...initialState };
     default:
       return (state);
   }
