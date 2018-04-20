@@ -2,13 +2,15 @@
 import {
     SET_NAME_TEXT,
     SET_EMAIL_TEXT,
-    SET_MESSAGE_TEXT
+    SET_MESSAGE_TEXT,
+    SEND_CONTACT_INFO
 } from '../actions/types';
 
 const initialState = {
   nameText: '',
   emailText: '',
-  messageText: ''
+  messageText: '',
+  contactInfo: {}
 };
 
 export default (state = initialState, action) => {
@@ -20,6 +22,8 @@ export default (state = initialState, action) => {
         return { ...state, emailText: action.payload };
     case SET_MESSAGE_TEXT:
         return { ...state, messageText: action.payload };
+    case SEND_CONTACT_INFO:
+        return { ...state, contactInfo: action.payload };
     default:
       return (state);
   }

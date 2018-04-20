@@ -28,6 +28,8 @@ export default class ContactForm extends Component {
     }
     submitInfo = () => {
         console.log('submitInfo pressed');
+        this.props.sendContactInfo('testContactInfo');
+        console.log(this.props.contactInfo);
     }
   render() {
     return (
