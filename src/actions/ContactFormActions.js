@@ -28,17 +28,25 @@ export const setMessageText = text => {
   });
 };
 
-export const sendContactInfo = contactInfo => {
-    return (dispatch) => {
+export const sendContactInfo = (contactInfo) => {
+    return async (dispatch) => {
         const { currentUser } = firebase.auth();
         const userID = currentUser.uid;
+        const infoToSend = { ...contactInfo, user: userID };
         // console.log(currentUser);
         const action = {
             type: SEND_CONTACT_INFO,
-            payload: contactInfo
+            payload: infoToSend
         };
-
+        await firebase.database().ref('/conctact_information/')
+        .push(infoToSend);
+        // console.log(resp);
         dispatch(action);
 
-    }
+        // firebase.database().ref('/conctact_information/')
+        // .push(infoToSend).then((resp) => {
+        //     console.log(resp);
+        //     dispatch(action);
+        // });
+    };
 };

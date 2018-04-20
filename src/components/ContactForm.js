@@ -28,7 +28,13 @@ export default class ContactForm extends Component {
     }
     submitInfo = () => {
         console.log('submitInfo pressed');
-        this.props.sendContactInfo('testContactInfo');
+        const { nameText, emailText, messageText } = this.props;
+        const info = {
+            name: nameText,
+            email: emailText,
+            message: messageText
+        };
+        this.props.sendContactInfo(info);
         console.log(this.props.contactInfo);
     }
   render() {
