@@ -7,6 +7,7 @@ import {
     StyleSheet,
     TextInput
  } from 'react-native';
+ import Button from './common/Button';
 
 export default class ContactForm extends Component {
 
@@ -24,6 +25,9 @@ export default class ContactForm extends Component {
     onMessageChange = (text) => {
         this.props.setMessageText(text);
         // console.log(this.props.messageText);
+    }
+    submitInfo = () => {
+        console.log('submitInfo pressed');
     }
   render() {
     return (
@@ -47,6 +51,13 @@ export default class ContactForm extends Component {
                 onChangeText={this.onMessageChange}
                 multiline
             />
+            <View style={styles.buttonContainer}>
+                <Button
+                    onPress={this.submitInfo}
+                >
+                    Submit
+                </Button>
+            </View>
         </View>
     );
   }
@@ -79,5 +90,12 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginTop: 10,
         fontWeight: 'bold'
+    },
+    buttonContainer: {
+        flex: 1,
+        alignItems: 'flex-end',
+        // borderWidth: 1,
+        // borderColor: 'black',
+        flexDirection: 'row'
     }
 });

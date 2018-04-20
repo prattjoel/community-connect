@@ -1,5 +1,5 @@
 'use strict';
-// import firebase from 'firebase';
+import firebase from 'firebase';
 import {
   SET_NAME_TEXT,
   SET_EMAIL_TEXT,
@@ -26,3 +26,10 @@ export const setMessageText = text => {
     payload: text
   });
 };
+
+// export const sendContactInfo = contactInfo => {
+//     return (dispatch) {
+//         const { currentUser } = firebase.auth();
+//         const userID = currentUser.uid;
+//     }
+// };
