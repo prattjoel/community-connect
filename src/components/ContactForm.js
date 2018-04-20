@@ -49,6 +49,18 @@ export default class ContactForm extends Component {
         }
         return false;
     }
+
+    showSentMessage = () => {
+        if (this.props.contactInfoSent) {
+            return (
+                <View style={styles.sentContainer}>
+                    <Text>
+                        Message Sent
+                    </Text>
+                </View>
+            );
+        }
+    }
   render() {
     return (
         <View style={styles.containerStyle}>
@@ -74,6 +86,7 @@ export default class ContactForm extends Component {
                 value={this.props.messageText}
                 multiline
             />
+            {this.showSentMessage()}
             <View style={styles.buttonContainer}>
                 <Button
                     onPress={this.submitInfo}
@@ -115,6 +128,11 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginTop: 10,
         fontWeight: 'bold'
+    },
+    sentContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
     buttonContainer: {
         flex: 1,

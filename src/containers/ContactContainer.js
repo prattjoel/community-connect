@@ -10,13 +10,14 @@ import {
 import ContactForm from '../components/ContactForm';
 
 const mapStateToProps = state => {
-    const { nameText, emailText, messageText, contactInfo } = state.contactForm;
+    const { nameText, emailText, messageText, contactInfo, contactInfoSent } = state.contactForm;
   return (
     {
       nameText,
       emailText,
       messageText,
-      contactInfo
+      contactInfo,
+      contactInfoSent
     }
   );
 };

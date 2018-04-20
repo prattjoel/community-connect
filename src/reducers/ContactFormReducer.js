@@ -10,7 +10,8 @@ const initialState = {
   nameText: '',
   emailText: '',
   messageText: '',
-  contactInfo: {}
+  contactInfo: {},
+  contactInfoSent: false
 };
 
 export default (state = initialState, action) => {
@@ -23,7 +24,7 @@ export default (state = initialState, action) => {
     case SET_MESSAGE_TEXT:
         return { ...state, messageText: action.payload };
     case SEND_CONTACT_INFO:
-        return { ...state, ...initialState };
+        return { ...state, ...initialState, contactInfoSent: true };
     default:
       return (state);
   }
