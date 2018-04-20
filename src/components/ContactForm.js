@@ -28,14 +28,26 @@ export default class ContactForm extends Component {
     }
     submitInfo = () => {
         console.log('submitInfo pressed');
+        if (this.isValidForm()) {
+            const { nameText, emailText, messageText } = this.props;
+            const info = {
+                name: nameText,
+                email: emailText,
+                message: messageText
+            };
+            this.props.sendContactInfo(info);
+            console.log('conactInfo: ', this.props.contactInfo);
+        }
+    }
+
+    isValidForm = () => {
+        // debugger;
         const { nameText, emailText, messageText } = this.props;
-        const info = {
-            name: nameText,
-            email: emailText,
-            message: messageText
-        };
-        this.props.sendContactInfo(info);
-        console.log(this.props.contactInfo);
+        if (nameText !== '' && emailText !== '' && messageText !== '') {
+            // this.props.setFormValid(true)
+            return true;
+        }
+        return false;
     }
   render() {
     return (
@@ -62,6 +74,8 @@ export default class ContactForm extends Component {
             <View style={styles.buttonContainer}>
                 <Button
                     onPress={this.submitInfo}
+                    disabled={!this.isValidForm()}
+                    // disabled
                 >
                     Submit
                 </Button>
