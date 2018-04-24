@@ -43,7 +43,7 @@ export default class ContactForm extends Component {
     isValidForm = () => {
         // debugger;
         const { nameText, emailText, messageText } = this.props;
-        if (nameText !== '' && emailText !== '' && messageText !== '') {
+        if (nameText.replace(/\s/g, '').length && emailText.replace(/\s/g, '').length && messageText.replace(/\s/g, '').length) {
             // this.props.setFormValid(true)
             return true;
         }
@@ -91,6 +91,7 @@ export default class ContactForm extends Component {
                 <Button
                     onPress={this.submitInfo}
                     disabled={!this.isValidForm()}
+                    style={{ alignSelf: 'flex-start' }}
                     // disabled
                 >
                     Submit
@@ -136,9 +137,10 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flex: 1,
-        alignItems: 'flex-end',
+        // justifyContent: 'flex-start',
         // borderWidth: 1,
         // borderColor: 'black',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: 15
     }
 });
