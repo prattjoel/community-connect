@@ -62,27 +62,27 @@ export default class ContactForm extends Component {
         }
     }
   render() {
-    const currentButtonStyle = this.isValidForm() ? {} : styles.disabledButtonStyle;
+    const currentButtonStyle = this.isValidForm() ? styles.activeButton : styles.disabledButtonStyle;
     return (
         <View style={styles.containerStyle}>
             <Text style={styles.textStyle}>Name</Text>
             <TextInput
                 style={styles.inputStyle}
-                placeholder=' Enter Name Here'
+                placeholder=' Enter Your Name Here'
                 onChangeText={this.onNameChange}
                 value={this.props.nameText}
             />
             <Text style={styles.textStyle}>Email</Text>
             <TextInput
                 style={styles.inputStyle}
-                placeholder=' Enter Email Here'
+                placeholder=' Enter Your Email Here'
                 onChangeText={this.onEmailChange}
                 value={this.props.emailText}
             />
             <Text style={styles.textStyle}>Message</Text>
             <TextInput
                 style={{ ...styles.inputStyle, ...styles.messageInput }}
-                placeholder=' Enter Message Here'
+                placeholder=' Enter Your Message Here'
                 onChangeText={this.onMessageChange}
                 value={this.props.messageText}
                 multiline
@@ -93,7 +93,7 @@ export default class ContactForm extends Component {
                         onPress={this.submitInfo}
                         disabled={!this.isValidForm()}
                         style={{ ...styles.buttonPositionStyle, ...currentButtonStyle }}
-                        updatedText={this.isValidForm() ? {} : styles.disabledTextStyle}
+                        updatedText={this.isValidForm() ? styles.activeButtonText : styles.disabledTextStyle}
                     >
                         Submit
                     </Button>
@@ -159,5 +159,12 @@ const styles = {
     disabledTextStyle: {
       color: 'gray',
       // opacity: 0.5
+    },
+    activeButtonText: {
+      color: 'white',
+      fontWeight: '800'
+    },
+    activeButton: {
+      backgroundColor: '#007aff'
     }
 };
