@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    StyleSheet,
+    // StyleSheet,
     TextInput
  } from 'react-native';
  import Button from './common/Button';
@@ -62,6 +62,8 @@ export default class ContactForm extends Component {
         }
     }
   render() {
+    const currentButtonStyle = this.isValidForm() ? {} : styles.disabledButtonStyle;
+    console.log(currentButtonStyle);
     return (
         <View style={styles.containerStyle}>
             <Text style={styles.textStyle}>Name</Text>
@@ -80,7 +82,7 @@ export default class ContactForm extends Component {
             />
             <Text style={styles.textStyle}>Message</Text>
             <TextInput
-                style={StyleSheet.flatten([styles.inputStyle, styles.messageInput])}
+                style={{ ...styles.inputStyle, ...styles.messageInput }}
                 placeholder=' Enter Message Here'
                 onChangeText={this.onMessageChange}
                 value={this.props.messageText}
@@ -91,8 +93,8 @@ export default class ContactForm extends Component {
                     <Button
                         onPress={this.submitInfo}
                         disabled={!this.isValidForm()}
-                        style={{ alignSelf: 'flex-start' }}
-                        // disabled
+                        style={{ ...styles.buttonPositionStyle, ...currentButtonStyle }}
+                        updatedText={this.isValidForm() ? {} : styles.disabledTextStyle}
                     >
                         Submit
                     </Button>
@@ -109,7 +111,7 @@ export default class ContactForm extends Component {
 //   );
 // };
 
-const styles = StyleSheet.create({
+const styles = {
     containerStyle: {
         flex: 1,
         backgroundColor: 'white',
@@ -147,5 +149,16 @@ const styles = StyleSheet.create({
         // borderColor: 'black',
         flexDirection: 'row',
         marginTop: 15
+    },
+    buttonPositionStyle: {
+      alignSelf: 'flex-start',
+    },
+    disabledButtonStyle: {
+      borderColor: 'gray',
+      // opacity: 0.5
+    },
+    disabledTextStyle: {
+      color: 'gray',
+      // opacity: 0.5
     }
-});
+};
