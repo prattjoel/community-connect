@@ -63,7 +63,6 @@ export default class ContactForm extends Component {
     }
   render() {
     const currentButtonStyle = this.isValidForm() ? {} : styles.disabledButtonStyle;
-    console.log(currentButtonStyle);
     return (
         <View style={styles.containerStyle}>
             <Text style={styles.textStyle}>Name</Text>

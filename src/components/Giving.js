@@ -35,14 +35,14 @@ const Giving = () => {
             </View>
             {/* <View style={{ ...styles.containerStyle, flexDirection: 'row' }}> */}
             {/* <View style={{ ...styles.containerStyle, flexDirection: 'row', borderColor: 'blue', borderWidth: 2 }}> */}
-            <View style={{ ...styles.containerStyle, justifyContent: 'space-between', marginTop: 20, marginBottom: 20 }}>
+            <View style={{ ...styles.containerStyle, justifyContent: 'flex-start', marginTop: 30 }}>
                 <View style={styles.linksContainer}>
                     <Button
                         onPress={() => {
                             openGivingUrl(webGivingUrl);
                         }}
-                        style={{ alignSelf: 'flex-start', borderColor: 'black' }}
-                        updatedText={{ color: 'black', fontSize: 28}}
+                        style={{ alignSelf: 'flex-start', borderColor: 'orange' }}
+                        updatedText={{ fontSize: 28, color: 'orange' }}
                     >
                         Give Online
                     </Button>
@@ -52,7 +52,7 @@ const Giving = () => {
                         Venmo:
                     </Text>
                     <Text style={{ ...styles.linkTextStyle, marginLeft: 5, alignSelf: 'flex-start' }}>
-                        VenmoUsername
+                        @Newday-Methodist
                     </Text>
 
                     {/* <Button
@@ -69,7 +69,7 @@ const Giving = () => {
                         Cash APP:
                     </Text>
                     <Text style={{ ...styles.linkTextStyle, marginLeft: 5 }}>
-                        Cash Username
+                        $NEWDAYCHURCHBX
                     </Text>
                 </View>
             </View>
@@ -136,7 +136,7 @@ const styles = {
         marginTop: 10
     },
     linkTextStyle: {
-        fontSize: 28,
-        fontWeight: '600'
+        fontSize: 18,
+        // fontWeight: '600'
     }
 };
