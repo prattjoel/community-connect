@@ -86,16 +86,18 @@ export default class ContactForm extends Component {
                 value={this.props.messageText}
                 multiline
             />
-            {this.showSentMessage()}
-            <View style={styles.buttonContainer}>
-                <Button
-                    onPress={this.submitInfo}
-                    disabled={!this.isValidForm()}
-                    style={{ alignSelf: 'flex-start' }}
-                    // disabled
-                >
-                    Submit
-                </Button>
+            <View style={{ flex: 1 }}>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        onPress={this.submitInfo}
+                        disabled={!this.isValidForm()}
+                        style={{ alignSelf: 'flex-start' }}
+                        // disabled
+                    >
+                        Submit
+                    </Button>
+                </View>
+                {/* {this.showSentMessage()} */}
             </View>
         </View>
     );
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     messageInput: {
-        height: 120
+        height: 100
     },
     textStyle: {
         marginLeft: 15,
@@ -131,9 +133,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     sentContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
+        flex: 4,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        // marginTop: 10,
+        // marginBottom: 10,
+        // borderWidth: 1
     },
     buttonContainer: {
         flex: 1,
