@@ -7,13 +7,16 @@ import ChatRoomList from '../components/chat/ChatRoomList';
 // import MessageList from '../components/MessageList';
 
 //
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const { currentChatRoom } = state.chatRooms;
+  const { selectorData, navigation } = ownProps;
   // debugger;
   return (
     {
       currentChatRoom,
-      availableChatRooms: state.chatRooms
+      availableChatRooms: state.chatRooms,
+      selectorData,
+      navigation
     }
   );
 };

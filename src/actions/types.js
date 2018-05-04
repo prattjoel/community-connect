@@ -23,3 +23,6 @@ export const SET_MESSAGE_TEXT = 'set_message_text';
 export const SEND_CONTACT_INFO = 'send_contact_info';
 
 export const ANNOUNCEMENTS = 'Announcements';
+export const WEEKLY_ANNOUNCEMENT_ROOM = 'weekly_announcement_room';
+export const EVENT_ANNOUNCEMENT_ROOM = 'event_announcement_room';
+export const COMMUNITY_ANNOUNCEMENT_ROOM = 'community_announcement_room';
