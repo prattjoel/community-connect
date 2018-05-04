@@ -17,7 +17,7 @@ export default class HomePage extends Component {
             <KeyboardManager style={{ flex: 1 }}>
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
                     <Messages
-                      currentChatRoom={this.props.currentChatRoom}
+                      // currentChatRoom={this.props.currentChatRoom}
                     />
                     <MessageInput />
                 </View>

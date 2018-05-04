@@ -8,7 +8,10 @@ import {
     SET_REFRESH_STATUS,
     SET_CHAT_ROOM,
     GET_REFRESHED_MESSAGES,
-    SET_LOADING
+    SET_LOADING,
+    WEEKLY_ANNOUNCEMENT_ROOM,
+    EVENT_ANNOUNCEMENT_ROOM,
+    COMMUNITY_ANNOUNCEMENT_ROOM
 } from '../actions/types';
 import {
     PRAYER_CHAT_ROOM,
@@ -21,6 +24,9 @@ const initialState = {
     prayer_chat_room: [],
     general_chat_room: [],
     small_group_chat_room: [],
+    weekly_announcement_room: [],
+    event_announcement_room: [],
+    community_announcement_room: [],
     messagesToShow: [],
     refreshedMessages: [],
     isRefreshing: false,
@@ -120,6 +126,12 @@ const getMessagesFromCurrentRoom = (currentRoom, state) => {
             return state.general_chat_room;
         case SMALL_GROUP_CHAT_ROOM:
             return state.small_group_chat_room;
+        case WEEKLY_ANNOUNCEMENT_ROOM:
+          return state.weekly_announcement_room;
+        case EVENT_ANNOUNCEMENT_ROOM:
+          return state.event_announcement_room;
+        case COMMUNITY_ANNOUNCEMENT_ROOM:
+          return state.community_announcement_room;
         default:
             return [];
     }

@@ -8,11 +8,11 @@ import MessageList from '../components/chat/MessageList';
 // Send message information as props to MessageList Component
 const mapStateToProps = (state, ownProps) => {
     // debugger;
-    const announcementRoom = ownProps.currentChatRoom;
+    // const announcementRoom = ownProps.currentChatRoom;
   const {
       messagesToShow,
       isRefreshing,
-      refreshedMessages,
+      // refreshedMessages,
       currentChatRoom,
       isLoadingMessages,
       canLoadOlderMessages,
@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
       isLoadingMessages,
       canLoadOlderMessages,
       isScrolling,
-      announcementRoom
+      // announcementRoom
       // lastTimeStamp
     }
   );

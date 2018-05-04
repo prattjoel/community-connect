@@ -11,10 +11,12 @@ export default class MessageList extends Component {
   componentWillMount() {
     // Get messages from chat room in firebase
     // debugger;
-    const { getMessages, currentChatRoom } = this.props;
+    const { getMessages, currentChatRoom, messagesToDisplay } = this.props;
     // const currentRoom = announcementRoom || currentChatRoom;
     console.log('current chat room in message list:', currentChatRoom);
-    if (this.props.messagesToDisplay.length < 1) {
+    console.log('current message list:', messagesToDisplay);
+
+    if (messagesToDisplay.length < 1) {
         getMessages(currentChatRoom);
         if (!this.props.isLoadingMessages) {
             this.props.setIsLoading(true);
