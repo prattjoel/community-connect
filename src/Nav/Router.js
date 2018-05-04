@@ -51,7 +51,7 @@ const HomeNav = TabNavigator(
                     return <Ionicons name={name} size={40} style={{ paddingTop: 10 }} />;
                 };
                 if (routeName === 'Chat') {
-                    const chatIconName = `ios-home${focused ? '' : '-outline'}`;
+                    const chatIconName = `ios-chatboxes${focused ? '' : '-outline'}`;
                     const chatIcon = createIcon(chatIconName);
                     return chatIcon;
                 } else if (routeName === 'Give') {

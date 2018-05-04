@@ -21,3 +21,5 @@ export const SET_NAME_TEXT = 'set_name_text';
 export const SET_EMAIL_TEXT = 'set_email_text';
 export const SET_MESSAGE_TEXT = 'set_message_text';
 export const SEND_CONTACT_INFO = 'send_contact_info';
+
+export const ANNOUNCEMENTS = 'Announcements';

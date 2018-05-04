@@ -6,8 +6,9 @@ import { getMessages, setRefresh, refreshMessages, setIsLoading } from '../actio
 import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     // debugger;
+    const announcementRoom = ownProps.currentChatRoom;
   const {
       messagesToShow,
       isRefreshing,
@@ -17,21 +18,8 @@ const mapStateToProps = state => {
       canLoadOlderMessages,
       isScrolling
   } = state.messages;
-  // const messages = messagesToShow.map(item => _.values(item));
-  // const currentMessages = messagesToShow[currentChatRoom] || {};
-  // const messages = [...currentMessages, ...refreshedMessages];
+
   const keys = getKeys(messagesToShow);
-  // const messages = [...messagesToShow, ...refreshedMessages];
-  // const reversedMessages = _.values(messagesToShow).reverse();
-  // const reversedKeys = Object.keys(messagesToShow).reverse();
-  // const lastTimeStamp = [];
-  // if (!_.isEmpty(messagesToShow)){
-  //     const lastKey = keys[keys.length - 1];
-  //     debugger;
-  //     const lastMessage = messagesToShow[messagesToShow.length - 1];
-  //     lastTimeStamp = lastMessage[lastKey].timestamp;
-  // }
-  // const isRefreshing = state.messagesisRefreshing;
   return (
     {
       messagesToDisplay: messagesToShow,
@@ -40,8 +28,8 @@ const mapStateToProps = state => {
       isRefreshing,
       isLoadingMessages,
       canLoadOlderMessages,
-      isScrolling
-
+      isScrolling,
+      announcementRoom
       // lastTimeStamp
     }
   );
