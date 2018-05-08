@@ -27,6 +27,7 @@ export default class ChatRoomList extends Component {
     this.props.setChatRoom(room);
   }
 
+  // Show list item as a chat room that can be selected.
   renderChatRoom = ({ item }) => {
     // debugger;
     return (
@@ -36,6 +37,7 @@ export default class ChatRoomList extends Component {
         room={item.room}
         // getMessages={this.props.getMessages}
         navigation={this.props.navigation}
+        isAnnouncements={this.props.isAnnouncements}
       >
         {item.room}
       </ChatRoomListItem>

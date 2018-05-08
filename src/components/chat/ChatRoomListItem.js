@@ -10,12 +10,13 @@ import ListSection from '../common/ListSection';
 
 export default class ChatRoomListItem extends Component {
     onPressItem = () => {
+        // Update current chat room with the current chat room key
         this.props.onPress(this.props.roomKey);
-        // this.props.getMessages(this.props.roomKey);
 
-        // Navigate to Messages screen
+        // Navigate to Messages screen - pass current room label and announcements page status
         this.props.navigation.navigate('Messages', {
-            currentChatroom: this.props.room
+            currentChatroom: this.props.room,
+            isAnnouncements: this.props.isAnnouncements
         });
     }
     render() {

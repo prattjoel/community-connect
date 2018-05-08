@@ -28,6 +28,7 @@ export default class AnnouncementsPage extends Component {
       <MessageSelector
         selectorData={announcementListData}
         navigation={this.props.navigation}
+        isAnnouncements
       />
         );
   }

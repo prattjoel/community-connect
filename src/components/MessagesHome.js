@@ -12,16 +12,26 @@ export default class HomePage extends Component {
     //     Keyboard.dismiss();
     //     console.log('keyboard dismissed');
     // }
+
+    // Hide messge input field when announcements page is shown
+    showMessageInput = () => {
+      // const chatroom = this.props.navigation.getParam('currentChatroom');
+      const isAnnouncements = this.props.navigation.getParam('isAnnouncements');
+      if (isAnnouncements) {
+        return null;
+      }
+      return (
+        <MessageInput />
+      );
+    }
+
     render() {
         return (
             <KeyboardManager style={{ flex: 1 }}>
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
-                    <Messages
-                      // currentChatRoom={this.props.currentChatRoom}
-                    />
-                    <MessageInput />
+                    <Messages />
+                  {this.showMessageInput()}
                 </View>
-                <ImagesFromCR />
             </KeyboardManager>
         );
     }
