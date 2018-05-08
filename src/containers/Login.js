@@ -19,8 +19,8 @@ const mapDispatchToProps = dispatch => {
     // debugger;
   return (
     {
-        updateSignIn: signedInStatus => {
-            dispatch(signInUser(signedInStatus));
+        updateSignIn: (signedInStatus, isAdmin) => {
+            dispatch(signInUser(signedInStatus, isAdmin));
         },
         updateLoading: isLoading => {
             dispatch(loading(isLoading));

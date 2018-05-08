@@ -4,11 +4,12 @@ import {
     LOADING
 } from './types';
 
-export const signInUser = isSignedIn => {
+export const signInUser = (isSignedIn, isAdmin) => {
   return (
     {
       type: SIGN_IN_USER,
-      isSignedIn
+      isSignedIn,
+      isAdmin
     }
   );
 };

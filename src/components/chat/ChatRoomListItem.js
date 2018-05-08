@@ -10,13 +10,24 @@ import ListSection from '../common/ListSection';
 
 export default class ChatRoomListItem extends Component {
     onPressItem = () => {
+      const {
+        onPress,
+        roomKey,
+        navigation,
+        room,
+        isAnnouncements,
+        isAdmin
+       } = this.props;
+       console.log('isAdmin in chatlist item:', isAdmin);
         // Update current chat room with the current chat room key
-        this.props.onPress(this.props.roomKey);
+        onPress(roomKey);
 
-        // Navigate to Messages screen - pass current room label and announcements page status
-        this.props.navigation.navigate('Messages', {
-            currentChatroom: this.props.room,
-            isAnnouncements: this.props.isAnnouncements
+        // Navigate to Messages screen - pass current room label,
+        // administrator status and announcements page status
+        navigation.navigate('Messages', {
+            currentChatroom: room,
+            isAnnouncements,
+            isAdmin
         });
     }
     render() {

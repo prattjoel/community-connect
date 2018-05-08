@@ -10,13 +10,15 @@ import ChatRoomList from '../components/chat/ChatRoomList';
 const mapStateToProps = (state, ownProps) => {
   const { currentChatRoom } = state.chatRooms;
   const { selectorData, navigation } = ownProps;
+  const { isAdmin } = state.signIn;
   // debugger;
   return (
     {
       currentChatRoom,
       availableChatRooms: state.chatRooms,
       selectorData,
-      navigation
+      navigation,
+      isAdmin
     }
   );
 };

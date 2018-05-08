@@ -188,10 +188,13 @@ export default class FBLoginButton extends Component {
     };
 
     // Use databse refernece to check if user is signed in to Firbase.
+    // Get signed in user's administrator status
     _checkFirebaseSignInStatus = (ref) => {
         ref.once('value')
-        .then(() => {
-            this.props.updateSignIn(true);
+        .then((result) => {
+            const userInfo = result.val();
+
+            this.props.updateSignIn(true, userInfo.isAdmin);
             this.props.updateLoading(false);
             this.goToHomeScreen();
         })

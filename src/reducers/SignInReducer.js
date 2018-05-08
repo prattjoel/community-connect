@@ -5,7 +5,9 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    isSignedIn: false, isLoading: false
+    isSignedIn: false,
+    isLoading: false,
+    isAdmin: false
 };
 
 const signIn = (state = initialState, action) => {
@@ -16,7 +18,7 @@ const signIn = (state = initialState, action) => {
         // console.log('state for SIGN_IN_USER set');
         // console.log('action called');
         // console.log(action.isSignedIn);
-            return ({ ...state, isSignedIn: action.isSignedIn });
+            return ({ ...state, isSignedIn: action.isSignedIn, isAdmin: action.isAdmin });
         case LOADING:
             return ({ ...state, isLoading: action.isLoading });
         default:

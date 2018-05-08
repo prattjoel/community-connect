@@ -13,11 +13,14 @@ export default class HomePage extends Component {
     //     console.log('keyboard dismissed');
     // }
 
-    // Hide messge input field when announcements page is shown
+    // Hide messge input field when announcements page is shown and 
+    // user is not an administrator
     showMessageInput = () => {
       // const chatroom = this.props.navigation.getParam('currentChatroom');
       const isAnnouncements = this.props.navigation.getParam('isAnnouncements');
-      if (isAnnouncements) {
+      const isAdmin = this.props.navigation.getParam('isAdmin');
+
+      if (isAnnouncements && !isAdmin) {
         return null;
       }
       return (
