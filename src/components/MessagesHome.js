@@ -13,7 +13,7 @@ export default class HomePage extends Component {
     //     console.log('keyboard dismissed');
     // }
 
-    // Hide messge input field when announcements page is shown and 
+    // Hide messge input field when announcements page is shown and
     // user is not an administrator
     showMessageInput = () => {
       // const chatroom = this.props.navigation.getParam('currentChatroom');
@@ -34,6 +34,7 @@ export default class HomePage extends Component {
                 <View style={{ flex: 1, backgroundColor: 'white' }}>
                     <Messages />
                   {this.showMessageInput()}
+                  <ImagesFromCR />
                 </View>
             </KeyboardManager>
         );

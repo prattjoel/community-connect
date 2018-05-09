@@ -13,8 +13,8 @@ export default class ImageSelector extends Component {
         // debugger;
         // console.log('showImages in componentDidMount');
         // console.log(this.props.showImages);
-        console.log('currentImages in componentDidMount ImageSelector: ');
-        console.log(this.props.currentImages);
+        // console.log('currentImages in componentDidMount ImageSelector: ');
+        // console.log(this.props.currentImages);
     }
 
     // componentWillReceiveProps(nextProps) {

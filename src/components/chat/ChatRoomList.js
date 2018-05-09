@@ -30,7 +30,6 @@ export default class ChatRoomList extends Component {
   // Show list item as a chat room that can be selected.
   renderChatRoom = ({ item }) => {
     // debugger;
-    console.log('isAdmin in Chatroom list', this.props.isAdmin);
     return (
       <ChatRoomListItem
         onPress={this.updateChatRoom}

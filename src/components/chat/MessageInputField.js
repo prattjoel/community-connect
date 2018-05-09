@@ -22,11 +22,11 @@ export default class MessageInputField extends Component {
     console.log(this.props.currentChatRoom);
   }
 
-  onMessageChange(text) {
+  onMessageChange = (text) => {
     this.props.updateMessageText(text);
   }
 
-  onSendButtonPressed() {
+  onSendButtonPressed = () => {
     const { message, currentChatRoom } = this.props;
 
     if (message !== '') {
@@ -36,8 +36,9 @@ export default class MessageInputField extends Component {
     }
   }
 
-  onImageButtonPressed() {
+  onImageButtonPressed = () => {
       this.props.showImageSelector(!this.props.showImages);
+
 
       CameraRoll.getPhotos({ first: 20 })
       .then(res => {
@@ -47,7 +48,7 @@ export default class MessageInputField extends Component {
     });
   }
 
-  userIsTyping() {
+  userIsTyping = () => {
       const { message } = this.props;
       if (message !== '') {
           return true;

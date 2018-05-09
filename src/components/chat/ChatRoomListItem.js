@@ -18,7 +18,6 @@ export default class ChatRoomListItem extends Component {
         isAnnouncements,
         isAdmin
        } = this.props;
-       console.log('isAdmin in chatlist item:', isAdmin);
         // Update current chat room with the current chat room key
         onPress(roomKey);
 
