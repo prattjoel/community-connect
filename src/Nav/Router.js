@@ -154,12 +154,12 @@ const LoginStack = StackNavigator(
 
 const MenuDrawer = DrawerNavigator(
     {
-        MessageHome: {
+        Home: {
             screen: MessagesNav
         },
-        SettingsMenu: {
-            screen: SettingsMenu
-        },
+        // SettingsMenu: {
+        //     screen: SettingsMenu
+        // },
         Logout: {
             screen: LoginStack,
         },

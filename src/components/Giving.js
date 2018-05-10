@@ -102,6 +102,8 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
+        // borderWidth: 5,
+        // borderColor: 'red'
         // flexDirection: 'row'
     },
     textStyle: {
@@ -118,6 +120,7 @@ const styles = {
     imageStyle: {
         flex: 1,
         resizeMode: 'contain',
+        borderRadius: 10,
         // borderWidth: 5,
         // borderColor: 'black'
 
