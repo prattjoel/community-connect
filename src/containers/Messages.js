@@ -2,7 +2,13 @@
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { getMessages, setRefresh, refreshMessages, setIsLoading } from '../actions/MessageActions';
+import {
+  getMessages,
+  setRefresh,
+  refreshMessages,
+  setIsLoading
+} from '../actions/MessageActions';
+import { toggleImageDetail } from '../actions/ImageActions';
 import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
@@ -18,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
       canLoadOlderMessages,
       isScrolling
   } = state.messages;
+  const { showImageDetail } = state.imagesFromCR;
 
   const keys = getKeys(messagesToShow);
   return (
@@ -29,6 +36,7 @@ const mapStateToProps = (state, ownProps) => {
       isLoadingMessages,
       canLoadOlderMessages,
       isScrolling,
+      showImageDetail
       // announcementRoom
       // lastTimeStamp
     }
@@ -59,6 +67,9 @@ const mapDispatchToProps = dispatch => {
     },
     setIsLoading: (isLoading) => {
         dispatch(setIsLoading(isLoading));
+    },
+    toggleImageDetail: (showImageDetail) => {
+      dispatch(toggleImageDetail(showImageDetail));
     },
   });
 };

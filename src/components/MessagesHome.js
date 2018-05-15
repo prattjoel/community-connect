@@ -6,6 +6,7 @@ import Messages from '../containers/Messages';
 import MessageInput from '../containers/MessageInput';
 import KeyboardManager from './common/KeyboardManager';
 import ImagesFromCR from '../containers/ImagesFromCR';
+import ImageDetail from '../containers/ImageDetailContainer';
 
 export default class HomePage extends Component {
     // componentWillUnMount() {
@@ -35,6 +36,7 @@ export default class HomePage extends Component {
                     <Messages />
                   {this.showMessageInput()}
                   <ImagesFromCR />
+                  <ImageDetail />
                 </View>
             </KeyboardManager>
         );

@@ -8,7 +8,8 @@ import {
     SHOW_IMAGE_SELECTOR,
     SELECT_IMAGE_TO_SEND,
     IMAGE_UPLOADED,
-    CANCEL_IMAGE_SELECTION
+    CANCEL_IMAGE_SELECTION,
+    SHOW_IMAGE_DETAIL
 } from '../constants/ImageTypes';
 import {
     prepareMessageToSend,
@@ -60,6 +61,13 @@ export const cancelImages = () => {
             type: CANCEL_IMAGE_SELECTION
         }
     );
+};
+
+export const toggleImageDetail = (showImageDetail) => {
+  return ({
+    type: SHOW_IMAGE_DETAIL,
+    payload: showImageDetail
+  });
 };
 
 // debugger;

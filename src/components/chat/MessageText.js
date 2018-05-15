@@ -5,7 +5,8 @@ import {
   View,
   Text,
   Image,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 
@@ -40,10 +41,17 @@ const MessageText = (props) => {
                     source={{ uri: props.photoUrl }}
                     style={{ width: 200, height: 200 }}
                   /> */}
-                  <CacheImage
-                    {...{ uri: props.photoUrl, preview }}
-                    style={{ width: imageWidth, height: 200, borderRadius: 5 }}
-                  />
+                  <TouchableHighlight
+                    onPress={() => {
+                      console.log('imageDetail pressed');
+                      props.toggleImageDetail(!props.showImageDetail);
+                    }}
+                  >
+                    <CacheImage
+                      {...{ uri: props.photoUrl, preview }}
+                      style={{ width: imageWidth, height: 200, borderRadius: 5 }}
+                    />
+                  </TouchableHighlight>
               </View>
             </View>
           </View>

@@ -5,7 +5,8 @@ import {
     SHOW_IMAGE_SELECTOR,
     SELECT_IMAGE_TO_SEND,
     IMAGE_UPLOADED,
-    CANCEL_IMAGE_SELECTION
+    CANCEL_IMAGE_SELECTION,
+    SHOW_IMAGE_DETAIL
     // UNSELECT_IMAGE_TO_SEND
 } from '../constants/ImageTypes';
 
@@ -13,7 +14,8 @@ const initialState = {
     currentImages: [],
     showImages: false,
     selectedImage: {},
-    photoUrl: ''
+    photoUrl: '',
+    showImageDetail: false
 };
 
 export default (state = initialState, action) => {
@@ -53,6 +55,8 @@ export default (state = initialState, action) => {
             return { ...initialState, photoUrl: action.payload };
         case CANCEL_IMAGE_SELECTION:
             return initialState;
+        case SHOW_IMAGE_DETAIL:
+          return { ...state, showImageDetail: action.payload };
         default:
             return state;
     }
