@@ -8,7 +8,10 @@ import {
   refreshMessages,
   setIsLoading
 } from '../actions/MessageActions';
-import { toggleImageDetail } from '../actions/ImageActions';
+import {
+  toggleImageDetail,
+  setImageDetailUrl
+} from '../actions/ImageActions';
 import MessageList from '../components/chat/MessageList';
 
 // Send message information as props to MessageList Component
@@ -24,7 +27,10 @@ const mapStateToProps = (state, ownProps) => {
       canLoadOlderMessages,
       isScrolling
   } = state.messages;
-  const { showImageDetail } = state.imagesFromCR;
+  const {
+    showImageDetail,
+    imageDetailUrl
+  } = state.imagesFromCR;
 
   const keys = getKeys(messagesToShow);
   return (
@@ -36,7 +42,8 @@ const mapStateToProps = (state, ownProps) => {
       isLoadingMessages,
       canLoadOlderMessages,
       isScrolling,
-      showImageDetail
+      showImageDetail,
+      imageDetailUrl
       // announcementRoom
       // lastTimeStamp
     }
@@ -71,6 +78,9 @@ const mapDispatchToProps = dispatch => {
     toggleImageDetail: (showImageDetail) => {
       dispatch(toggleImageDetail(showImageDetail));
     },
+    setImageDetailUrl: (imageDetailUrl) => {
+      dispatch(setImageDetailUrl(imageDetailUrl));
+    }
   });
 };
 

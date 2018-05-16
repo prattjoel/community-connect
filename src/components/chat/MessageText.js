@@ -9,6 +9,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
+// import {CacheManager} from "react-native-expo-image-cache';
 
 const MessageText = (props) => {
     // // debugger;
@@ -37,13 +38,9 @@ const MessageText = (props) => {
                 </Text>
               </View>
               <View style={{ paddingTop: 10, paddingBottom: 5 }}>
-                  {/* <Image
-                    source={{ uri: props.photoUrl }}
-                    style={{ width: 200, height: 200 }}
-                  /> */}
                   <TouchableHighlight
                     onPress={() => {
-                      console.log('imageDetail pressed');
+                      props.setImageDetailUrl(props.photoUrl);
                       props.toggleImageDetail(!props.showImageDetail);
                     }}
                   >

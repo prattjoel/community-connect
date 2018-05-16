@@ -7,7 +7,7 @@ import {
     CHILD_ADDED,
     SET_REFRESH_STATUS,
     GET_REFRESHED_MESSAGES,
-    SET_LOADING
+    SET_LOADING,
     // SET_CAN_LOAD,
     // SET_SCROLLING
 } from './types';

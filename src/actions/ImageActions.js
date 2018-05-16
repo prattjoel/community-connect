@@ -9,7 +9,8 @@ import {
     SELECT_IMAGE_TO_SEND,
     IMAGE_UPLOADED,
     CANCEL_IMAGE_SELECTION,
-    SHOW_IMAGE_DETAIL
+    SHOW_IMAGE_DETAIL,
+    SET_IMAGE_DETAIL_URL
 } from '../constants/ImageTypes';
 import {
     prepareMessageToSend,
@@ -43,6 +44,13 @@ export const toggleImageSelector = showImageSelector => {
             payload: showImageSelector
         }
     );
+};
+
+export const setImageDetailUrl = imageDetailUrl => {
+  return {
+    type: SET_IMAGE_DETAIL_URL,
+    payload: imageDetailUrl
+  };
 };
 
 export const selectImageToSend = imageToSend => {
