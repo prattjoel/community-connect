@@ -2,6 +2,9 @@
 
 import { connect } from 'react-redux';
 import ImageDetail from '../components/chat/ImageDetail';
+import {
+  toggleImageDetail,
+} from '../actions/ImageActions';
 
 const mapStateToProps = state => {
   const {
@@ -15,9 +18,19 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+    return (
+        {
+          toggleImageDetail: (showImageDetail) => {
+            dispatch(toggleImageDetail(showImageDetail));
+          },
+        }
+    );
+};
+
 const ImageDetailContainer = connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(ImageDetail);
 
 export default ImageDetailContainer;
