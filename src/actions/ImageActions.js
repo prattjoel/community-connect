@@ -10,7 +10,8 @@ import {
     IMAGE_UPLOADED,
     CANCEL_IMAGE_SELECTION,
     SHOW_IMAGE_DETAIL,
-    SET_IMAGE_DETAIL_URL
+    SET_IMAGE_DETAIL_URL,
+    SET_IMAGE_DETAIL_SIZE
 } from '../constants/ImageTypes';
 import {
     prepareMessageToSend,
@@ -50,6 +51,13 @@ export const setImageDetailUrl = imageDetailUrl => {
   return {
     type: SET_IMAGE_DETAIL_URL,
     payload: imageDetailUrl
+  };
+};
+
+export const setImageDetailSize = (imageSize) => {
+  return {
+    type: SET_IMAGE_DETAIL_SIZE,
+    payload: imageSize
   };
 };
 

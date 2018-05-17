@@ -5,17 +5,36 @@ import {
     Modal,
     View,
     Dimensions,
-    TouchableHighlight
-    // Image
+    TouchableHighlight,
+    Image
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 import { Ionicons } from '@expo/vector-icons';
 
 export default class ImageDetail extends Component {
 
+  checkImageSize = (imageUrl) => {
+    if (imageUrl !== '') {
+      Image.getSize(imageUrl, (width, height) => {
+        console.log('imageSize', width, height);
+        if (width > height) {
+          const imageWidth = Dimensions.get('window').width;
+          const scaleFactor = width / imageWidth;
+          const imageHeight = height / scaleFactor;
+          const imageSize = { width: imageWidth, height: imageHeight };
+          this.props.setImageDetailSize(imageSize);
+        } else {
+          const imageWidth = Dimensions.get('window').width;
+          const imageHeight = Dimensions.get('window').height;
+          const imageSize = { width: imageWidth, height: imageHeight };
+          this.props.setImageDetailSize(imageSize);
+        }
+      });
+      return this.props.imageDetailSize;
+    }
+  };
+
   render() {
-    const { width } = Dimensions.get('window');
-    const imageWidth = 0.85 * width;
     const preview = require('../../assets/messageImagePlaceholder.png');
     const backArrow = 'ios-arrow-round-back';
     return (
@@ -38,8 +57,8 @@ export default class ImageDetail extends Component {
 
         <View style={styles.containerStyle}>
           <CacheImage
-             {...{ uri: this.props.imageDetailUrl, preview }}
-             style={{ width: imageWidth, height: 200, borderRadius: 5 }}
+             {...{ uri: this.props.imageDetailUrl }}
+             style={this.checkImageSize(this.props.imageDetailUrl)}
           />
         </View>
       </Modal>

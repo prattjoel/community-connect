@@ -7,7 +7,8 @@ import {
     IMAGE_UPLOADED,
     CANCEL_IMAGE_SELECTION,
     SHOW_IMAGE_DETAIL,
-    SET_IMAGE_DETAIL_URL
+    SET_IMAGE_DETAIL_URL,
+    SET_IMAGE_DETAIL_SIZE
     // UNSELECT_IMAGE_TO_SEND
 } from '../constants/ImageTypes';
 
@@ -17,7 +18,8 @@ const initialState = {
     selectedImage: {},
     photoUrl: '',
     showImageDetail: false,
-    imageDetailUrl: ''
+    imageDetailUrl: '',
+    imageDetailSize: {}
 };
 
 export default (state = initialState, action) => {
@@ -31,6 +33,8 @@ export default (state = initialState, action) => {
             return { ...state, showImages: action.payload };
         case SET_IMAGE_DETAIL_URL:
             return { ...state, imageDetailUrl: action.payload };
+        case SET_IMAGE_DETAIL_SIZE:
+            return { ...state, imageDetailSize: action.payload };
         case SELECT_IMAGE_TO_SEND:
         // TODO: DONE
         // 1. restructure reducer to reflect single image selection.

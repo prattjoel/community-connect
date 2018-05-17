@@ -4,17 +4,20 @@ import { connect } from 'react-redux';
 import ImageDetail from '../components/chat/ImageDetail';
 import {
   toggleImageDetail,
+  setImageDetailSize
 } from '../actions/ImageActions';
 
 const mapStateToProps = state => {
   const {
     showImageDetail,
-    imageDetailUrl
+    imageDetailUrl,
+    imageDetailSize
   } = state.imagesFromCR;
 
   return {
     showImageDetail,
-    imageDetailUrl
+    imageDetailUrl,
+    imageDetailSize
   };
 };
 
@@ -24,6 +27,9 @@ const mapDispatchToProps = dispatch => {
           toggleImageDetail: (showImageDetail) => {
             dispatch(toggleImageDetail(showImageDetail));
           },
+          setImageDetailSize: (imageSize) => {
+            dispatch(setImageDetailSize(imageSize));
+          }
         }
     );
 };
