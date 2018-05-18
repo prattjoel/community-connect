@@ -5,5 +5,5 @@ export const SELECT_IMAGE_TO_SEND = 'select_image_to_send';
 export const IMAGE_UPLOADED = 'image_uploaded';
 export const CANCEL_IMAGE_SELECTION = 'cancel_image_selection';
 export const SHOW_IMAGE_DETAIL = 'show_image_detail';
-export const SET_IMAGE_DETAIL_URL = 'set_image_detail_url';
+export const SET_IMAGE_DETAIL_INFO = 'set_image_detail_info';
 export const SET_IMAGE_DETAIL_SIZE = 'set_image_detail_size';

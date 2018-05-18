@@ -76,7 +76,9 @@ export default class MessageList extends Component {
             profilePicUrl={messageInfo.profilePhotoUrl}
             toggleImageDetail={this.props.toggleImageDetail}
             showImageDetail={this.props.showImageDetail}
-            setImageDetailUrl={this.props.setImageDetailUrl}
+            setImageDetailInfo={this.props.setImageDetailInfo}
+            imageHeight={messageInfo.height}
+            imageWidth={messageInfo.width}
           />
         );
     }

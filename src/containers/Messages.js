@@ -10,7 +10,7 @@ import {
 } from '../actions/MessageActions';
 import {
   toggleImageDetail,
-  setImageDetailUrl
+  setImageDetailInfo
 } from '../actions/ImageActions';
 import MessageList from '../components/chat/MessageList';
 
@@ -78,8 +78,8 @@ const mapDispatchToProps = dispatch => {
     toggleImageDetail: (showImageDetail) => {
       dispatch(toggleImageDetail(showImageDetail));
     },
-    setImageDetailUrl: (imageDetailUrl) => {
-      dispatch(setImageDetailUrl(imageDetailUrl));
+    setImageDetailInfo: (imageDetailUrl, imageDetailHeight, imageDetailwidth) => {
+      dispatch(setImageDetailInfo(imageDetailUrl, imageDetailHeight, imageDetailwidth));
     }
   });
 };

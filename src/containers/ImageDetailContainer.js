@@ -10,13 +10,13 @@ import {
 const mapStateToProps = state => {
   const {
     showImageDetail,
-    imageDetailUrl,
+    imageDetailInfo,
     imageDetailSize
   } = state.imagesFromCR;
 
   return {
     showImageDetail,
-    imageDetailUrl,
+    imageDetailInfo,
     imageDetailSize
   };
 };

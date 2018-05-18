@@ -6,64 +6,27 @@ import {
     View,
     Dimensions,
     TouchableHighlight,
-    Image
 } from 'react-native';
-import Expo from 'expo';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 import { Ionicons } from '@expo/vector-icons';
 
 export default class ImageDetail extends Component {
 
-  // componentWillMount() {
-  //
-  // }
-
   onShowImage = () => {
-    if (this.props.imageDetailUrl !== '') {
-      Image.getSize(this.props.imageDetailUrl, (width, height) => {
-        console.log('imageSize', width, height);
-        if (width > height) {
-          const imageWidth = Dimensions.get('window').width;
-          const scaleFactor = width / imageWidth;
-          const imageHeight = height / scaleFactor;
-          const imageSize = { width: imageWidth, height: imageHeight };
-          this.props.setImageDetailSize(imageSize);
-        } else {
-          const imageWidth = Dimensions.get('window').width;
-          const imageHeight = Dimensions.get('window').height;
-          const imageSize = { width: imageWidth, height: imageHeight };
-          this.props.setImageDetailSize(imageSize);
-        }
-      });
-      return this.props.imageDetailSize;
+    const { height, width } = this.props.imageDetailInfo;
+    if (width > height) {
+      const imageWidth = Dimensions.get('window').width;
+      const scaleFactor = width / imageWidth;
+      const imageHeight = height / scaleFactor;
+      const imageSize = { width: imageWidth, height: imageHeight };
+      this.props.setImageDetailSize(imageSize);
+    } else {
+      const imageWidth = Dimensions.get('window').width;
+      const imageHeight = Dimensions.get('window').height;
+      const imageSize = { width: imageWidth, height: imageHeight };
+      this.props.setImageDetailSize(imageSize);
     }
-    // Expo.FileSystem.readDirectoryAsync(`${Expo.FileSystem.cacheDirectory}expo-image-cache/`).then(
-    //   (result) => {
-    //     console.log('fileSystemInfo:', result);
-    //   }
-    // );
   }
-
-  checkImageSize = (imageUrl) => {
-    if (imageUrl !== '') {
-      Image.getSize(imageUrl, (width, height) => {
-        console.log('imageSize', width, height);
-        if (width > height) {
-          const imageWidth = Dimensions.get('window').width;
-          const scaleFactor = width / imageWidth;
-          const imageHeight = height / scaleFactor;
-          const imageSize = { width: imageWidth, height: imageHeight };
-          this.props.setImageDetailSize(imageSize);
-        } else {
-          const imageWidth = Dimensions.get('window').width;
-          const imageHeight = Dimensions.get('window').height;
-          const imageSize = { width: imageWidth, height: imageHeight };
-          this.props.setImageDetailSize(imageSize);
-        }
-      });
-      return this.props.imageDetailSize;
-    }
-  };
 
   render() {
     const preview = require('../../assets/messageImagePlaceholder.png');
@@ -77,6 +40,8 @@ export default class ImageDetail extends Component {
       >
         <TouchableHighlight
           onPress={() => {
+            const defaultImageSize = { height: 0, width: 0 };
+            this.props.setImageDetailSize(defaultImageSize);
             this.props.toggleImageDetail(!this.props.showImageDetail);
           }}
         >
@@ -89,7 +54,7 @@ export default class ImageDetail extends Component {
 
         <View style={styles.containerStyle}>
           <CacheImage
-             {...{ uri: this.props.imageDetailUrl }}
+             {...{ uri: this.props.imageDetailInfo.photoUrl }}
              style={this.props.imageDetailSize}
           />
         </View>

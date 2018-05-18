@@ -40,7 +40,7 @@ const MessageText = (props) => {
               <View style={{ paddingTop: 10, paddingBottom: 5 }}>
                   <TouchableHighlight
                     onPress={() => {
-                      props.setImageDetailUrl(props.photoUrl);
+                      props.setImageDetailInfo(props.photoUrl, props.imageHeight, props.imageWidth);
                       props.toggleImageDetail(!props.showImageDetail);
                     }}
                   >

@@ -2,6 +2,7 @@
 
 import { RNS3 } from 'react-native-aws3';
 import firebase from 'firebase';
+// import { Image } from 'react-native';
 // import Config from 'react-native-config';
 import {
     SET_CURRENT_IMAGES,
@@ -10,7 +11,7 @@ import {
     IMAGE_UPLOADED,
     CANCEL_IMAGE_SELECTION,
     SHOW_IMAGE_DETAIL,
-    SET_IMAGE_DETAIL_URL,
+    SET_IMAGE_DETAIL_INFO,
     SET_IMAGE_DETAIL_SIZE
 } from '../constants/ImageTypes';
 import {
@@ -25,9 +26,12 @@ import {
 export const setCurrentImages = imagesFromCameraRoll => {
     const currentImages = imagesFromCameraRoll
     .map(imageInfo => {
+      const { uri, filename, height, width } = imageInfo.node.image;
         return {
-            uri: imageInfo.node.image.uri,
-            filename: imageInfo.node.image.filename,
+            uri,
+            filename,
+            height,
+            width,
             isSelected: false
         };
     });
@@ -47,10 +51,10 @@ export const toggleImageSelector = showImageSelector => {
     );
 };
 
-export const setImageDetailUrl = imageDetailUrl => {
+export const setImageDetailInfo = (imageDetailUrl, imageDetailHeight, imageDetailwidth) => {
   return {
-    type: SET_IMAGE_DETAIL_URL,
-    payload: imageDetailUrl
+    type: SET_IMAGE_DETAIL_INFO,
+    payload: { photoUrl: imageDetailUrl, height: imageDetailHeight, width: imageDetailwidth }
   };
 };
 
@@ -111,6 +115,7 @@ export const sendSelectedImages = (selectedImages, currentChatRoom) => {
 
 const sendImage = (dispatch, imageFile, currentChatRoom) => {
     // debugger;
+
     RNS3.put(imageFile, imageOptions).then(response => {
         if (response.status !== 201) {
             console.log(response);
@@ -130,10 +135,11 @@ const sendImage = (dispatch, imageFile, currentChatRoom) => {
             const userInfo = snapshot.val();
 
             const messageInfo = prepareMessageToSend('photoUrl', photoUrl, userInfo, userID);
+            const photoMessageInfo = { ...messageInfo, height: imageFile.height, width: imageFile.width };
             const action = {
                 type: IMAGE_UPLOADED,
                 payload: photoUrl };
-                sendMessageToDatabase(dispatch, messageInfo, currentChatRoom, action);
+                sendMessageToDatabase(dispatch, photoMessageInfo, currentChatRoom, action);
             })
             .catch((error) => {
                 console.log('error sending image from sendImage', error);
@@ -145,6 +151,8 @@ const sendImage = (dispatch, imageFile, currentChatRoom) => {
         const preparedImage = {
             uri: imageToPrepare.uri,
             name: imageToPrepare.filename,
+            height: imageToPrepare.height,
+            width: imageToPrepare.width,
             type: 'image/png'
         };
         return preparedImage;

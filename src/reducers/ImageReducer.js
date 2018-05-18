@@ -7,7 +7,7 @@ import {
     IMAGE_UPLOADED,
     CANCEL_IMAGE_SELECTION,
     SHOW_IMAGE_DETAIL,
-    SET_IMAGE_DETAIL_URL,
+    SET_IMAGE_DETAIL_INFO,
     SET_IMAGE_DETAIL_SIZE
     // UNSELECT_IMAGE_TO_SEND
 } from '../constants/ImageTypes';
@@ -19,27 +19,21 @@ const initialState = {
     photoUrl: '',
     showImageDetail: false,
     imageDetailUrl: '',
+    imageDetailInfo: {},
     imageDetailSize: {}
 };
 
 export default (state = initialState, action) => {
-    // debugger;
     switch (action.type) {
         case SET_CURRENT_IMAGES:
             return { ...state, currentImages: action.payload };
         case SHOW_IMAGE_SELECTOR:
-        // console.log('showImages');
-        // console.log(action.payload);
             return { ...state, showImages: action.payload };
-        case SET_IMAGE_DETAIL_URL:
-            return { ...state, imageDetailUrl: action.payload };
+        case SET_IMAGE_DETAIL_INFO:
+            return { ...state, imageDetailInfo: action.payload };
         case SET_IMAGE_DETAIL_SIZE:
             return { ...state, imageDetailSize: action.payload };
         case SELECT_IMAGE_TO_SEND:
-        // TODO: DONE
-        // 1. restructure reducer to reflect single image selection.
-        // 2. enable unselecting
-        // debugger;
             {
                 const index = state.currentImages.map((image) => image.filename)
                 .indexOf(action.payload.filename);

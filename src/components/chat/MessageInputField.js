@@ -39,7 +39,7 @@ export default class MessageInputField extends Component {
   onImageButtonPressed = () => {
       this.props.showImageSelector(!this.props.showImages);
 
-
+      // debugger;
       CameraRoll.getPhotos({ first: 20 })
       .then(res => {
           const imageArray = res.edges;
