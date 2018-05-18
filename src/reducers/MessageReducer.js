@@ -1,6 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
+import Expo from 'expo';
 import {
     MESSAGE_TEXT_CHANGED,
     MESSAGE_SENT,
