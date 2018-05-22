@@ -58,9 +58,10 @@ export const setImageDetailInfo = (imageDetailUrl, imageDetailHeight, imageDetai
   };
 };
 
-export const setImageDetailSize = (imageSize) => {
+export const setImageDetailSize = (imageSize, isLandscape) => {
   return {
     type: SET_IMAGE_DETAIL_SIZE,
+    isLandscape,
     payload: imageSize
   };
 };

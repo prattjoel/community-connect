@@ -11,13 +11,15 @@ const mapStateToProps = state => {
   const {
     showImageDetail,
     imageDetailInfo,
-    imageDetailSize
+    imageDetailSize,
+    isLandscape
   } = state.imagesFromCR;
 
   return {
     showImageDetail,
     imageDetailInfo,
-    imageDetailSize
+    imageDetailSize,
+    isLandscape
   };
 };
 
@@ -27,8 +29,8 @@ const mapDispatchToProps = dispatch => {
           toggleImageDetail: (showImageDetail) => {
             dispatch(toggleImageDetail(showImageDetail));
           },
-          setImageDetailSize: (imageSize) => {
-            dispatch(setImageDetailSize(imageSize));
+          setImageDetailSize: (imageSize, isLandscape) => {
+            dispatch(setImageDetailSize(imageSize, isLandscape));
           }
         }
     );

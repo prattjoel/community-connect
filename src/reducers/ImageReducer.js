@@ -20,7 +20,8 @@ const initialState = {
     showImageDetail: false,
     imageDetailUrl: '',
     imageDetailInfo: {},
-    imageDetailSize: {}
+    imageDetailSize: {},
+    isLandscape: true
 };
 
 export default (state = initialState, action) => {
@@ -32,7 +33,7 @@ export default (state = initialState, action) => {
         case SET_IMAGE_DETAIL_INFO:
             return { ...state, imageDetailInfo: action.payload };
         case SET_IMAGE_DETAIL_SIZE:
-            return { ...state, imageDetailSize: action.payload };
+            return { ...state, imageDetailSize: action.payload, isLandscape: action.isLandscape };
         case SELECT_IMAGE_TO_SEND:
             {
                 const index = state.currentImages.map((image) => image.filename)
