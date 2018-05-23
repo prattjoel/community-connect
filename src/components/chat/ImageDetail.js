@@ -6,6 +6,7 @@ import {
     View,
     Dimensions,
     TouchableHighlight,
+    LayoutAnimation
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
 import { Ionicons } from '@expo/vector-icons';
@@ -68,6 +69,7 @@ export default class ImageDetail extends Component {
         // {/* </View> */}
       );
     }
+    LayoutAnimation.easeInEaseOut();
   }
 
   render() {
@@ -86,6 +88,7 @@ export default class ImageDetail extends Component {
           {this.renderBackArrow(this.props.imageDetailMenuIsVisible)}
         </View>
           <TouchableHighlight
+            activeOpacity={1}
             onPress={() => {
               this.props.toggleImageDetailMenu(!this.props.imageDetailMenuIsVisible);
             }}
