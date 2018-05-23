@@ -8,7 +8,8 @@ import {
     CANCEL_IMAGE_SELECTION,
     SHOW_IMAGE_DETAIL,
     SET_IMAGE_DETAIL_INFO,
-    SET_IMAGE_DETAIL_SIZE
+    SET_IMAGE_DETAIL_SIZE,
+    TOGGLE_IMAGE_DETAIL_MENU
     // UNSELECT_IMAGE_TO_SEND
 } from '../constants/ImageTypes';
 
@@ -21,7 +22,8 @@ const initialState = {
     imageDetailUrl: '',
     imageDetailInfo: {},
     imageDetailSize: {},
-    isLandscape: true
+    isLandscape: true,
+    imageDetailMenuIsVisible: true
 };
 
 export default (state = initialState, action) => {
@@ -34,6 +36,8 @@ export default (state = initialState, action) => {
             return { ...state, imageDetailInfo: action.payload };
         case SET_IMAGE_DETAIL_SIZE:
             return { ...state, imageDetailSize: action.payload, isLandscape: action.isLandscape };
+        case TOGGLE_IMAGE_DETAIL_MENU:
+            return { ...state, imageDetailMenuIsVisible: action.payload };
         case SELECT_IMAGE_TO_SEND:
             {
                 const index = state.currentImages.map((image) => image.filename)

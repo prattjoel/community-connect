@@ -44,9 +44,34 @@ export default class ImageDetail extends Component {
     return styles.imageContainer;
   }
 
+  renderBackArrow = (imageDetailMenuIsVisible) => {
+    const backArrow = 'ios-arrow-round-back';
+    if (imageDetailMenuIsVisible) {
+      return (
+        // <View
+        //   style={styles.arrowContainer}
+        // >
+          <TouchableHighlight
+            // style={styles.arrowContainer}
+            onPress={() => {
+              const defaultImageSize = { height: 0, width: 0 };
+              this.props.setImageDetailSize(defaultImageSize, true);
+              this.props.toggleImageDetail(!this.props.showImageDetail);
+            }}
+          >
+            <Ionicons
+              name={backArrow}
+              size={60}
+              style={styles.arrowStyle}
+            />
+          </TouchableHighlight>
+        // {/* </View> */}
+      );
+    }
+  }
+
   render() {
     const preview = require('../../assets/messageImagePlaceholder.png');
-    const backArrow = 'ios-arrow-round-back';
     return (
       <Modal
         animationType='fade'
@@ -58,30 +83,23 @@ export default class ImageDetail extends Component {
           <View
             style={styles.arrowContainer}
           >
-            <TouchableHighlight
-              // style={styles.arrowContainer}
-              onPress={() => {
-                const defaultImageSize = { height: 0, width: 0 };
-                this.props.setImageDetailSize(defaultImageSize, true);
-                this.props.toggleImageDetail(!this.props.showImageDetail);
-              }}
-            >
-              <Ionicons
-                name={backArrow}
-                size={60}
-                style={styles.arrowStyle}
-              />
-            </TouchableHighlight>
-          </View>
-          <View
+          {this.renderBackArrow(this.props.imageDetailMenuIsVisible)}
+        </View>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.toggleImageDetailMenu(!this.props.imageDetailMenuIsVisible);
+            }}
             style={this.setImageStyle()}
           >
-            <CacheImage
-               {...{ uri: this.props.imageDetailInfo.photoUrl }}
-               style={this.props.imageDetailSize}
-            />
-          </View>
-
+            {/* <View
+              style={this.setImageStyle()}
+            > */}
+              <CacheImage
+                 {...{ uri: this.props.imageDetailInfo.photoUrl }}
+                 style={this.props.imageDetailSize}
+              />
+            {/* </View> */}
+          </TouchableHighlight>
         </View>
       </Modal>
     );

@@ -12,7 +12,8 @@ import {
     CANCEL_IMAGE_SELECTION,
     SHOW_IMAGE_DETAIL,
     SET_IMAGE_DETAIL_INFO,
-    SET_IMAGE_DETAIL_SIZE
+    SET_IMAGE_DETAIL_SIZE,
+    TOGGLE_IMAGE_DETAIL_MENU
 } from '../constants/ImageTypes';
 import {
     prepareMessageToSend,
@@ -63,6 +64,13 @@ export const setImageDetailSize = (imageSize, isLandscape) => {
     type: SET_IMAGE_DETAIL_SIZE,
     isLandscape,
     payload: imageSize
+  };
+};
+
+export const toggleImageDetailMenu = (imageDetailMenuIsVisible) => {
+  return {
+    type: TOGGLE_IMAGE_DETAIL_MENU,
+    payload: imageDetailMenuIsVisible
   };
 };
 

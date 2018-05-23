@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import ImageDetail from '../components/chat/ImageDetail';
 import {
   toggleImageDetail,
-  setImageDetailSize
+  setImageDetailSize,
+  toggleImageDetailMenu
 } from '../actions/ImageActions';
 
 const mapStateToProps = state => {
@@ -12,14 +13,16 @@ const mapStateToProps = state => {
     showImageDetail,
     imageDetailInfo,
     imageDetailSize,
-    isLandscape
+    isLandscape,
+    imageDetailMenuIsVisible
   } = state.imagesFromCR;
 
   return {
     showImageDetail,
     imageDetailInfo,
     imageDetailSize,
-    isLandscape
+    isLandscape,
+    imageDetailMenuIsVisible
   };
 };
 
@@ -31,6 +34,9 @@ const mapDispatchToProps = dispatch => {
           },
           setImageDetailSize: (imageSize, isLandscape) => {
             dispatch(setImageDetailSize(imageSize, isLandscape));
+          },
+          toggleImageDetailMenu: (imageDetailMenuIsVisible) => {
+            dispatch(toggleImageDetailMenu(imageDetailMenuIsVisible));
           }
         }
     );
