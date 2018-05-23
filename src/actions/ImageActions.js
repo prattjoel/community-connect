@@ -2,8 +2,6 @@
 
 import { RNS3 } from 'react-native-aws3';
 import firebase from 'firebase';
-// import { Image } from 'react-native';
-// import Config from 'react-native-config';
 import {
     SET_CURRENT_IMAGES,
     SHOW_IMAGE_SELECTOR,
@@ -36,7 +34,6 @@ export const setCurrentImages = imagesFromCameraRoll => {
             isSelected: false
         };
     });
-    // debugger;
     return ({
         type: SET_CURRENT_IMAGES,
         payload: currentImages

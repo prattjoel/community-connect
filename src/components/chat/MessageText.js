@@ -9,22 +9,16 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { Image as CacheImage } from 'react-native-expo-image-cache';
-// import {CacheManager} from "react-native-expo-image-cache';
 
 const MessageText = (props) => {
-    // // debugger;
-    // console.log('photo url in message text: ', props.profilePicUrl);
     const { width } = Dimensions.get('window');
     const imageWidth = 0.85 * width;
     const preview = require('../../assets/messageImagePlaceholder.png');
-    // debugger;
-    // console.log('profile url in mesagetext: ', props.profilePicUrl);
 
     if (props.photoUrl) {
         return (
           <View style={styles.containerStyle}>
             <Image
-              // source={require('../../assets/profilePlaceholder.png')}
               source={props.profilePicUrl ? { uri: props.profilePicUrl } : require('../../assets/profilePlaceholder.png')}
               style={{ width: 20, height: 20, borderRadius: 10 }}
             />
@@ -57,7 +51,6 @@ const MessageText = (props) => {
         return (
           <View style={styles.containerStyle}>
             <Image
-              // source={require('../../assets/profilePlaceholder.png')}
               source={props.profilePicUrl ? { uri: props.profilePicUrl } : require('../../assets/profilePlaceholder.png')}
               style={{ width: 20, height: 20, borderRadius: 10 }}
             />
@@ -88,9 +81,6 @@ const styles = {
     paddingTop: 10,
     paddingRight: 25,
     paddingBottom: 10
-    // borderTopWidth: 0.5,
-    // borderBottomWidth: 0.5,
-    // borderColor: '#d3d3d3'
   },
   textStyle: {
     paddingLeft: 10,

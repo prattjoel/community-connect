@@ -10,7 +10,6 @@ import {
     SET_IMAGE_DETAIL_INFO,
     SET_IMAGE_DETAIL_SIZE,
     TOGGLE_IMAGE_DETAIL_MENU
-    // UNSELECT_IMAGE_TO_SEND
 } from '../constants/ImageTypes';
 
 const initialState = {
@@ -58,7 +57,6 @@ export default (state = initialState, action) => {
                     };
             }
         case IMAGE_UPLOADED:
-            // debugger;
             return { ...initialState, photoUrl: action.payload };
         case CANCEL_IMAGE_SELECTION:
             return initialState;

@@ -44,8 +44,6 @@ const mapStateToProps = (state, ownProps) => {
       isScrolling,
       showImageDetail,
       imageDetailUrl
-      // announcementRoom
-      // lastTimeStamp
     }
   );
 };
